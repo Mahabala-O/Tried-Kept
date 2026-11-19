@@ -1,0 +1,399 @@
+{
+  "nike-vapor-12": {
+    "source": "https://static.nike.com/a/images/t_default/5a7432d7-57c1-4541-841a-50aec9bccc41/M+ZOOM+VAPOR+12+HC.png",
+    "width": 400,
+    "height": 400,
+    "mode": "studio",
+    "crop": {
+      "left": 33,
+      "top": 166,
+      "width": 335,
+      "height": 148
+    },
+    "brightness": 1
+  },
+  "nike-vapor-pro-3": {
+    "source": "https://static.nike.com/a/images/t_default/c30cc9fd-e597-4b85-82f9-4f69bd396aeb/M+ZOOM+VAPOR+PRO+3+HC.png",
+    "width": 400,
+    "height": 400,
+    "mode": "studio",
+    "crop": {
+      "left": 33,
+      "top": 164,
+      "width": 333,
+      "height": 147
+    },
+    "brightness": 1
+  },
+  "nike-gp-challenge-1-5": {
+    "source": "https://static.nike.com/a/images/t_default/fbf09f61-e365-4db1-b6a8-3231c63abd3a/M+ZOOM+GP+CHALLENGE+1.5+HC.png",
+    "width": 400,
+    "height": 400,
+    "mode": "studio",
+    "crop": {
+      "left": 33,
+      "top": 158,
+      "width": 334,
+      "height": 154
+    },
+    "brightness": 1
+  },
+  "asics-gel-resolution-x-wide-mens": {
+    "source": "https://images.asics.com/is/image/asics/1041A487_104_SL_LT_GLB?$sfcc-product$=",
+    "width": 683,
+    "height": 512,
+    "mode": "studio",
+    "crop": {
+      "left": 3,
+      "top": 99,
+      "width": 672,
+      "height": 288
+    },
+    "brightness": 1
+  },
+  "asics-gel-resolution-x-wide-womens": {
+    "source": "https://images.asics.com/is/image/asics/1042A278_102_SL_LT_GLB?$sfcc-product$=",
+    "width": 683,
+    "height": 512,
+    "mode": "studio",
+    "crop": {
+      "left": 4,
+      "top": 75,
+      "width": 671,
+      "height": 332
+    },
+    "brightness": 1
+  },
+  "asics-gel-resolution-9": {
+    "source": "https://assets.asics.com/system/media_libraries/18598/file.JPG",
+    "width": 877,
+    "height": 375,
+    "mode": "studio",
+    "crop": {
+      "left": 10,
+      "top": 13,
+      "width": 848,
+      "height": 344
+    },
+    "brightness": 1
+  },
+  "asics-solution-speed-ff-4": {
+    "source": "https://assets.asics.com/system/media_libraries/25394/file.jpg",
+    "width": 3307,
+    "height": 2408,
+    "mode": "studio",
+    "crop": {
+      "left": 7,
+      "top": 0,
+      "width": 3292,
+      "height": 2408
+    },
+    "brightness": 1
+  },
+  "yonex-ezone-98-2025": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 482.9057799277308,
+      "centerY": 566.4442603186804,
+      "width": 721.8825532802174,
+      "height": 928.3685516374671,
+      "support": [
+        {
+          "x": 340,
+          "y": 131
+        },
+        {
+          "x": 587,
+          "y": 1064
+        },
+        {
+          "x": 557,
+          "y": 76
+        },
+        {
+          "x": 457,
+          "y": 1087
+        }
+      ]
+    },
+    "source": "https://us.yonex.com/cdn/shop/files/ALL_08EZ98_839-1.jpg?v=1786149524&width=960",
+    "width": 960,
+    "height": 1143,
+    "mode": "studio",
+    "crop": {
+      "left": 304,
+      "top": 44,
+      "width": 352,
+      "height": 1058
+    },
+    "brightness": 1.0282
+  },
+  "yonex-ezone-100": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 482.11332893242485,
+      "centerY": 565.0117779509596,
+      "width": 724.1085687367636,
+      "height": 934.4103403432589,
+      "support": [
+        {
+          "x": 337,
+          "y": 131
+        },
+        {
+          "x": 586,
+          "y": 1065
+        },
+        {
+          "x": 561,
+          "y": 74
+        },
+        {
+          "x": 456,
+          "y": 1089
+        }
+      ]
+    },
+    "source": "https://us.yonex.com/cdn/shop/files/ALL_08EZ100_839-1.jpg?v=1785871338&width=960",
+    "width": 960,
+    "height": 1143,
+    "mode": "studio",
+    "crop": {
+      "left": 300,
+      "top": 43,
+      "width": 360,
+      "height": 1060
+    },
+    "brightness": 1.0282
+  },
+  "yonex-eclipsion-5": {
+    "source": "https://us.yonex.com/cdn/shop/files/ALL_SHTE5MAC_115-1.jpg?v=1787870486&width=960",
+    "width": 960,
+    "height": 1143,
+    "mode": "studio",
+    "crop": {
+      "left": 69,
+      "top": 512,
+      "width": 813,
+      "height": 332
+    },
+    "brightness": 1.0324
+  },
+  "k-swiss-hypercourt-express-2": {
+    "source": "https://kswiss.com/cdn/shop/files/06613-102-m-hypercourt-express-2-whiteblack-2800154.png?v=1775215043&width=960",
+    "width": 960,
+    "height": 720,
+    "mode": "studio",
+    "crop": {
+      "left": 0,
+      "top": 126,
+      "width": 960,
+      "height": 472
+    },
+    "brightness": 1
+  },
+  "k-swiss-hypercourt-express-3": {
+    "source": "https://kswiss.com/cdn/shop/files/04603-002-m-hypercourt-express-3-blackwhite-6055812.png?v=1775199812&width=960",
+    "width": 960,
+    "height": 720,
+    "mode": "studio",
+    "crop": {
+      "left": 8,
+      "top": 154,
+      "width": 944,
+      "height": 439
+    },
+    "brightness": 1
+  },
+  "on-the-roger-pro-3-clay": {
+    "source": "https://images.ctfassets.net/hnk2vsx53n6l/44dTrnr5lSJjNoJJqApmnE/67f3373fcb694a670116122b4c607076/8c7f954d4a64ea9df16b4268f5927e16a44755cf.png?w=960&fm=webp",
+    "width": 960,
+    "height": 960,
+    "mode": "studio",
+    "crop": {
+      "left": 51,
+      "top": 292,
+      "width": 864,
+      "height": 446
+    },
+    "brightness": 1
+  },
+  "head-speed-sinner-2026": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 326.9994998767952,
+      "centerY": 441.1914335512839,
+      "width": 479.92487173276317,
+      "height": 695.2910000094519,
+      "support": [
+        {
+          "x": 243,
+          "y": 136
+        },
+        {
+          "x": 355,
+          "y": 836
+        },
+        {
+          "x": 403,
+          "y": 87
+        },
+        {
+          "x": 316,
+          "y": 836
+        }
+      ]
+    },
+    "source": "https://cdn-mdb.head.com/CDN3/D/232116/1/683x911/speed-sinner-2026.webp",
+    "width": 683,
+    "height": 911,
+    "mode": "studio",
+    "crop": {
+      "left": 207,
+      "top": 64,
+      "width": 269,
+      "height": 782
+    },
+    "brightness": 1.0581
+  },
+  "on-the-roger-pro-fire": {
+    "source": "https://images.ctfassets.net/hnk2vsx53n6l/5CwnPZyAPKXd7fEy3BIV0E/811cc9f1209f784268a842e52254571d/f3471f56d7cdad80c8d09d526cb1786e4254bf45.png?w=960&fm=webp",
+    "width": 960,
+    "height": 960,
+    "mode": "studio",
+    "crop": {
+      "left": 50,
+      "top": 342,
+      "width": 867,
+      "height": 394
+    },
+    "brightness": 1
+  },
+  "yonex-vcore-100": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 450.63077712529656,
+      "centerY": 540.7781680117397,
+      "width": 689.5459553920775,
+      "height": 958.680288098373,
+      "support": [
+        {
+          "x": 322,
+          "y": 113
+        },
+        {
+          "x": 504,
+          "y": 1089
+        },
+        {
+          "x": 596,
+          "y": 77
+        },
+        {
+          "x": 442,
+          "y": 1090
+        }
+      ]
+    },
+    "source": "https://us.yonex.com/cdn/shop/files/ALL_08VC100_338-2.jpg?v=1765575203&width=960",
+    "width": 960,
+    "height": 1143,
+    "mode": "studio",
+    "crop": {
+      "left": 265,
+      "top": 40,
+      "width": 429,
+      "height": 1063
+    },
+    "brightness": 1.0282
+  },
+  "head-boom-2026": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 325.2174640655095,
+      "centerY": 437.64111255330533,
+      "width": 495.1906238304953,
+      "height": 702.6035313091035,
+      "support": [
+        {
+          "x": 225,
+          "y": 144
+        },
+        {
+          "x": 360,
+          "y": 836
+        },
+        {
+          "x": 417,
+          "y": 89
+        },
+        {
+          "x": 313,
+          "y": 836
+        }
+      ]
+    },
+    "source": "https://cdn-mdb.head.com/CDN3/D/232216/1/683x911/boom-mp-2026.webp",
+    "width": 683,
+    "height": 911,
+    "mode": "studio",
+    "crop": {
+      "left": 196,
+      "top": 63,
+      "width": 290,
+      "height": 784
+    },
+    "brightness": 1.0581
+  },
+  "mizuno-wave-exceed-tour-5": {
+    "source": "https://cdn11.bigcommerce.com/s-x6b2pdd9ey/images/stencil/original/image-manager/a5f6fbae-9624-40b6-996e-5765dfec2ed0.jpg?t=1704379049",
+    "width": 1980,
+    "height": 850,
+    "mode": "scene",
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "width": 1980,
+      "height": 850
+    },
+    "brightness": 1
+  },
+  "wilson-blade-v10": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 967.9203456758153,
+      "centerY": 977.5171031651075,
+      "width": 1144.024066038649,
+      "height": 1608.404435952185,
+      "support": [
+        {
+          "x": 820,
+          "y": 165
+        },
+        {
+          "x": 1054,
+          "y": 1889
+        },
+        {
+          "x": 1051,
+          "y": 100
+        },
+        {
+          "x": 952,
+          "y": 1897
+        }
+      ]
+    },
+    "source": "https://img.myshopline.com/image/store/1722911146473/WR207811U-1-BLADE-98-16X19-V10-FRM-GREEN.png?h=960&q=80&w=960",
+    "width": 2000,
+    "height": 2000,
+    "mode": "studio",
+    "crop": {
+      "left": 741,
+      "top": 61,
+      "width": 481,
+      "height": 1858
+    },
+    "brightness": 1
+  }
+}

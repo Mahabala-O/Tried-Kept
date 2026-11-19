@@ -12,7 +12,7 @@ export default function ResilientImage({ src, srcSet, fallbackSrc = "/media/tenn
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth === 0) setFailedSrc(src);
   }, [src]);
-  return <><img {...props} ref={imageRef} src={failed ? fallbackSrc : src} srcSet={failed ? undefined : srcSet}
+  return <><img {...props} ref={imageRef} data-fallback={failed ? "true" : undefined} src={failed ? fallbackSrc : src} srcSet={failed ? undefined : srcSet}
     alt={failed ? "Tennis illustration; photo unavailable" : props.alt}
     onError={failed ? undefined : () => setFailedSrc(src)} />
     {failed && fallbackLabel && <span className="art-label">{fallbackLabel}</span>}</>;

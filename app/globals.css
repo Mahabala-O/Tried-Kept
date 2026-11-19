@@ -721,3 +721,29 @@ svg .anim-bounce, .pa-ball, .pa-shadow { transform-box: fill-box; transform-orig
   border-radius: 14px; background: var(--cream); color: var(--ink);
 }
 .art-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+/* Measured product framing: remove source-photo margins without clipping gear.
+   Blending neutral studio backgrounds into one plate keeps gray/white bars out. */
+.product-photo {
+  position: absolute; inset: 0; overflow: hidden; container-type: size;
+  background: #f3f0e7;
+}
+.product-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+}
+.product-photo[data-mode="scene"] img { object-fit: cover; }
+.product-photo[data-mode="studio"] img:not([data-fallback]) {
+  filter: brightness(var(--photo-brightness, 1)); mix-blend-mode: multiply;
+}
+@supports (width: 1cqw) {
+  .product-photo[data-mode="studio"] img:not([data-fallback]) {
+    --frame-pad: clamp(6px, 4cqw, 18px);
+    --pixel: min(calc((100cqw - 2 * var(--frame-pad)) / var(--fit-w)), calc((100cqh - 2 * var(--frame-pad)) / var(--fit-h)));
+    inset: auto;
+    width: calc(var(--image-w) * var(--pixel)); height: calc(var(--image-h) * var(--pixel));
+    left: calc(50% - var(--crop-cx) * var(--pixel)); top: calc(50% - var(--crop-cy) * var(--pixel));
+    transform-origin: calc(var(--crop-cx) * var(--pixel)) calc(var(--crop-cy) * var(--pixel));
+    transform: rotate(var(--photo-angle, 0deg)); object-fit: fill; max-width: none;
+  }
+}
+.product-photo img[data-fallback] { filter: none; mix-blend-mode: normal; object-fit: contain; }

@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import GiphyClip from "@/components/art/GiphyClip";
 import PlayerArt from "@/components/art/PlayerArt";
 import ResilientImage from "@/components/ResilientImage";
+import ProductPhoto from "@/components/ProductPhoto";
 import { getPro, type Product } from "@/lib/catalog";
 import { gifEmbedUrl, photoSrcSet, productIllustrationSrc, productPhotos, proMedia, type Gif, type Photo } from "@/lib/media";
 
@@ -23,6 +24,7 @@ type FrameProps = {
   /** A visible line under the credit, such as "Shows the player, not the gear". */
   note?: string;
   photoFallbackSrc?: string;
+  photoContent?: ReactNode;
   className?: string;
 };
 
@@ -97,7 +99,7 @@ export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50v
  * One box for any picture: a credited photo, a credited GIF, or original art.
  * The box keeps its aspect ratio before anything loads, so nothing shifts.
  */
-export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover", eager = false, plain = false, sizes, note, photoFallbackSrc, className }: FrameProps) {
+export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover", eager = false, plain = false, sizes, note, photoFallbackSrc, photoContent, className }: FrameProps) {
   const classes = ["media-frame", plain ? "media-plain" : "", className ?? ""].filter(Boolean).join(" ");
   const media = gif ?? photo ?? null;
   const shape = ratio ?? (media ? `${media.width} / ${media.height}` : "4 / 3");
@@ -123,7 +125,7 @@ export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover",
     return (
       <figure className={classes}>
         <div className="media-box" style={style}>
-          <PhotoImg photo={photo} eager={eager} sizes={sizes} fallbackSrc={photoFallbackSrc} />
+          {photoContent ?? <PhotoImg photo={photo} eager={eager} sizes={sizes} fallbackSrc={photoFallbackSrc} />}
         </div>
         <PhotoCredit photo={photo} note={note} />
       </figure>
@@ -153,9 +155,11 @@ export function ProductImage({
   plain?: boolean;
   className?: string;
 }) {
+  const photo = productPhotos[product.slug];
   return (
     <MediaFrame
-      photo={productPhotos[product.slug] ?? null}
+      photo={photo ?? null}
+      photoContent={photo ? <ProductPhoto product={product} photo={photo} eager={eager} /> : undefined}
       photoFallbackSrc={productIllustrationSrc(product.slug)}
       fallback={
         <div className="art-frame" style={{ "--art-bg": "var(--cream)" } as CSSProperties}>

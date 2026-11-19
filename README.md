@@ -56,6 +56,8 @@ All 23 products also have a labelled original illustration in `public/media/prod
 node scripts/export-product-art.mjs
 ```
 
+Product photos use measured foreground bounds from `lib/product-framing.json` so source margins do not shrink the product. Neutral studio backgrounds blend into the shared warm card background; racquets are angled to use the tile better while preserving the whole product. These are display adjustments; original photographs stay unchanged. To measure a new source, download it for analysis, then run `node scripts/analyze-product-photo.mjs <slug> <local-image> <source-url> -32` for a racquet (omit the final angle for a shoe). Measurements are ignored if the source URL changes.
+
 Exact-model photos with approved rights can be added to `productPhotos`. GIFs use GIPHY's embed player; paused clips show a credited player portrait or original court art. Image load failures fall back to local court art. The media tests check coverage for every catalog product and pro, including every local image and responsive rendition.
 
 ## Deploy on Railway

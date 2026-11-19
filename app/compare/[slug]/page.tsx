@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import BallArt from "@/components/art/BallArt";
 import ResilientImage from "@/components/ResilientImage";
+import ProductPhoto from "@/components/ProductPhoto";
 import { ProductImage } from "@/components/MediaFrame";
 import ProductReports from "@/components/ProductReports";
 import ScoutMark from "@/components/ScoutMark";
@@ -82,11 +83,12 @@ function VsHero({ models }: { models: Product[] }) {
 
 /** Decorative repeat of the product image, credited with the full-size image above. */
 function MiniThumb({ product }: { product: Product }) {
+  const photo = productPhotos[product.slug];
   return (
     <span className={s.miniThumb} aria-hidden="true">
-      <ResilientImage src={productPhotos[product.slug]?.src ?? productIllustrationSrc(product.slug)}
+      {photo ? <ProductPhoto product={product} photo={photo} /> : <ResilientImage src={productIllustrationSrc(product.slug)}
         fallbackSrc={productIllustrationSrc(product.slug)} alt="" width={40} height={40}
-        style={{ width: "100%", height: "100%", objectFit: "contain", background: "white" }} />
+        style={{ width: "100%", height: "100%", objectFit: "contain", background: "white" }} />}
     </span>
   );
 }

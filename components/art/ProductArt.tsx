@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { productLabel, type Product } from "@/lib/catalog";
 import { paletteFor } from "./palette";
 import RacquetArt from "./RacquetArt";
-import ShoeArt from "./ShoeArt";
+import ShoeArt, { shoeModelFor } from "./ShoeArt";
 
 type Props = {
   product: Pick<Product, "slug" | "category" | "brand" | "name" | "line">;
@@ -14,13 +14,14 @@ type Props = {
 };
 
 /**
- * Original art standing in for a product photo. Colors come from the slug, so each
- * model keeps its own look. The label makes clear it is not a picture of the product.
+ * Original art standing in for a product photo. Shoes are drawn from each model's
+ * real shape and a colorway it is sold in (components/art/shoeModels.ts). The label makes clear it is not a picture of the product.
  */
 export default function ProductArt({ product, className, ratio, hideLabel = false }: Props) {
   const palette = paletteFor(product.slug);
+  const bg = product.category === "shoe" ? shoeModelFor(product.slug).colors.bg : palette.bg;
   const kind = product.category === "racquet" ? "tennis racquet" : "tennis shoe";
-  const style = { "--art-bg": palette.bg, ...(ratio ? { "--ratio": ratio } : {}) } as CSSProperties;
+  const style = { "--art-bg": bg, ...(ratio ? { "--ratio": ratio } : {}) } as CSSProperties;
   return (
     <div
       className={className ? `art-frame ${className}` : "art-frame"}
@@ -37,14 +38,7 @@ export default function ProductArt({ product, className, ratio, hideLabel = fals
       {product.category === "racquet" ? (
         <RacquetArt seed={product.slug} frame={palette.main} accent={palette.accent} grip={palette.detail} />
       ) : (
-        <ShoeArt
-          seed={product.slug}
-          main={palette.main}
-          accent={palette.accent}
-          detail={palette.detail}
-          base={palette.base}
-          lace={palette.lace}
-        />
+        <ShoeArt seed={product.slug} />
       )}
     </div>
   );

@@ -52,6 +52,8 @@ export type Gif = {
 export type ProMedia = { portrait?: Photo; gifs: Gif[] };
 
 const CC_BY_2 = { license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" };
+const CC_BY_4 = { license: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/" };
+const PD_USGOV = { license: "Public domain", licenseUrl: "https://commons.wikimedia.org/wiki/Template:PD-USGov" };
 const CC_BY_SA_2 = { license: "CC BY-SA 2.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/" };
 const CC_BY_SA_3 = { license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/" };
 const CC_BY_SA_4 = { license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" };
@@ -133,6 +135,191 @@ export const proMedia: Record<string, ProMedia> = {
         "Carlos Alcaraz",
       ),
     ],
+  },
+  "jannik-sinner": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/6/64/Jannik_Sinner_2025_US_Open.jpg",
+      width: 1200,
+      height: 1600,
+      alt: "Jannik Sinner in a white cap and rust-red shirt, racquet raised beside his face, watching the ball during the 2025 US Open final",
+      credit: {
+        author: "The White House",
+        ...PD_USGOV,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Jannik_Sinner_2025_US_Open.jpg",
+      },
+    },
+    gifs: [
+      giphy(
+        "hdTSiALy2nap2C5F9E",
+        "wimbledon-jannik-sinner-wimbledon-2025-hdTSiALy2nap2C5F9E",
+        480,
+        270,
+        "Wimbledon",
+        "Jannik Sinner, in white, holds the Wimbledon men's trophy on Centre Court in 2025 as the crowd applauds behind him.",
+        "Jannik Sinner",
+      ),
+      giphy(
+        "0XnYEeYKNfywhv8xnG",
+        "tennistv-sinner-jannik-pumped-0XnYEeYKNfywhv8xnG",
+        450,
+        450,
+        "Tennis TV",
+        "Jannik Sinner, in a white cap and shirt, clenches his fist and nods after winning a point on an indoor court.",
+        "Jannik Sinner",
+      ),
+    ],
+  },
+  "casper-ruud": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Casper_Ruud%2C_ATP_Basel_2025.jpg/1280px-Casper_Ruud%2C_ATP_Basel_2025.jpg",
+      width: 1280,
+      height: 720,
+      alt: "Casper Ruud, in a white shirt and orange shorts, crouching low to play a forehand on the blue indoor court at the 2025 Swiss Indoors in Basel",
+      credit: {
+        author: "Skyscraper2010",
+        ...CC_BY_SA_4,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Casper_Ruud,_ATP_Basel_2025.jpg",
+      },
+    },
+    gifs: [
+      giphy(
+        "i4gFRctIJzJzFXJQIk",
+        "tennistv-tennis-rune-ruud-i4gFRctIJzJzFXJQIk",
+        480,
+        480,
+        "Tennis TV",
+        "Casper Ruud, in a lilac shirt, walks to the net to shake hands after a match on clay in Rome, with Holger Rune behind him.",
+        "Casper Ruud",
+      ),
+    ],
+  },
+  "ben-shelton": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Ben_Shelton_forehand.png/1280px-Ben_Shelton_forehand.png",
+      width: 1280,
+      height: 902,
+      alt: "Ben Shelton, in grey with pink shoes, stretching low for a forehand on the blue indoor court in Basel",
+      credit: {
+        author: "LHC88",
+        ...CC_BY_4,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Ben_Shelton_forehand.png",
+      },
+    },
+    gifs: [
+      giphy(
+        "I8fSr6sIkWv8y8CjpM",
+        "tennistv-ben-shelton-celebration-phone-I8fSr6sIkWv8y8CjpM",
+        450,
+        450,
+        "Tennis TV",
+        "Ben Shelton, in a black sleeveless top, holds his hand to his ear like a phone and hangs up, his signature celebration.",
+        "Ben Shelton",
+      ),
+    ],
+  },
+  "aryna-sabalenka": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Aryna_Sabalenka_at_2025_Miami_Open_01.jpg/1280px-Aryna_Sabalenka_at_2025_Miami_Open_01.jpg",
+      width: 1280,
+      height: 1006,
+      alt: "Aryna Sabalenka, in a black top and grey skirt, lining up a forehand on a blue hard court at the 2025 Miami Open",
+      credit: {
+        author: "Vbrunophotog",
+        ...CC_BY_SA_4,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Aryna_Sabalenka_at_2025_Miami_Open_01.jpg",
+      },
+    },
+    gifs: [
+      giphy(
+        "KGwcLGddYoH1qRTyEa",
+        "wta-omg-celebration-yay-KGwcLGddYoH1qRTyEa",
+        480,
+        480,
+        "WTA",
+        "Aryna Sabalenka, wide-eyed and grinning, throws both arms up in a studio shoot against a grey backdrop.",
+        "Aryna Sabalenka",
+      ),
+      giphy(
+        "fxHPZ1W8eU74uo2CBd",
+        "wta-tennis-sabalenka-aryna-fxHPZ1W8eU74uo2CBd",
+        480,
+        480,
+        "WTA",
+        "Aryna Sabalenka laughs and dances in a studio shoot against a grey backdrop.",
+        "Aryna Sabalenka",
+      ),
+    ],
+  },
+  "coco-gauff": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Gauff_-_US_Open_2026.jpg/1280px-Gauff_-_US_Open_2026.jpg",
+      width: 1280,
+      height: 1919,
+      alt: "Coco Gauff, in a pale yellow top, fully stretched to serve on Arthur Ashe Stadium at the 2026 US Open as fans watch from the stands",
+      credit: {
+        author: "Nrbelex",
+        ...CC_BY_SA_4,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Gauff_-_US_Open_2026.jpg",
+      },
+    },
+    gifs: [
+      giphy(
+        "fUkgo7VXRXyCfMAPyQ",
+        "tennischannel-coco-gauff-fUkgo7VXRXyCfMAPyQ",
+        480,
+        270,
+        "Tennis Channel",
+        "Coco Gauff, in navy, looks up and steadies herself between points on the clay at Roland-Garros.",
+        "Coco Gauff",
+      ),
+    ],
+  },
+  "iga-swiatek": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg/1280px-Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg",
+      width: 1280,
+      height: 1646,
+      alt: "Iga Swiatek, in a light blue cap and black kit, turning her shoulders with her left arm out as she sets up a shot at the 2023 US Open",
+      credit: {
+        author: "Hameltion",
+        ...CC_BY_SA_4,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Iga_%C5%9Awi%C4%85tek_(2023_US_Open)_39_(cropped).jpg",
+      },
+    },
+    gifs: [
+      giphy(
+        "QgyaSoPPzLX8RveoyT",
+        "wimbledon-wimbledon-2025-iga-witek-QgyaSoPPzLX8RveoyT",
+        480,
+        270,
+        "Wimbledon",
+        "Iga Swiatek, in a white cap, kisses the Venus Rosewater Dish after winning the 2025 Wimbledon women's title.",
+        "Iga Swiatek",
+      ),
+      giphy(
+        "Piz7JsGtqaUZbYhwcK",
+        "wta-tennis-iga-swiatek-Piz7JsGtqaUZbYhwcK",
+        480,
+        480,
+        "WTA",
+        "Iga Swiatek, in a black sleeveless top, grins and gives two shaka signs in a studio shoot.",
+        "Iga Swiatek",
+      ),
+    ],
+  },
+  "elena-rybakina": {
+    portrait: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg/1280px-Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg",
+      width: 1280,
+      height: 960,
+      alt: "Elena Rybakina, in a navy dress and white visor, swinging a two-handed backhand on the clay at Roland-Garros 2025",
+      credit: {
+        author: "Kuberzog",
+        ...CC_BY_SA_4,
+        sourceUrl: "https://commons.wikimedia.org/wiki/File:Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg",
+      },
+    },
+    gifs: [],
   },
 };
 

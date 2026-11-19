@@ -1,10 +1,13 @@
 import { COLORS, hashSeed, paletteFor, type GearColors } from "./palette";
+import { SHOE_MODELS, genericShoe, type ShoeModel } from "./shoeModels";
 
 export type ShoeArtProps = Partial<Omit<GearColors, "bg">> & {
-  /** Any string or number. Different seeds give different colors and side patterns. */
+  /** Any string or number. A catalog product slug draws that model; anything else gets a made-up shoe. */
   seed?: string | number;
-  /** Pick the side pattern directly: 0 band, 1 zigzag, 2 dots, 3 color block, 4 perforations, 5 wave. */
+  /** For made-up shoes, pick the side graphic directly. */
   variant?: number;
+  /** Draw this spec instead of looking one up by seed. */
+  model?: ShoeModel;
   className?: string;
   /** Accessible name. Without it the art is decorative and hidden from screen readers. */
   title?: string;
@@ -12,18 +15,63 @@ export type ShoeArtProps = Partial<Omit<GearColors, "bg">> & {
 
 const INK = COLORS.ink;
 
-/** A stylized side-view tennis shoe. Original art with no brand marks. */
-export default function ShoeArt({ seed = "shoe", variant, className, title, ...colors }: ShoeArtProps) {
-  const hash = hashSeed(seed);
+/** Ground line and outsole thickness, in viewBox units. */
+const G = 136;
+const OUT = 6;
+const COLLAR_TOP = { low: 50, mid: 44, high: 32, sock: 42 } as const;
+
+/** The drawing spec for a seed: the catalog model when there is one, otherwise a made-up shoe. */
+export function shoeModelFor(seed: string | number, colors: Partial<Omit<GearColors, "bg">> = {}, variant?: number): ShoeModel {
+  const known = typeof seed === "string" ? SHOE_MODELS[seed] : undefined;
+  if (known) return known;
   const p = { ...paletteFor(seed), ...stripUndefined(colors) };
-  // Every trait comes from a different slice of the hash, so each model gets its own mix.
-  const pattern = (variant ?? (hash >>> 4)) % 6;
-  const toeCap = ((hash >>> 8) & 1) === 0;
-  const highCollar = ((hash >>> 9) & 1) === 0;
-  const tread = (hash >>> 10) % 3;
-  const dualMidsole = ((hash >>> 12) & 1) === 0;
-  const heelTab = ((hash >>> 13) & 1) === 0;
-  const toeDrag = ((hash >>> 14) & 1) === 0;
+  return genericShoe(hashSeed(seed), p, variant);
+}
+
+/** A side-view tennis shoe, toe to the right. Original art with no brand marks. */
+export default function ShoeArt({ seed = "shoe", variant, model, className, title, ...colors }: ShoeArtProps) {
+  const m = model ?? shoeModelFor(seed, colors, variant);
+  const c = m.colors;
+  const id = `shoe-${String(seed).replace(/[^a-z0-9-]/gi, "")}-${variant ?? "m"}`;
+
+  const yH = G - OUT - m.soleHeel;
+  const yT = G - OUT - m.soleToe - 3;
+  const soleTop = (x: number) => yH + ((yT - yH) * (x - 18)) / (226 - 18);
+  const top = COLLAR_TOP[m.collar];
+  const laceStart = { x: 98, y: top + 2 };
+  const laceEnd = { x: 166, y: 84 };
+  const laceBend = { x: 140, y: laceStart.y + 18 };
+  /** A point on the curved lace line, t from 0 at the collar to 1 at the vamp. */
+  const along = (t: number) => ({
+    x: (1 - t) ** 2 * laceStart.x + 2 * (1 - t) * t * laceBend.x + t ** 2 * laceEnd.x,
+    y: (1 - t) ** 2 * laceStart.y + 2 * (1 - t) * t * laceBend.y + t ** 2 * laceEnd.y,
+  });
+
+  // How far the collar dips at the ankle. High and sock collars barely dip.
+  const dip = m.collar === "high" ? 4 : m.collar === "sock" ? 8 : 14;
+  const front =
+    m.collar === "sock"
+      ? `Q 84 ${top + 2} ${laceStart.x} ${laceStart.y}`
+      : `Q 78 ${top + dip} 86 ${top + 2} L 92 ${top - 2} L ${laceStart.x} ${laceStart.y}`;
+  const upper = [
+    `M 26 ${yH + 2}`,
+    // Heel leans back, then rounds over at the heel peak.
+    `C 18 ${yH - 12} 14 ${top + 24} 20 ${top + 8}`,
+    `Q 23 ${top - 2} 34 ${top - 1}`,
+    // Collar runs down toward the ankle.
+    `Q 54 ${top + 1} 70 ${top + dip}`,
+    front,
+    // Lace line, vamp and a low rounded toe.
+    `Q ${laceBend.x} ${laceBend.y} ${laceEnd.x} ${laceEnd.y}`,
+    `Q 204 ${92} 222 ${yT - 7}`,
+    `Q 235 ${yT - 3} 232 ${yT + 3}`,
+    `L 26 ${yH + 2} Z`,
+  ].join(" ");
+  const tongue = `M 74 ${top + 10} Q 76 ${top - 12} 90 ${top - 12} Q 102 ${top - 11} 102 ${top - 2} L ${laceEnd.x} ${laceEnd.y} Z`;
+  const midsole = `M 16 ${yH} L 228 ${yT} Q 240 ${yT + 2} 236 ${G - OUT - 4} Q 228 ${G - OUT} 206 ${G - OUT} L 24 ${G - OUT} Q 14 ${G - OUT - 2} 16 ${yH} Z`;
+  const outsole = `M 22 ${G - OUT} L 206 ${G - OUT} Q 228 ${G - OUT} 236 ${G - OUT - 4} Q 237 ${G - 1} 222 ${G} L 30 ${G} Q 20 ${G} 22 ${G - OUT} Z`;
+  const treadColor = isDark(c.outsole) ? "#FFFFFF" : INK;
+  const midLine = (x: number) => (soleTop(x) + G - OUT) / 2;
 
   return (
     <svg
@@ -34,95 +82,155 @@ export default function ShoeArt({ seed = "shoe", variant, className, title, ...c
       aria-hidden={title ? undefined : true}
       focusable="false"
     >
-      <g stroke={INK} strokeWidth={3} strokeLinejoin="round" strokeLinecap="round">
-        {/* Tongue */}
-        <path d={highCollar ? "M62 46 Q62 22 86 22 Q98 24 98 34 L106 66 Q92 60 82 50 Z" : "M64 46 Q66 30 84 30 Q94 31 95 38 L104 66 Q92 60 82 50 Z"} fill={p.lace === COLORS.paper ? p.accent : COLORS.paper} />
-        {/* Upper */}
-        <path
-          d={
-            highCollar
-              ? "M26 106 L26 56 Q26 40 42 38 L64 37 Q76 38 82 50 L100 68 Q112 76 136 78 L178 82 Q214 86 226 104 L226 106 Z"
-              : "M26 106 L26 62 Q26 48 40 46 L66 44 Q76 44 82 50 L100 68 Q112 76 136 78 L178 82 Q214 86 226 104 L226 106 Z"
-          }
-          fill={p.main}
-        />
-        {/* Heel counter */}
-        <path d="M26 64 L26 106 L58 106 Q48 86 56 64 Q40 59 26 64 Z" fill={p.accent} />
-        {/* Toe cap */}
-        {toeCap && <path d="M180 82 Q214 86 226 104 L226 106 L186 106 Q174 96 180 82 Z" fill={p.accent} />}
-        {/* Side pattern */}
-        {pattern === 0 && <rect x={62} y={86} width={108} height={11} rx={5.5} fill={p.detail} />}
-        {pattern === 1 && (
-          <polyline points="60,98 72,86 84,98 96,86 108,98 120,86 132,98 144,86 156,98 166,88" fill="none" stroke={p.detail} strokeWidth={6} />
-        )}
-        {pattern === 1 && (
-          <polyline points="60,98 72,86 84,98 96,86 108,98 120,86 132,98 144,86 156,98 166,88" fill="none" strokeWidth={1.5} />
-        )}
-        {pattern === 2 &&
-          [
-            [72, 92],
-            [90, 88],
-            [108, 94],
-            [126, 89],
-            [144, 94],
-            [162, 92],
-          ].map(([cx, cy]) => <circle key={cx} cx={cx} cy={cy} r={5} fill={p.detail} />)}
-        {pattern === 3 && <path d="M64 102 L76 80 L130 82 L120 102 Z" fill={p.detail} />}
-        {pattern === 4 &&
-          [0, 1, 2].flatMap((row) =>
-            [0, 1, 2, 3, 4, 5, 6].map((col) => (
-              <circle key={`${row}-${col}`} cx={70 + col * 15 + row * 4} cy={84 + row * 7} r={2.2} fill={p.detail} strokeWidth={1.2} />
-            )),
+      <defs>
+        <clipPath id={`${id}-u`}>
+          <path d={upper} />
+        </clipPath>
+        <clipPath id={`${id}-m`}>
+          <path d={midsole} />
+        </clipPath>
+      </defs>
+      <g stroke={INK} strokeWidth={2.6} strokeLinejoin="round" strokeLinecap="round">
+        {m.collar !== "sock" && <path d={tongue} fill={c.upper2} />}
+        <path d={upper} fill={c.upper} />
+
+        <g clipPath={`url(#${id}-u)`}>
+          {m.heel === "panel" && <path d={`M 0 0 L 58 0 L 48 ${yH + 10} L 0 ${yH + 10} Z`} fill={c.upper2} />}
+          {m.heel === "block" && <path d={`M 8 ${yH - 24} L 44 ${yH - 24} Q 54 ${yH - 10} 50 ${yH + 8} L 8 ${yH + 8} Z`} fill={c.upper2} />}
+          {m.heel === "cage" && (
+            <path
+              d={`M 12 ${yH + 4} Q 14 ${yH - 26} 30 ${yH - 32} Q 48 ${yH - 36} 56 ${yH - 20} Q 64 ${yH - 4} 96 ${soleTop(96) + 4} L 12 ${yH + 4} Z`}
+              fill={c.upper2}
+            />
           )}
-        {pattern === 5 && (
-          <path d="M60 92 Q75 82 90 92 T120 92 T150 92 T168 88" fill="none" stroke={p.detail} strokeWidth={7} />
-        )}
-        {pattern === 5 && <path d="M60 92 Q75 82 90 92 T120 92 T150 92 T168 88" fill="none" strokeWidth={1.5} />}
-        {/* Heel pull tab */}
-        {heelTab && <path d={highCollar ? "M24 40 L34 38 L34 56 L24 58 Z" : "M24 48 L34 46 L34 62 L24 64 Z"} fill={p.detail} />}
-        {/* Laces */}
-        <g stroke={p.lace} strokeWidth={4.5}>
-          <path d="M86 60 L96 52" />
-          <path d="M97 69 L107 61" />
-          <path d="M110 75 L118 67" />
-          <path d="M124 78 L130 71" />
+          {m.side === "dash" && <path d={`M 36 ${yH - 4} L 178 88 L 184 95 L 44 ${yH + 4} Z`} fill={c.graphic} />}
+          {m.side === "wedge" && <path d={`M 50 ${yH + 4} L 148 80 L 158 90 L 124 ${soleTop(124) + 4} Z`} fill={c.graphic} />}
+          {m.side === "bar" && <path d={`M 10 ${yH - 18} L 120 ${soleTop(120) - 14} L 120 ${soleTop(120) + 2} L 10 ${yH + 2} Z`} fill={c.graphic} />}
+          {m.side === "ribs" &&
+            Array.from({ length: 10 }, (_, i) => {
+              const x = 58 + i * 11;
+              return <path key={i} d={`M ${x} ${soleTop(x) + 2} L ${x + 24} 62`} stroke={c.graphic} strokeWidth={2.6} fill="none" />;
+            })}
+          {m.side === "saddle" &&
+            (() => {
+              const top1 = along(0.22);
+              const top2 = along(0.66);
+              const mid = (top1.y + soleTop(120)) / 2;
+              return (
+                <>
+                  <path
+                    d={`M ${top1.x} ${top1.y} L ${top2.x} ${top2.y} Q ${top2.x - 4} ${mid} 146 ${soleTop(146) + 4} L 104 ${soleTop(104) + 4} Q ${top1.x - 8} ${mid} ${top1.x} ${top1.y} Z`}
+                    fill={c.graphic}
+                  />
+                  <path d={`M 118 ${mid + 2} L 132 ${mid + 1}`} stroke={c.upper} strokeWidth={3} />
+                  <path d={`M 116 ${mid + 10} L 132 ${mid + 9}`} stroke={c.upper} strokeWidth={3} />
+                </>
+              );
+            })()}
+          {m.side === "mesh" && (
+            <g fill={c.graphic} stroke="none" opacity={0.7}>
+              {Array.from({ length: 5 }, (_, row) =>
+                Array.from({ length: 16 }, (_, col) => (
+                  <circle key={`${row}-${col}`} cx={34 + col * 12 + (row % 2) * 6} cy={60 + row * 10} r={1.7} />
+                )),
+              )}
+            </g>
+          )}
+          {/* Collar lining */}
+          <path d={`M 28 ${top} L 46 ${top - 2} Q 60 ${top + dip} 74 ${top + 4}`} fill="none" stroke={c.upper2} strokeWidth={6} />
         </g>
-        {/* Collar line */}
-        <path d={highCollar ? "M32 52 Q34 44 44 43 L62 42" : "M32 58 Q33 51 42 50 L64 49"} fill="none" strokeWidth={2} />
-        {/* Midsole */}
-        <path d="M18 106 L224 104 Q234 106 232 115 L230 120 L18 121 Q14 114 18 106 Z" fill={p.base} />
-        {dualMidsole && <path d="M22 114 L228 113" fill="none" stroke={p.accent} strokeWidth={4} />}
-        {/* Toe guard that wraps up from the sole */}
-        {toeDrag && <path d="M206 104 Q226 100 232 112 L230 120 L210 120 Q204 112 206 104 Z" fill={p.accent} />}
-        {/* Outsole */}
-        <path d="M18 121 L230 120 Q228 131 214 131 L32 132 Q18 132 18 121 Z" fill={INK} />
-        {/* Tread: notches, herringbone or studs */}
-        {tread === 0 && (
-          <g stroke={p.base} strokeWidth={2.5} opacity={0.7}>
-            {[44, 70, 96, 122, 148, 174, 200].map((x) => (
-              <path key={x} d={`M${x} 124 L${x + 8} 128`} />
-            ))}
-          </g>
+        {/* Outline again over the clipped panels, so edges stay crisp */}
+        <path d={upper} fill="none" />
+
+        {m.heelLoop && (
+          <>
+            <circle cx={27} cy={top - 5} r={6.5} fill="none" strokeWidth={7} />
+            <circle cx={27} cy={top - 5} r={6.5} fill="none" stroke={c.upper2} strokeWidth={3.4} />
+          </>
         )}
-        {tread === 1 && (
+
+        {/* Laces */}
+        <g stroke={c.lace} strokeWidth={4.2}>
+          {[0.12, 0.36, 0.6, 0.84].map((t) => {
+            const p = along(t);
+            return <path key={t} d={`M ${p.x - 4} ${p.y + 5} L ${p.x + 6} ${p.y - 5}`} />;
+          })}
+        </g>
+        <g fill="none" strokeWidth={1.2}>
+          {[0.12, 0.36, 0.6, 0.84].map((t) => {
+            const p = along(t);
+            return <path key={t} d={`M ${p.x - 4} ${p.y + 5} L ${p.x + 6} ${p.y - 5}`} />;
+          })}
+        </g>
+
+        {/* Midsole */}
+        <path d={midsole} fill={c.midsole} />
+        <g clipPath={`url(#${id}-m)`}>
+          {m.soleSweep && <path d={`M 40 ${G} Q 120 ${G - OUT - 1} 186 ${soleTop(186) - 2} L 244 ${yT - 6} L 244 ${G} Z`} fill={c.midsole2} />}
+          {m.soleStripe && <path d={`M 18 ${midLine(18)} L 232 ${midLine(232)}`} stroke={c.midsole2} strokeWidth={3.6} fill="none" />}
+          {Array.from({ length: m.soleWindows }, (_, i) => {
+            const x = 104 + i * 32;
+            return (
+              <path
+                key={i}
+                d={`M ${x} ${G - OUT - 3} L ${x + 20} ${G - OUT - 3} L ${x + 27} ${soleTop(x + 27) + 4} L ${x + 7} ${soleTop(x + 7) + 4} Z`}
+                fill={c.upper2}
+                strokeWidth={2}
+              />
+            );
+          })}
+          {m.airPod && (
+            <>
+              <rect x={92} y={soleTop(120) + 3} width={58} height={G - OUT - 3 - (soleTop(120) + 3)} rx={6} fill="#E4EDF3" strokeWidth={2} />
+              <path d={`M 100 ${soleTop(120) + 7} L 142 ${soleTop(120) + 7}`} stroke="#FFFFFF" strokeWidth={2.4} />
+            </>
+          )}
+          {m.heel === "window" && <path d={`M 28 ${G - OUT - 3} L 64 ${G - OUT - 3} L 46 ${yH + 3} Z`} fill={c.upper2} strokeWidth={2} />}
+        </g>
+        <path d={midsole} fill="none" />
+
+        {m.toeGuard && (
+          <path d={`M 198 ${G - OUT} Q 236 ${G - OUT} 236 ${yT - 2} Q 232 ${yT - 14} 212 ${yT - 12} Q 202 ${yT - 6} 198 ${G - OUT} Z`} fill={c.upper2} />
+        )}
+
+        {/* Outsole and tread */}
+        <path d={outsole} fill={c.outsole} />
+        {m.tread === "herringbone" && (
           <polyline
-            points="30,128 38,123 46,128 54,123 62,128 70,123 78,128 86,123 94,128 102,123 110,128 118,123 126,128 134,123 142,128 150,123 158,128 166,123 174,128 182,123 190,128 198,123 206,128 214,123"
+            points={Array.from({ length: 24 }, (_, i) => `${30 + i * 8},${i % 2 === 0 ? G - 2 : G - 5}`).join(" ")}
             fill="none"
-            stroke={p.base}
-            strokeWidth={2}
-            opacity={0.7}
+            stroke={treadColor}
+            strokeWidth={1.6}
+            opacity={0.45}
           />
         )}
-        {tread === 2 && (
-          <g fill={p.base} stroke="none" opacity={0.75}>
-            {[40, 62, 84, 106, 128, 150, 172, 194, 214].map((x) => (
-              <circle key={x} cx={x} cy={126} r={2.6} />
+        {m.tread === "clay" && (
+          <polyline
+            points={Array.from({ length: 38 }, (_, i) => `${30 + i * 5},${i % 2 === 0 ? G - 1.8 : G - 4.6}`).join(" ")}
+            fill="none"
+            stroke={treadColor}
+            strokeWidth={1.3}
+            opacity={0.5}
+          />
+        )}
+        {m.tread === "studs" && (
+          <g fill={treadColor} stroke="none" opacity={0.45}>
+            {Array.from({ length: 10 }, (_, i) => (
+              <circle key={i} cx={38 + i * 19} cy={G - 3} r={1.8} />
             ))}
           </g>
         )}
       </g>
     </svg>
   );
+}
+
+function isDark(hex: string): boolean {
+  const n = parseInt(hex.replace("#", ""), 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  return 0.299 * r + 0.587 * g + 0.114 * b < 110;
 }
 
 function stripUndefined<T extends object>(value: T): Partial<T> {

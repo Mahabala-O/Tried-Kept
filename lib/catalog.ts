@@ -1,7 +1,8 @@
 /**
- * Seed catalog. Every fact here comes from tennis_gear_buyer_research.pdf
- * (U.S. market, checked November 18, 2026). A value the research does not
- * state stays null and the UI labels it as a gap. Never fill one in by guessing.
+ * Seed catalog. Product facts come from tennis_gear_buyer_research.pdf
+ * (U.S. market, checked November 18, 2026). Pro gear added on November 19,
+ * 2026 comes from the dated sources named on each item. A value no source
+ * states stays null and the UI labels it as a gap. Never fill one in by guessing.
  */
 
 export const RESEARCH_DATE = "2026-11-18";
@@ -78,6 +79,14 @@ const S = {
   twuStrings: { label: "TWU similar strings", url: "https://twu.tennis-warehouse.com/learning_center/similarstrings.php" },
   kswissOwner: { label: "K-Swiss page: one pickleball player's comparison", url: "https://kswiss.com/collections/mens-tennis-shoes/products/04603-002-m" },
   twCrossover: { label: "Tennis Warehouse hard-court crossover models", url: "https://www.tennis-warehouse.com/learning_center/pickleball/best-tennis-shoes-for-pickleball.html" },
+  // Pro gear sources added November 19, 2026. Each one was read on that day.
+  rgShoes26: { label: "The Second Serve: 2026 Roland-Garros shoe report", url: "https://www.thesecondserve.com/?p=135077" },
+  yonexAO26: { label: "Yonex: Team Yonex at the 2026 Australian Open", url: "https://www.yonex.co.uk/blogs/tennis/team-yonex-shines-at-the-australian-open-2026-in-melbourne-s-summer-heat" },
+  speedSinner: { label: "TennisNerd: HEAD Speed Sinner goes retail", url: "https://www.tennisnerd.net/?p=70689" },
+  siSabalenka: { label: "Sports Illustrated: Sabalenka debuts Wilson's newest racquet", url: "https://www.si.com/onsi/serve/news/aryna-sabalenka-debuts-wilson-newest-tennis-racket" },
+  boom26: { label: "TennisNerd: HEAD Boom 2026", url: "https://www.tennisnerd.net/?p=62579" },
+  tfightIG: { label: "TennisNerd: Tecnifibre T-Fight I.G. signature racquet", url: "https://www.tennisnerd.net/?p=65199" },
+  sheltonGear: { label: "Tennis.com: Geared Up with Ben Shelton", url: "https://www.tennis.com/baseline/articles/geared-up-ben-shelton-takes-aim-at-the-top-10-with-yonex-and-on" },
 } satisfies Record<string, Source>;
 
 export const sources = S;
@@ -216,8 +225,8 @@ export const products: Product[] = [
     name: "Eclipsion 5",
     brand: "Yonex",
     category: "shoe",
-    summary: "One r/10s player reported a successful switch from the GEL-Resolution 9, with little detail on fit.",
-    sources: [S.res9Thread],
+    summary: "One r/10s player reported a successful switch from the GEL-Resolution 9, with little detail on fit. Yonex makes men's and women's versions.",
+    sources: [S.res9Thread, S.yonexAO26],
   },
   {
     ...blank,
@@ -244,7 +253,7 @@ export const products: Product[] = [
     brand: "Yonex",
     category: "racquet",
     summary: "The older, more accessible EZONE 98. One shopper asked whether it was worth buying over the 2025 frame.",
-    sources: [S.ezoneThread, S.twEzone],
+    sources: [S.ezoneThread, S.twEzone, S.sheltonGear],
   },
   {
     ...blank,
@@ -254,6 +263,104 @@ export const products: Product[] = [
     category: "racquet",
     summary: "The newer EZONE 98. Tennis Warehouse playtested it against the 2022 frame with the same string and tension.",
     sources: [S.ezoneThread, S.twEzone],
+  },
+  /* Pro gear, added November 19, 2026 */
+  {
+    ...blank,
+    slug: "nike-gp-challenge-1-5",
+    name: "GP Challenge 1.5",
+    brand: "Nike",
+    category: "shoe",
+    summary: "A Nike hard-court and all-court tennis shoe. No price, fit or weight has been recorded yet.",
+    sources: [S.rgShoes26],
+  },
+  {
+    ...blank,
+    slug: "nike-zoom-nxt",
+    name: "Zoom NXT",
+    brand: "Nike",
+    category: "shoe",
+    summary: "A Nike model that The Second Serve described as discontinued in May 2026, so new pairs may be hard to find.",
+    sources: [S.rgShoes26],
+  },
+  {
+    ...blank,
+    slug: "new-balance-coco-cg2",
+    name: "Coco CG2",
+    brand: "New Balance",
+    category: "shoe",
+    summary: "The second version of a New Balance signature shoe. No price, fit or weight has been recorded yet.",
+    sources: [S.rgShoes26],
+  },
+  {
+    ...blank,
+    slug: "on-the-roger-pro-fire",
+    name: "THE ROGER Pro Fire",
+    brand: "On",
+    category: "shoe",
+    summary: "A version of On's THE ROGER Pro. No price, fit or weight has been recorded yet.",
+    sources: [S.rgShoes26],
+  },
+  {
+    ...blank,
+    slug: "on-the-roger-pro-3-clay",
+    name: "THE ROGER Pro 3 Clay",
+    brand: "On",
+    category: "shoe",
+    summary: "The clay-court version of On's THE ROGER Pro 3. No price, fit or weight has been recorded yet.",
+    sources: [S.rgShoes26],
+  },
+  {
+    ...blank,
+    slug: "head-speed-sinner-2026",
+    name: "Speed Sinner 2026",
+    brand: "HEAD",
+    category: "racquet",
+    weightG: 304,
+    summary: "A retail Speed with HEAD-confirmed specs from TennisNerd: 100 sq in, 304 g unstrung, 16x19.",
+    specs: [
+      { label: "Head size", value: "100 sq in", source: S.speedSinner },
+      { label: "Weight (unstrung)", value: "304 g", source: S.speedSinner },
+      { label: "Balance (unstrung)", value: "324 mm", source: S.speedSinner },
+      { label: "String pattern", value: "16x19", source: S.speedSinner },
+    ],
+    sources: [S.speedSinner],
+  },
+  {
+    ...blank,
+    slug: "wilson-blade-v10",
+    name: "Blade v10",
+    brand: "Wilson",
+    category: "racquet",
+    summary: "Wilson's tenth-generation Blade, launched in April 2026. The head size and pattern aren't recorded here, because the line has several.",
+    sources: [S.siSabalenka],
+  },
+  {
+    ...blank,
+    slug: "head-boom-2026",
+    name: "Boom (2026)",
+    brand: "HEAD",
+    category: "racquet",
+    summary: "HEAD's 2026 Boom line, which comes in several head sizes and weights. No single model is recorded here yet.",
+    sources: [S.boom26],
+  },
+  {
+    ...blank,
+    slug: "yonex-ezone-100",
+    name: "EZONE 100",
+    brand: "Yonex",
+    category: "racquet",
+    summary: "The 100 sq in EZONE. No price, weight or string pattern has been recorded yet.",
+    sources: [S.yonexAO26],
+  },
+  {
+    ...blank,
+    slug: "yonex-vcore-100",
+    name: "VCORE 100",
+    brand: "Yonex",
+    category: "racquet",
+    summary: "Yonex's 100 sq in VCORE. No price, weight or string pattern has been recorded yet.",
+    sources: [S.yonexAO26],
   },
 ];
 
@@ -311,17 +418,26 @@ export type BagItem = {
   source: Source;
 };
 
+export type Tour = "ATP" | "WTA";
+
+export const TOUR_LABELS: Record<Tour, string> = { ATP: "Men's tour (ATP)", WTA: "Women's tour (WTA)" };
+
 export type Pro = {
   slug: string;
   name: string;
+  tour: Tour;
   caveat: string;
   bag: BagItem[];
 };
+
+/** A gear page may show a pro stock or custom frame, so every pro carries this unless a source says more. */
+const STOCK_CAVEAT = "Pros often play custom or pro stock versions, so the retail model may differ from the one in the match.";
 
 export const pros: Pro[] = [
   {
     slug: "carlos-alcaraz",
     name: "Carlos Alcaraz",
+    tour: "ATP",
     caveat: "Babolat's own Alcaraz page says a pro may use a custom or different model from the one pictured.",
     bag: [
       {
@@ -338,6 +454,167 @@ export const pros: Pro[] = [
         identifiedOn: null,
         evidence: "No dated racquet identification has been recorded yet.",
         source: S.babolatAlcaraz,
+      },
+    ],
+  },
+  {
+    slug: "jannik-sinner",
+    name: "Jannik Sinner",
+    tour: "ATP",
+    caveat: "TennisNerd reports that his match frame is a customized pro stock HEAD, heavier than the retail Speed Sinner.",
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "nike-gp-challenge-1-5",
+        identifiedOn: "2026-05-28",
+        evidence: "The Second Serve's Roland-Garros shoe report, published May 28, 2026, names the GP Challenge 1.5.",
+        source: S.rgShoes26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: "head-speed-sinner-2026",
+        identifiedOn: "2026-11-16",
+        evidence:
+          "TennisNerd covered HEAD's retail version of his racquet on November 16, 2026. HEAD calls it as close as possible to his setup, and TennisNerd says his own frames are heavier customized pro stock.",
+        source: S.speedSinner,
+      },
+    ],
+  },
+  {
+    slug: "casper-ruud",
+    name: "Casper Ruud",
+    tour: "ATP",
+    caveat: STOCK_CAVEAT,
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "yonex-eclipsion-5",
+        identifiedOn: "2026-01-22",
+        evidence: "Yonex's Australian Open post of January 22, 2026 lists the men's Power Cushion Eclipsion 5.",
+        source: S.yonexAO26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: "yonex-ezone-100",
+        identifiedOn: "2026-01-22",
+        evidence: "The same Yonex post lists the EZONE 100, strung with Polytour Spin and Polytour Pro.",
+        source: S.yonexAO26,
+      },
+    ],
+  },
+  {
+    slug: "ben-shelton",
+    name: "Ben Shelton",
+    tour: "ATP",
+    caveat: STOCK_CAVEAT,
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "on-the-roger-pro-3-clay",
+        identifiedOn: "2026-05-28",
+        evidence: "The Second Serve's Roland-Garros shoe report, published May 28, 2026, names THE ROGER Pro 3 Clay in thistle and pink.",
+        source: S.rgShoes26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: "yonex-ezone-98-2022",
+        identifiedOn: "2024-07-30",
+        evidence:
+          "Tennis.com named the Aqua Night Black EZONE 98 on July 30, 2024, before the 2025 frame came out. No newer dated identification has been recorded yet.",
+        source: S.sheltonGear,
+      },
+    ],
+  },
+  {
+    slug: "aryna-sabalenka",
+    name: "Aryna Sabalenka",
+    tour: "WTA",
+    caveat: STOCK_CAVEAT,
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "nike-zoom-nxt",
+        identifiedOn: "2026-05-28",
+        evidence:
+          "The Second Serve's Roland-Garros shoe report, published May 28, 2026, says she went back to a discontinued Nike Zoom NXT, so it may be hard to buy new.",
+        source: S.rgShoes26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: "wilson-blade-v10",
+        identifiedOn: "2026-04-16",
+        evidence:
+          "Sports Illustrated quoted her on April 16, 2026, the day the Blade v10 launched, saying she was excited to compete with it. The article does not give the head size or string pattern.",
+        source: S.siSabalenka,
+      },
+    ],
+  },
+  {
+    slug: "coco-gauff",
+    name: "Coco Gauff",
+    tour: "WTA",
+    caveat: STOCK_CAVEAT,
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "new-balance-coco-cg2",
+        identifiedOn: "2026-05-28",
+        evidence: "The Second Serve's Roland-Garros shoe report, published May 28, 2026, names her signature Coco CG2.",
+        source: S.rgShoes26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: "head-boom-2026",
+        identifiedOn: "2026-01-12",
+        evidence:
+          "TennisNerd saw her playing a lavender Boom 2026 at the United Cup, in a post dated January 12, 2026. It does not say which Boom model.",
+        source: S.boom26,
+      },
+    ],
+  },
+  {
+    slug: "iga-swiatek",
+    name: "Iga Swiatek",
+    tour: "WTA",
+    caveat: STOCK_CAVEAT,
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "on-the-roger-pro-fire",
+        identifiedOn: "2026-05-28",
+        evidence: "The Second Serve's Roland-Garros shoe report, published May 28, 2026, names THE ROGER Pro Fire in bloom and black.",
+        source: S.rgShoes26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: null,
+        identifiedOn: null,
+        evidence:
+          "Tecnifibre released a T-Fight I.G. signature line in April 2026 in 98 and 100 sq in versions, but no dated source says which one she plays.",
+        source: S.tfightIG,
+      },
+    ],
+  },
+  {
+    slug: "elena-rybakina",
+    name: "Elena Rybakina",
+    tour: "WTA",
+    caveat: STOCK_CAVEAT,
+    bag: [
+      {
+        slot: "Shoes",
+        productSlug: "yonex-eclipsion-5",
+        identifiedOn: "2026-01-22",
+        evidence:
+          "Yonex's Australian Open post of January 22, 2026 lists the women's Power Cushion Eclipsion 5. The Second Serve saw the clay version at Roland-Garros in May.",
+        source: S.yonexAO26,
+      },
+      {
+        slot: "Racquet",
+        productSlug: "yonex-vcore-100",
+        identifiedOn: "2026-01-22",
+        evidence: "The same Yonex post lists the VCORE 100, strung with Polytour Fire.",
+        source: S.yonexAO26,
       },
     ],
   },

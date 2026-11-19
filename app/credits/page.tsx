@@ -31,14 +31,14 @@ function CreditLine({ entry }: { entry: CreditEntry }) {
         </p>
         <p className="small muted">
           By {credit.author} ·{" "}
-          <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer license">
-            {credit.license}
-          </a>{" "}
+          {credit.kind === "manufacturer" ? credit.license :
+            <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer license">{credit.license}</a>}{" "}
           ·{" "}
           <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer">
             Source
           </a>
         </p>
+        {photo.caption && <p className="small muted">{photo.caption}</p>}
       </div>
     </li>
   );
@@ -88,7 +88,8 @@ export default function CreditsPage() {
         <span className="eyebrow">Credits</span>
         <h1>Who made the pictures</h1>
         <p className="lede">
-          Every photo and GIF on this site is credited where it appears and listed here with its license. Pictures marked
+          Every photo and GIF on this site is credited where it appears and listed here with its source. Manufacturer product
+          photos retain their brand copyright; the other photos show their reuse license. Pictures marked
           Illustration are original art made for this site, and never show a real product or person.
         </p>
       </div>

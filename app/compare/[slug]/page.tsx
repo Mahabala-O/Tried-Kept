@@ -3,14 +3,14 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import BallArt from "@/components/art/BallArt";
-import ProductArt from "@/components/art/ProductArt";
+import ResilientImage from "@/components/ResilientImage";
 import { ProductImage } from "@/components/MediaFrame";
 import ProductReports from "@/components/ProductReports";
 import ScoutMark from "@/components/ScoutMark";
 import { GapNote, OfferButtons, PriceSticker, SourceLink, SourceList, formatDate } from "@/components/ui";
 import { demoProgram, getComparison, getProduct, productLabel, type Comparison, type Product } from "@/lib/catalog";
 import { breakEvenHours, costPerHour } from "@/lib/finder";
-import { productPhotos } from "@/lib/media";
+import { productIllustrationSrc, productPhotos } from "@/lib/media";
 import { comparisonModels } from "../_components/CompareCard";
 import s from "../compare.module.css";
 
@@ -80,12 +80,13 @@ function VsHero({ models }: { models: Product[] }) {
   );
 }
 
-/** A small picture for the sticky header. Art only: a photo would need its credit right beside it. */
+/** Decorative repeat of the product image, credited with the full-size image above. */
 function MiniThumb({ product }: { product: Product }) {
-  if (productPhotos[product.slug]) return null;
   return (
     <span className={s.miniThumb} aria-hidden="true">
-      <ProductArt product={product} hideLabel />
+      <ResilientImage src={productPhotos[product.slug]?.src ?? productIllustrationSrc(product.slug)}
+        fallbackSrc={productIllustrationSrc(product.slug)} alt="" width={40} height={40}
+        style={{ width: "100%", height: "100%", objectFit: "contain", background: "white" }} />
     </span>
   );
 }

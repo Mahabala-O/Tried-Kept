@@ -1,5 +1,8 @@
+import { productPhotos } from "./product-photos";
+export { productPhotos } from "./product-photos";
+
 /**
- * Licensed imagery. Every entry records who made it, under which license, and
+ * Credited imagery. Every entry records who made it, its rights information, and
  * where it came from, and the UI shows that credit. Nothing here may show a
  * different model or person than the one it is attached to. When an entry is
  * missing, components fall back to original art from components/art.
@@ -15,11 +18,12 @@
  * link `pageUrl`. The footage rights stay with the tournaments and
  * broadcasters. Keep GIFs away from product claims.
  *
- * Products: no photo of an exact catalog model and generation was found under an
- * open license, so products use labelled, locally served original vector art.
+ * Products: manufacturer-hosted product photos retain their brand copyright and
+ * source attribution. Entries without a verified match use local original art.
  */
 
 export type Credit = {
+  kind?: "manufacturer";
   author: string;
   /** Short license name, e.g. "CC BY-SA 4.0". */
   license: string;
@@ -35,6 +39,8 @@ export type Photo = {
   width: number;
   height: number;
   alt: string;
+  /** Visible qualification when the photo shows another colorway or a model within a line. */
+  caption?: string;
   credit: Credit;
 };
 
@@ -343,8 +349,7 @@ export const proMedia: Record<string, ProMedia> = {
   },
 };
 
-/** Keyed by product slug. Only a photo of that exact model belongs here. */
-export const productPhotos: Record<string, Photo> = {};
+
 
 
 /** Every catalog product has an image file; these are illustrations, not photos. */

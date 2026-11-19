@@ -37,13 +37,16 @@ describe("photos", () => {
     }
   });
 
-  it("carry a full credit under an open license", () => {
+  it("carry a full credit and describe their rights accurately", () => {
     for (const p of allPhotos) {
       expect(p.credit.author.trim(), p.src).not.toBe("");
       expect(p.credit.license.trim(), p.src).not.toBe("");
       expect(p.credit.licenseUrl.trim(), p.src).not.toBe("");
       expect(p.credit.sourceUrl.trim(), p.src).not.toBe("");
-      expect(p.credit.license, p.src).toMatch(OPEN_LICENSES);
+      if (p.credit.kind === "manufacturer") {
+        expect(Object.values(productPhotos)).toContain(p);
+        expect(p.credit.license).toBe("Copyright retained by manufacturer");
+      } else expect(p.credit.license, p.src).toMatch(OPEN_LICENSES);
     }
   });
 
@@ -66,6 +69,17 @@ describe("photos", () => {
 });
 
 describe("complete visual coverage", () => {
+  it("records model variants and source provenance for real product photos", () => {
+    for (const [slug, photo] of Object.entries(productPhotos)) {
+      expect(photo.credit.author, slug).toBe(getProduct(slug)?.brand);
+      expect(photo.picturedVariant.trim(), slug).not.toBe("");
+      expect(photo.checkedOn, slug).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(photo.src).not.toContain("/media/products/");
+    }
+    expect(productPhotos["nike-vapor-12"].caption).toContain("FV5552-003");
+    expect(productPhotos["head-boom-2026"].caption).toContain("Boom MP 2026");
+    expect(productPhotos["wilson-blade-v10"].caption).toContain("Blade 98 16x19");
+  });
   it("provides a portrait and a matching player GIF for every catalog pro", () => {
     for (const pro of pros) {
       const media = proMedia[pro.slug];

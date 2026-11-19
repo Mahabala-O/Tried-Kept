@@ -48,7 +48,9 @@ All catalog data lives in `lib/catalog.ts`. Leave a value `null` when you have n
 
 `lib/media.ts` records portraits, GIFs, image credits, and original photo URLs. All 8 catalog pros have a portrait and an official-channel GIF. The 14 licensed photos are served from `public/media/photos` as WebP images at 320, 640, and 1280 pixels; credits remain next to each image and on `/credits`.
 
-All 23 products have a labelled original illustration in `public/media/products`. Regenerate these from the editable drawing components after adding products:
+Manufacturer-hosted photos for 19 products are recorded in `lib/product-photos.ts`, with source links, checked dates, and pictured variants. These retain manufacturer copyright and are not presented as open-license photos. Different colorways and representative models within a racquet line are explicitly captioned.
+
+All 23 products also have a labelled original illustration in `public/media/products`, used when there is no verified photo or a remote image fails. Regenerate these from the editable drawing components after adding products:
 
 ```bash
 node scripts/export-product-art.mjs

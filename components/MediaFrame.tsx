@@ -22,6 +22,7 @@ type FrameProps = {
   sizes?: string;
   /** A visible line under the credit, such as "Shows the player, not the gear". */
   note?: string;
+  photoFallbackSrc?: string;
   className?: string;
 };
 
@@ -38,6 +39,13 @@ export function commonsSrcSet(photo: Photo): string | undefined {
 
 export function PhotoCredit({ photo, note }: { photo: Photo; note?: string }) {
   const { credit } = photo;
+  if (credit.kind === "manufacturer") {
+    return <figcaption className="media-credit">
+      Product photo: <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer">{credit.author}</a>
+      {photo.caption && <span className="media-note">{photo.caption}</span>}
+      {note && <span className="media-note">{note}</span>}
+    </figcaption>;
+  }
   return (
     <figcaption className="media-credit">
       Photo: {credit.author} ·{" "}
@@ -65,11 +73,13 @@ export function GifCredit({ gif, note }: { gif: Gif; note?: string }) {
 }
 
 /** A resilient image for a credited photo, with smaller responsive files for phones. */
-export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50vw, 100vw" }: { photo: Photo; eager?: boolean; sizes?: string }) {
+export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50vw, 100vw", fallbackSrc }: { photo: Photo; eager?: boolean; sizes?: string; fallbackSrc?: string }) {
   const srcSet = photoSrcSet(photo) ?? commonsSrcSet(photo);
   return (
     <ResilientImage
       src={photo.src}
+      fallbackSrc={fallbackSrc}
+      fallbackLabel={fallbackSrc ? "Illustration" : undefined}
       srcSet={srcSet}
       sizes={srcSet ? sizes : undefined}
       width={photo.width}
@@ -87,11 +97,13 @@ export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50v
  * One box for any picture: a credited photo, a credited GIF, or original art.
  * The box keeps its aspect ratio before anything loads, so nothing shifts.
  */
-export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover", eager = false, plain = false, sizes, note, className }: FrameProps) {
+export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover", eager = false, plain = false, sizes, note, photoFallbackSrc, className }: FrameProps) {
   const classes = ["media-frame", plain ? "media-plain" : "", className ?? ""].filter(Boolean).join(" ");
   const media = gif ?? photo ?? null;
   const shape = ratio ?? (media ? `${media.width} / ${media.height}` : "4 / 3");
-  const style = { "--ratio": shape, "--fit": fit } as CSSProperties;
+  const style = { "--ratio": shape, "--fit": fit,
+    ...(photo?.credit.kind === "manufacturer" ? { backgroundColor: "#fff" } : {}),
+  } as CSSProperties;
 
   if (gif) {
     const poster = photo ?? Object.entries(proMedia)
@@ -111,7 +123,7 @@ export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover",
     return (
       <figure className={classes}>
         <div className="media-box" style={style}>
-          <PhotoImg photo={photo} eager={eager} sizes={sizes} />
+          <PhotoImg photo={photo} eager={eager} sizes={sizes} fallbackSrc={photoFallbackSrc} />
         </div>
         <PhotoCredit photo={photo} note={note} />
       </figure>
@@ -144,6 +156,7 @@ export function ProductImage({
   return (
     <MediaFrame
       photo={productPhotos[product.slug] ?? null}
+      photoFallbackSrc={productIllustrationSrc(product.slug)}
       fallback={
         <div className="art-frame" style={{ "--art-bg": "var(--cream)" } as CSSProperties}>
           <ResilientImage src={productIllustrationSrc(product.slug)} width={640} height={480}

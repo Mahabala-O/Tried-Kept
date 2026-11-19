@@ -11,8 +11,23 @@ import { mailReady } from "@/lib/mail";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.APP_URL || "https://tried-kept-production.up.railway.app"),
   title: { default: "Tried & Kept", template: "%s · Tried & Kept" },
   description: "See what tennis players tried, kept and returned, then choose gear you will keep using.",
+  openGraph: {
+    type: "website",
+    siteName: "Tried & Kept",
+    title: "Tried & Kept — Find your next keeper.",
+    description: "Compare tennis gear, explore pro bags, and share what you tried, kept or sent back.",
+    images: [{ url: "/social/tried-and-kept-card-v1.png", width: 1200, height: 630,
+      alt: "Tried & Kept — Find your next keeper. A colorful tennis court, racquet, ball and verdict stickers." }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tried & Kept — Find your next keeper.",
+    description: "Compare tennis gear, explore pro bags, and share what you tried, kept or sent back.",
+    images: ["/social/tried-and-kept-card-v1.png"],
+  },
   // Outside hosts (Wikimedia, GIPHY) get only our origin, never the page path.
   referrer: "strict-origin-when-cross-origin",
 };

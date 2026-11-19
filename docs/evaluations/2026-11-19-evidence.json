@@ -1,0 +1,732 @@
+{
+  "date": "2026-11-19",
+  "production": "https://tried-kept-production.up.railway.app",
+  "method": "Automated Chromium browser journeys and expert heuristic review; not a study with real customers. Account/report/reset actions used an isolated local database and development inbox.",
+  "automatedTestsPassed": 237,
+  "publicPageChecks": [
+    {
+      "route": "/",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 9573,
+      "loadMs": 522
+    },
+    {
+      "route": "/gear",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 12722,
+      "loadMs": 369
+    },
+    {
+      "route": "/gear/yonex-ezone-98-2025",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3032,
+      "loadMs": 256
+    },
+    {
+      "route": "/gear/nike-vapor-12",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3897,
+      "loadMs": 273
+    },
+    {
+      "route": "/pros",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 9064,
+      "loadMs": 330
+    },
+    {
+      "route": "/pros/carlos-alcaraz",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3233,
+      "loadMs": 275
+    },
+    {
+      "route": "/compare",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2555,
+      "loadMs": 269
+    },
+    {
+      "route": "/compare/vapor-12-vs-vapor-pro-3",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 4918,
+      "loadMs": 278
+    },
+    {
+      "route": "/play",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3948,
+      "loadMs": 251
+    },
+    {
+      "route": "/play/finder",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1375,
+      "loadMs": 275
+    },
+    {
+      "route": "/play/rally",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1297,
+      "loadMs": 265
+    },
+    {
+      "route": "/play/cost",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2420,
+      "loadMs": 303
+    },
+    {
+      "route": "/community",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1934,
+      "loadMs": 319
+    },
+    {
+      "route": "/signup",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2213,
+      "loadMs": 294
+    },
+    {
+      "route": "/login",
+      "width": 375,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1189,
+      "loadMs": 262
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 9544,
+      "loadMs": 258
+    },
+    {
+      "route": "/gear",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 12911,
+      "loadMs": 260
+    },
+    {
+      "route": "/gear/yonex-ezone-98-2025",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3027,
+      "loadMs": 289
+    },
+    {
+      "route": "/gear/nike-vapor-12",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3884,
+      "loadMs": 284
+    },
+    {
+      "route": "/pros",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 9126,
+      "loadMs": 287
+    },
+    {
+      "route": "/pros/carlos-alcaraz",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3208,
+      "loadMs": 267
+    },
+    {
+      "route": "/compare",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2540,
+      "loadMs": 255
+    },
+    {
+      "route": "/compare/vapor-12-vs-vapor-pro-3",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 4860,
+      "loadMs": 256
+    },
+    {
+      "route": "/play",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3879,
+      "loadMs": 287
+    },
+    {
+      "route": "/play/finder",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1378,
+      "loadMs": 275
+    },
+    {
+      "route": "/play/rally",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1300,
+      "loadMs": 280
+    },
+    {
+      "route": "/play/cost",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2359,
+      "loadMs": 275
+    },
+    {
+      "route": "/community",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1895,
+      "loadMs": 272
+    },
+    {
+      "route": "/signup",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2136,
+      "loadMs": 274
+    },
+    {
+      "route": "/login",
+      "width": 390,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1189,
+      "loadMs": 270
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 8616,
+      "loadMs": 293
+    },
+    {
+      "route": "/gear",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 7507,
+      "loadMs": 284
+    },
+    {
+      "route": "/gear/yonex-ezone-98-2025",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3041,
+      "loadMs": 273
+    },
+    {
+      "route": "/gear/nike-vapor-12",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3611,
+      "loadMs": 273
+    },
+    {
+      "route": "/pros",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 5285,
+      "loadMs": 274
+    },
+    {
+      "route": "/pros/carlos-alcaraz",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 3160,
+      "loadMs": 276
+    },
+    {
+      "route": "/compare",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1771,
+      "loadMs": 275
+    },
+    {
+      "route": "/compare/vapor-12-vs-vapor-pro-3",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 4142,
+      "loadMs": 277
+    },
+    {
+      "route": "/play",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 4059,
+      "loadMs": 271
+    },
+    {
+      "route": "/play/finder",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1206,
+      "loadMs": 252
+    },
+    {
+      "route": "/play/rally",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1369,
+      "loadMs": 271
+    },
+    {
+      "route": "/play/cost",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1806,
+      "loadMs": 281
+    },
+    {
+      "route": "/community",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1759,
+      "loadMs": 268
+    },
+    {
+      "route": "/signup",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1803,
+      "loadMs": 271
+    },
+    {
+      "route": "/login",
+      "width": 768,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1152,
+      "loadMs": 274
+    },
+    {
+      "route": "/",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 6970,
+      "loadMs": 269
+    },
+    {
+      "route": "/gear",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 5928,
+      "loadMs": 286
+    },
+    {
+      "route": "/gear/yonex-ezone-98-2025",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2364,
+      "loadMs": 280
+    },
+    {
+      "route": "/gear/nike-vapor-12",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2885,
+      "loadMs": 276
+    },
+    {
+      "route": "/pros",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 5234,
+      "loadMs": 290
+    },
+    {
+      "route": "/pros/carlos-alcaraz",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2998,
+      "loadMs": 263
+    },
+    {
+      "route": "/compare",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1773,
+      "loadMs": 270
+    },
+    {
+      "route": "/compare/vapor-12-vs-vapor-pro-3",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 4067,
+      "loadMs": 276
+    },
+    {
+      "route": "/play",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 2158,
+      "loadMs": 275
+    },
+    {
+      "route": "/play/finder",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1179,
+      "loadMs": 269
+    },
+    {
+      "route": "/play/rally",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1342,
+      "loadMs": 266
+    },
+    {
+      "route": "/play/cost",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1779,
+      "loadMs": 286
+    },
+    {
+      "route": "/community",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1466,
+      "loadMs": 281
+    },
+    {
+      "route": "/signup",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 1624,
+      "loadMs": 264
+    },
+    {
+      "route": "/login",
+      "width": 1280,
+      "status": 200,
+      "h1": 1,
+      "overflow": 0,
+      "height": 915,
+      "loadMs": 273
+    }
+  ],
+  "menu": {
+    "opens": true,
+    "escCloses": true,
+    "focusRestored": true
+  },
+  "accessibilityBeforeFix": [
+    {
+      "route": "/",
+      "violations": [
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
+          "nodes": [
+            {
+              "html": "<ol class=\"chip-scroll oe3DtG_levels\" aria-label=\"Levels and the XP each one needs\">",
+              "summary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable",
+              "target": [
+                ".oe3DtG_levels"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/compare/vapor-12-vs-vapor-pro-3",
+      "violations": []
+    },
+    {
+      "route": "/play/finder",
+      "violations": []
+    },
+    {
+      "route": "/community",
+      "violations": []
+    },
+    {
+      "route": "/signup",
+      "violations": []
+    }
+  ],
+  "journeys": [
+    {
+      "name": "Signup, confirmation, login and return path",
+      "passed": true,
+      "evidence": "Confirmed through the local test inbox and returned to the originating product."
+    },
+    {
+      "name": "Add gear to locker",
+      "passed": true,
+      "evidence": "Vapor Pro 3 appears on the Using shelf."
+    },
+    {
+      "name": "Create a detailed returned report",
+      "passed": true,
+      "evidence": "Your report is published. You earned 60 XP."
+    },
+    {
+      "name": "Edit profile and share a public locker",
+      "passed": true,
+      "evidence": "Bio saved, profile URL copied, locker/report visible anonymously, private email absent."
+    },
+    {
+      "name": "Another player can mark a report helpful",
+      "passed": true,
+      "evidence": "A distinct confirmed account can vote; the author cannot vote on their own report."
+    },
+    {
+      "name": "Gear Match: men, hard court, $150, roomy, forefoot",
+      "passed": true,
+      "evidence": "Back to games\nGear Match\n\nSix quick questions. We rank shoes only on facts we have checked and show you what is missing.\n\n1 match for your answers\nMen's\nHard court\nUp to $150\nRoomy fit\nForefoot cushioning\n\nRanked only on facts we hold. Missing data earns no points and is labelled on each shoe.\n\n+15 XP for finishing Gear Match.\n\nProduct photo: Nike\nTOP MATCH\nMATCH 1 \u00b7 NIKE\nVapor Pro 3 (Men's)\n$135\nChecked November 18, 2026\n\nWhy it matched\n\n$135 on November 18, 2026 fits your $150 budget\nListed as a hard-court version\n93.2 mm at the ball of the foot in the lab's test shoe\nAir Zoom sits in the forefoot\nCheck price at Nike\nfor Nike Vapor Pro 3 (Men's)\n\nLink checked November 18, 2026. Size availability is not confirmed. We may earn a commission.\n\nView product\nVapor 12 vs Vapor Pro 3\nStart again\nCompare products side by side"
+    },
+    {
+      "name": "Gear Match: women, clay, $100, unsure fit/cushioning",
+      "passed": true,
+      "evidence": "Back to games\nGear Match\n\nSix quick questions. We rank shoes only on facts we have checked and show you what is missing.\n\nNo match yet\nWomen's\nClay\nUp to $100\nFit: not sure\nCushioning: not sure\n\nYour Gear Match XP is already counted. Play as often as you like.\n\nClay is not covered yet\n\nNo shoe here is recorded as a clay version yet. Try Any surface to see the shoes we do track.\n\nPlayed in shoes that fit this? Your report could fill the gap for the next player.\n\nGo to the community\nStart again\nCompare products side by side"
+    },
+    {
+      "name": "Court Cost default, input update and validation",
+      "passed": true,
+      "evidence": {
+        "validCalculation": true,
+        "zeroRejected": true,
+        "text": "Back to games\nCourt Cost\n\nA pricier pair can cost less per hour if it lasts longer. See how much longer it needs to last.\n\nPair A\nPrice in USD\n\u2212\n$\n+\nHours it lasts\n\u2212\nhrs\n+\n\nYour own estimate.\n\nThe hours for pair A must be more than zero.\n\nVS\nPair B\nPrice in USD\n\u2212\n$\n+\nHours it lasts (optional)\n\u2212\nhrs\n+\n\nLeave empty to see only the break-even.\n\nFix the fields marked above to see the numbers.\n\nThese numbers are an illustration, not a durability claim. We have no recorded wear hours for any shoe here. The starting prices are Nike's U.S. prices for the Vapor Pro 3 ($135) and Vapor 12 ($180), checked November 18, 2026. The 60 hours is an example.\n\nReset to the example"
+      }
+    },
+    {
+      "name": "Spec Rally complete eight-question game and replay",
+      "passed": true,
+      "evidence": {
+        "questions": 8,
+        "final": "Back to games\nSpec Rally\n\nOne question at a time. Every fact comes with its source.\n\nFINAL SCORE\n\n2/8\n\n2 of 8 correct\n\nEvery miss came with its source. Give them a read and go again.\n\nBest streak 1\n+10 XP this rally\nPlay again\nBack to games",
+        "replayWorks": true
+      }
+    }
+  ],
+  "extraChecks": {
+    "passwordResetAndLogin": true,
+    "accessibility": [
+      {
+        "route": "/",
+        "violations": []
+      },
+      {
+        "route": "/me",
+        "violations": []
+      },
+      {
+        "route": "/report/new?product=nike-vapor-pro-3",
+        "violations": []
+      },
+      {
+        "route": "/u/pm_audit2",
+        "violations": []
+      }
+    ],
+    "levelsKeyboardScroll": true,
+    "metadata": "http://localhost:3919/social/tried-and-kept-card-v1.png",
+    "twitterCard": "summary_large_image",
+    "signedOutLockerRedirect": true
+  },
+  "catalog": {
+    "catalog": 23,
+    "shoes": 16,
+    "racquets": 7,
+    "pros": 8,
+    "comparisons": 4,
+    "priced": 2,
+    "shoeWidths": 2,
+    "shoeCushioning": 2,
+    "knownShoeLine": 4,
+    "combinations": 432,
+    "empty": 218,
+    "everRecommended": [
+      "asics-gel-resolution-x-wide-mens",
+      "nike-vapor-pro-3",
+      "nike-vapor-12",
+      "asics-gel-resolution-x-wide-womens"
+    ],
+    "neverRecommended": [
+      "nike-vapor-pro-2",
+      "asics-gel-resolution-9",
+      "mizuno-wave-exceed-tour-5",
+      "asics-solution-speed-ff-4",
+      "yonex-eclipsion-5",
+      "k-swiss-hypercourt-express-2",
+      "k-swiss-hypercourt-express-3",
+      "nike-gp-challenge-1-5",
+      "nike-zoom-nxt",
+      "new-balance-coco-cg2",
+      "on-the-roger-pro-fire",
+      "on-the-roger-pro-3-clay"
+    ],
+    "byLine": {
+      "mens": {
+        "runs": 144,
+        "empty": 55,
+        "models": [
+          "asics-gel-resolution-x-wide-mens",
+          "nike-vapor-pro-3",
+          "nike-vapor-12"
+        ]
+      },
+      "womens": {
+        "runs": 144,
+        "empty": 108,
+        "models": [
+          "asics-gel-resolution-x-wide-womens"
+        ]
+      },
+      "any": {
+        "runs": 144,
+        "empty": 55,
+        "models": [
+          "asics-gel-resolution-x-wide-mens",
+          "asics-gel-resolution-x-wide-womens",
+          "nike-vapor-pro-3",
+          "nike-vapor-12"
+        ]
+      }
+    }
+  },
+  "productsWithRetailerLinks": 4
+}

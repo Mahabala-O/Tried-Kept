@@ -431,7 +431,7 @@ function XpRally({ loggedIn }: { loggedIn: boolean }) {
         </ol>
         <div className="stack">
           <h3>Levels</h3>
-          <ol className={`chip-scroll ${s.levels}`} aria-label="Levels and the XP each one needs">
+          <ol className={`chip-scroll ${s.levels}`} aria-label="Levels and the XP each one needs" tabIndex={0}>
             {LEVELS.map((level, i) => (
               <li key={level.name} className={s.levelChip}>
                 <span className={s.levelNum}>{i + 1}</span>

@@ -44,6 +44,18 @@ Without a template, the button goes to the plain retailer page and earns nothing
 
 All catalog data lives in `lib/catalog.ts`. Leave a value `null` when you have no source for it, and the app labels it as a gap. Pro gear needs a date and a source.
 
+## Images and GIFs
+
+`lib/media.ts` records portraits, GIFs, image credits, and original photo URLs. All 8 catalog pros have a portrait and an official-channel GIF. The 14 licensed photos are served from `public/media/photos` as WebP images at 320, 640, and 1280 pixels; credits remain next to each image and on `/credits`.
+
+All 23 products have a labelled original illustration in `public/media/products`. Regenerate these from the editable drawing components after adding products:
+
+```bash
+node scripts/export-product-art.mjs
+```
+
+Exact-model photos with approved rights can be added to `productPhotos`. GIFs use GIPHY's embed player; paused clips show a credited player portrait or original court art. Image load failures fall back to local court art. The media tests check coverage for every catalog product and pro, including every local image and responsive rendition.
+
 ## Deploy on Railway
 
 The app stores data in SQLite, so it needs a Railway volume and runs as a single replica.

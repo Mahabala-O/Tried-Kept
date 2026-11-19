@@ -97,3 +97,4 @@
     overflow: visible; margin-inline: 0; padding-inline: 0;
   }
 }
+.unknownArt > svg { width: 90%; height: 90%; }

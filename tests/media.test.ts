@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { getPro, getProduct } from "@/lib/catalog";
-import { allCredits, gifEmbedUrl, homeMedia, productPhotos, proMedia, type Gif, type Photo } from "@/lib/media";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { getPro, getProduct, products, pros } from "@/lib/catalog";
+import { allCredits, gifEmbedUrl, homeMedia, photoSrcSet, productIllustrationSrc, productPhotos, proMedia, type Gif, type Photo } from "@/lib/media";
 
 const isHttps = (url: string) => new URL(url).protocol === "https:";
 
@@ -24,9 +26,12 @@ describe("media keys", () => {
 });
 
 describe("photos", () => {
-  it("are all https", () => {
+  it("are local files or https with traceable https credits", () => {
     for (const p of allPhotos) {
-      expect(isHttps(p.src), p.src).toBe(true);
+      if (p.src.startsWith("/media/")) {
+        expect(existsSync(path.join(process.cwd(), "public", p.src)), p.src).toBe(true);
+        expect(isHttps(p.originalSrc!), p.originalSrc).toBe(true);
+      } else expect(isHttps(p.src), p.src).toBe(true);
       expect(isHttps(p.credit.licenseUrl), p.credit.licenseUrl).toBe(true);
       expect(isHttps(p.credit.sourceUrl), p.credit.sourceUrl).toBe(true);
     }
@@ -57,6 +62,36 @@ describe("photos", () => {
   it("are labeled with a display name, not a raw slug, when names are given", () => {
     const credits = allCredits({ pro: (slug) => getPro(slug)?.name, product: (slug) => getProduct(slug)?.name });
     for (const entry of credits) expect(entry.label, entry.photo.src).not.toMatch(/^[a-z0-9]+(-[a-z0-9]+)+$/);
+  });
+});
+
+describe("complete visual coverage", () => {
+  it("provides a portrait and a matching player GIF for every catalog pro", () => {
+    for (const pro of pros) {
+      const media = proMedia[pro.slug];
+      expect(media?.portrait, pro.slug).toBeDefined();
+      expect(media?.gifs.length, pro.slug).toBeGreaterThan(0);
+      expect(media.gifs.every(g => g.playerName === pro.name), pro.slug).toBe(true);
+    }
+  });
+
+  it("provides a standalone image for every product", () => {
+    for (const product of products) {
+      const file = path.join(process.cwd(), "public", productIllustrationSrc(product.slug));
+      expect(existsSync(file), product.slug).toBe(true);
+      const svg = readFileSync(file, "utf8");
+      expect(svg).toContain('xmlns="http://www.w3.org/2000/svg"');
+      expect(svg).toContain("<title>");
+      expect(svg).toContain("illustration");
+    }
+  });
+
+  it("ships every responsive photo rendition referenced in srcset", () => {
+    for (const photo of allPhotos) {
+      for (const part of photoSrcSet(photo)?.split(", ") ?? []) {
+        expect(existsSync(path.join(process.cwd(), "public", part.split(" ")[0])), part).toBe(true);
+      }
+    }
   });
 });
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BallArt from "@/components/art/BallArt";
 import { PhotoImg } from "@/components/MediaFrame";
+import ResilientImage from "@/components/ResilientImage";
 import { getPro, getProduct } from "@/lib/catalog";
 import { allCredits, homeMedia, proMedia, type CreditEntry, type Gif } from "@/lib/media";
 
@@ -43,14 +44,14 @@ function CreditLine({ entry }: { entry: CreditEntry }) {
   );
 }
 
-/** GIFs only play through GIPHY's embed, so the list shows a labeled tile instead of a still. */
+/** Credit rows use the player's portrait or original court art as a visual. */
 function GifLine({ gif, label, usedOn }: { gif: Gif; label: string; usedOn: string }) {
+  const portrait = Object.entries(proMedia).find(([slug]) => getPro(slug)?.name === gif.playerName)?.[1].portrait;
   return (
     <li className="card" style={rowStyle}>
-      <div className="media-box" style={thumbStyle} aria-hidden="true">
-        <div className="clip-card" style={{ padding: 8 }}>
-          <span className="clip-card-kicker">GIF</span>
-        </div>
+      <div className="media-box" style={thumbStyle}>
+        {portrait ? <PhotoImg photo={portrait} sizes="88px" /> :
+          <ResilientImage src="/media/tennis-court.svg" alt="Illustrated tennis court" width={88} height={88} loading="lazy" />}
       </div>
       <div className="stack" style={{ gap: 6 }}>
         <p>

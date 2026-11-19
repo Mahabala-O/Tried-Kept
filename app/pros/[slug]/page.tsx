@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
+import ShoeArt from "@/components/art/ShoeArt";
+import RacquetArt from "@/components/art/RacquetArt";
 import MediaFrame, { ProImage, ProductImage } from "@/components/MediaFrame";
 import { GapNote, OfferButtons, SourceLink, formatDate } from "@/components/ui";
 import {
@@ -50,8 +52,8 @@ function BagEntry({ item }: { item: BagItem }) {
     return (
       <article className={`card ${s.unknownCard}`}>
         <div className={s.unknownTop}>
-          <div className={s.unknownArt} aria-hidden="true">
-            <span className={s.unknownMark}>?</span>
+          <div className={s.unknownArt} role="img" aria-label={`Generic ${item.slot.toLowerCase()} illustration; model not identified`}>
+            {item.slot === "Shoes" ? <ShoeArt /> : <RacquetArt />}
           </div>
           <div className={s.gearStickers}>
             <span className="sticker sticker-ink sticker-sm tilt-left">{item.slot}</span>

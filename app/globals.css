@@ -627,7 +627,7 @@ select { padding-right: 36px; }
 .media-toggle svg { width: 18px; height: 18px; }
 .media-toggle-wide { width: auto; padding: 0 16px; border-radius: 999px; gap: 8px; display: inline-flex; align-items: center; font: inherit; font-weight: 700; }
 .media-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-/* What a GIPHY clip shows before it loads, or when motion is reduced: no picture of anyone, only a labeled card. */
+/* Compact labelled tiles on the GIF credits list. Playback posters use photos or court art. */
 .clip-card {
   position: absolute; inset: 0; display: grid; align-content: end; gap: 6px; padding: 14px 14px 64px;
   background:
@@ -713,3 +713,11 @@ svg .anim-bounce, .pa-ball, .pa-shadow { transform-box: fill-box; transform-orig
 
 .not-found-ball, .credits-ball { width: 96px; height: 96px; }
 .not-found .not-found-ball { width: clamp(96px, 28vw, 160px); height: auto; }
+
+/* Photos remain visible when motion is paused or a GIF's external player loads. */
+.clip-poster-caption {
+  position: absolute; left: 12px; bottom: 62px; max-width: calc(100% - 24px);
+  display: grid; gap: 4px; padding: 10px 14px; border: 2px solid var(--ink);
+  border-radius: 14px; background: var(--cream); color: var(--ink);
+}
+.art-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }

@@ -1,9 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
 import GiphyClip from "@/components/art/GiphyClip";
 import PlayerArt from "@/components/art/PlayerArt";
-import ProductArt from "@/components/art/ProductArt";
+import ResilientImage from "@/components/ResilientImage";
 import { getPro, type Product } from "@/lib/catalog";
-import { gifEmbedUrl, productPhotos, proMedia, type Gif, type Photo } from "@/lib/media";
+import { gifEmbedUrl, photoSrcSet, productIllustrationSrc, productPhotos, proMedia, type Gif, type Photo } from "@/lib/media";
 
 type FrameProps = {
   photo?: Photo | null;
@@ -64,11 +64,11 @@ export function GifCredit({ gif, note }: { gif: Gif; note?: string }) {
   );
 }
 
-/** A plain img for a credited photo, with Commons' smaller widths for phones. */
+/** A resilient image for a credited photo, with smaller responsive files for phones. */
 export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50vw, 100vw" }: { photo: Photo; eager?: boolean; sizes?: string }) {
-  const srcSet = commonsSrcSet(photo);
+  const srcSet = photoSrcSet(photo) ?? commonsSrcSet(photo);
   return (
-    <img
+    <ResilientImage
       src={photo.src}
       srcSet={srcSet}
       sizes={srcSet ? sizes : undefined}
@@ -94,12 +94,15 @@ export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover",
   const style = { "--ratio": shape, "--fit": fit } as CSSProperties;
 
   if (gif) {
+    const poster = photo ?? Object.entries(proMedia)
+      .find(([slug]) => getPro(slug)?.name === gif.playerName)?.[1].portrait;
     return (
       <figure className={classes}>
         <div className="media-box" style={style}>
-          <GiphyClip embedUrl={gifEmbedUrl(gif)} alt={gif.alt} playerName={gif.playerName} channel={gif.channel} />
+          <GiphyClip embedUrl={gifEmbedUrl(gif)} alt={gif.alt} playerName={gif.playerName} channel={gif.channel} posterSrc={poster?.src} posterAlt={poster?.alt} />
         </div>
         <GifCredit gif={gif} note={note} />
+        {poster && <PhotoCredit photo={poster} />}
       </figure>
     );
   }
@@ -141,7 +144,14 @@ export function ProductImage({
   return (
     <MediaFrame
       photo={productPhotos[product.slug] ?? null}
-      fallback={<ProductArt product={product} />}
+      fallback={
+        <div className="art-frame" style={{ "--art-bg": "var(--cream)" } as CSSProperties}>
+          <ResilientImage src={productIllustrationSrc(product.slug)} width={640} height={480}
+            alt={`Illustration of ${product.brand} ${product.name}; not a product photo`}
+            loading={eager ? "eager" : "lazy"} decoding="async" />
+          <span className="art-label" aria-hidden="true"><span className="art-label-long">Illustration</span><span className="art-label-short">Art</span></span>
+        </div>
+      }
       ratio={ratio}
       fit="contain"
       eager={eager}
@@ -193,7 +203,7 @@ export function ProImage({
   const gif = media?.gifs[0] ?? null;
   const photo = media?.portrait ?? null;
   const name = getPro(slug)?.name ?? "this player";
-  const chosen = prefer === "gif" ? { gif, photo: gif ? null : photo } : { gif: photo ? null : gif, photo };
+  const chosen = prefer === "gif" ? { gif, photo } : { gif: photo ? null : gif, photo };
 
   return (
     <MediaFrame

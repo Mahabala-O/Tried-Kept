@@ -155,8 +155,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
               {proSightings.length === 0 && <GapNote>No dated pro identification is recorded for this model.</GapNote>}
               {proSightings.map(({ pro, item, date }) => (
                 <article key={pro.slug} className={`card ${s.sighting}`}>
-                  {/* Art, not a photo: a photo of the player would sit beside a shoe claim it does not show. */}
-                  <ProImage slug={pro.slug} prefer="art" ratio="16 / 9" artBg="#E6FF3D" />
+                  <ProImage slug={pro.slug} prefer="photo" ratio="16 / 9" note="Player portrait. Gear identification is documented separately below." />
                   <div className={s.sightingBody}>
                     <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-left">Identified {formatDate(date)}</span>
                     <h3>

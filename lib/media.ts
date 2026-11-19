@@ -5,8 +5,8 @@
  * missing, components fall back to original art from components/art.
  *
  * Photos: Wikimedia Commons files, license and author checked against the Commons
- * API on 2026-11-19. Each src is the 1280px rendition, loaded straight from
- * upload.wikimedia.org; MediaFrame adds a srcset of Commons' standard widths.
+ * API on 2026-11-19. Photos are served locally as responsive WebP renditions,
+ * with the original URL and author/license retained for provenance.
  *
  * GIFs: published on GIPHY by the official tournament or tour account named in
  * `channel`. They are shown only through GIPHY's own iframe embed (gifEmbedUrl),
@@ -16,7 +16,7 @@
  * broadcasters. Keep GIFs away from product claims.
  *
  * Products: no photo of an exact catalog model and generation was found under an
- * open license, so productPhotos is empty and product pages use original art.
+ * open license, so products use labelled, locally served original vector art.
  */
 
 export type Credit = {
@@ -30,6 +30,8 @@ export type Credit = {
 
 export type Photo = {
   src: string;
+  /** Original download URL, retained for provenance when a photo is served locally. */
+  originalSrc?: string;
   width: number;
   height: number;
   alt: string;
@@ -87,7 +89,8 @@ export function gifEmbedUrl(gif: Pick<Gif, "id">): string {
 export const proMedia: Record<string, ProMedia> = {
   "carlos-alcaraz": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Carlos_Alcaraz_serving_while_playing_Jan-Lennard_Struff_%28Wimbledon_2025%29.jpg/1280px-Carlos_Alcaraz_serving_while_playing_Jan-Lennard_Struff_%28Wimbledon_2025%29.jpg",
+      src: "/media/photos/carlos-alcaraz-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Carlos_Alcaraz_serving_while_playing_Jan-Lennard_Struff_%28Wimbledon_2025%29.jpg/1280px-Carlos_Alcaraz_serving_while_playing_Jan-Lennard_Struff_%28Wimbledon_2025%29.jpg",
       width: 1280,
       height: 720,
       alt: "Carlos Alcaraz in all-white kit tossing the ball up to serve on a sunlit Wimbledon grass court, his shadow stretching across the baseline",
@@ -138,7 +141,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "jannik-sinner": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/6/64/Jannik_Sinner_2025_US_Open.jpg",
+      src: "/media/photos/jannik-sinner-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/6/64/Jannik_Sinner_2025_US_Open.jpg",
       width: 1200,
       height: 1600,
       alt: "Jannik Sinner in a white cap and rust-red shirt, racquet raised beside his face, watching the ball during the 2025 US Open final",
@@ -171,7 +175,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "casper-ruud": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Casper_Ruud%2C_ATP_Basel_2025.jpg/1280px-Casper_Ruud%2C_ATP_Basel_2025.jpg",
+      src: "/media/photos/casper-ruud-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Casper_Ruud%2C_ATP_Basel_2025.jpg/1280px-Casper_Ruud%2C_ATP_Basel_2025.jpg",
       width: 1280,
       height: 720,
       alt: "Casper Ruud, in a white shirt and orange shorts, crouching low to play a forehand on the blue indoor court at the 2025 Swiss Indoors in Basel",
@@ -195,7 +200,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "ben-shelton": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Ben_Shelton_forehand.png/1280px-Ben_Shelton_forehand.png",
+      src: "/media/photos/ben-shelton-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Ben_Shelton_forehand.png/1280px-Ben_Shelton_forehand.png",
       width: 1280,
       height: 902,
       alt: "Ben Shelton, in grey with pink shoes, stretching low for a forehand on the blue indoor court in Basel",
@@ -219,7 +225,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "aryna-sabalenka": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Aryna_Sabalenka_at_2025_Miami_Open_01.jpg/1280px-Aryna_Sabalenka_at_2025_Miami_Open_01.jpg",
+      src: "/media/photos/aryna-sabalenka-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Aryna_Sabalenka_at_2025_Miami_Open_01.jpg/1280px-Aryna_Sabalenka_at_2025_Miami_Open_01.jpg",
       width: 1280,
       height: 1006,
       alt: "Aryna Sabalenka, in a black top and grey skirt, lining up a forehand on a blue hard court at the 2025 Miami Open",
@@ -252,7 +259,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "coco-gauff": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Gauff_-_US_Open_2026.jpg/1280px-Gauff_-_US_Open_2026.jpg",
+      src: "/media/photos/coco-gauff-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Gauff_-_US_Open_2026.jpg/1280px-Gauff_-_US_Open_2026.jpg",
       width: 1280,
       height: 1919,
       alt: "Coco Gauff, in a pale yellow top, fully stretched to serve on Arthur Ashe Stadium at the 2026 US Open as fans watch from the stands",
@@ -276,7 +284,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "iga-swiatek": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg/1280px-Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg",
+      src: "/media/photos/iga-swiatek-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg/1280px-Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg",
       width: 1280,
       height: 1646,
       alt: "Iga Swiatek, in a light blue cap and black kit, turning her shoulders with her left arm out as she sets up a shot at the 2023 US Open",
@@ -309,7 +318,8 @@ export const proMedia: Record<string, ProMedia> = {
   },
   "elena-rybakina": {
     portrait: {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg/1280px-Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg",
+      src: "/media/photos/elena-rybakina-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg/1280px-Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg",
       width: 1280,
       height: 960,
       alt: "Elena Rybakina, in a navy dress and white visor, swinging a two-handed backhand on the clay at Roland-Garros 2025",
@@ -319,12 +329,35 @@ export const proMedia: Record<string, ProMedia> = {
         sourceUrl: "https://commons.wikimedia.org/wiki/File:Elena_Rybakina_-_Roland_Garros_2025_-_backhand_wide.jpg",
       },
     },
-    gifs: [],
+    gifs: [
+      giphy(
+        "IN8Dh8LIrBOtNUcfXQ",
+        "tennischannel-IN8Dh8LIrBOtNUcfXQ",
+        480,
+        270,
+        "Tennis Channel",
+        "Wide view of Elena Rybakina at the far baseline during her Wimbledon match against Alize Cornet, who is recovering near the net.",
+        "Elena Rybakina",
+      ),
+    ],
   },
 };
 
 /** Keyed by product slug. Only a photo of that exact model belongs here. */
 export const productPhotos: Record<string, Photo> = {};
+
+
+/** Every catalog product has an image file; these are illustrations, not photos. */
+export function productIllustrationSrc(slug: string): string {
+  return `/media/products/${slug}.svg`;
+}
+
+/** Locally hosted photo sizes avoid external thumbnail rate limits. */
+export function photoSrcSet(photo: Photo): string | undefined {
+  if (!photo.src.startsWith("/media/photos/") || !photo.src.endsWith("-1280.webp")) return undefined;
+  return [320, 640, 1280].filter(w => w <= photo.width)
+    .map(w => `${photo.src.replace("-1280.webp", `-${w}.webp`)} ${w}w`).join(", ");
+}
 
 /** General tennis moments for the home page. Not tied to any product claim. */
 export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
@@ -385,7 +418,8 @@ export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
   ],
   photos: [
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/The_Bryan_Brothers_triumphant_at_the_US_Open_%289662618045%29.jpg/1280px-The_Bryan_Brothers_triumphant_at_the_US_Open_%289662618045%29.jpg",
+      src: "/media/photos/bryan-brothers-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/The_Bryan_Brothers_triumphant_at_the_US_Open_%289662618045%29.jpg/1280px-The_Bryan_Brothers_triumphant_at_the_US_Open_%289662618045%29.jpg",
       width: 1280,
       height: 853,
       alt: "Bob and Mike Bryan, in matching yellow shirts, leap into a mid-air chest bump on a blue US Open hard court while their opponents stand at the net",
@@ -396,7 +430,8 @@ export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
       },
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Roland_Garros_2013_-_balle_de_match.jpg/1280px-Roland_Garros_2013_-_balle_de_match.jpg",
+      src: "/media/photos/clay-ball-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Roland_Garros_2013_-_balle_de_match.jpg/1280px-Roland_Garros_2013_-_balle_de_match.jpg",
       width: 1280,
       height: 960,
       alt: "A yellow Roland-Garros tennis ball resting on the white baseline of an orange clay court in dappled sunlight",
@@ -407,7 +442,8 @@ export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
       },
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg/1280px-Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg",
+      src: "/media/photos/kei-nishikori-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg/1280px-Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg",
       width: 1280,
       height: 1920,
       alt: "Kei Nishikori, in white with a headband, lunging full stretch for a low forehand on a Wimbledon grass court, the ball just off his strings",
@@ -418,7 +454,8 @@ export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
       },
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/2013_Australian_Open_-_Guillaume_Rufin.jpg/1280px-2013_Australian_Open_-_Guillaume_Rufin.jpg",
+      src: "/media/photos/guillaume-rufin-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/2013_Australian_Open_-_Guillaume_Rufin.jpg/1280px-2013_Australian_Open_-_Guillaume_Rufin.jpg",
       width: 1280,
       height: 1920,
       alt: "Guillaume Rufin, in a bright yellow shirt, arching back to serve on the blue hard court of Rod Laver Arena, with the ball high above and the crowd in the stands behind",
@@ -429,9 +466,10 @@ export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
       },
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Blue_%2845135693732%29.jpg/1280px-Blue_%2845135693732%29.jpg",
-      width: 1280,
-      height: 1918,
+      src: "/media/photos/blue-balls-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Blue_%2845135693732%29.jpg/1280px-Blue_%2845135693732%29.jpg",
+      width: 960,
+      height: 1439,
       alt: "A wall of bright blue tennis balls lined up in neat rows against a purple backdrop at the 2018 US Open",
       credit: {
         author: "Carine06",
@@ -440,7 +478,8 @@ export const homeMedia: { gifs: Gif[]; photos: Photo[] } = {
       },
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Carlos_Alcaraz_-_Roland_Garros_2025_-_serving.jpg/1280px-Carlos_Alcaraz_-_Roland_Garros_2025_-_serving.jpg",
+      src: "/media/photos/alcaraz-clay-1280.webp",
+      originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Carlos_Alcaraz_-_Roland_Garros_2025_-_serving.jpg/1280px-Carlos_Alcaraz_-_Roland_Garros_2025_-_serving.jpg",
       width: 1280,
       height: 853,
       alt: "Carlos Alcaraz in a black-and-white striped shirt and black shorts reaching up to serve on the orange clay at Roland-Garros 2025",

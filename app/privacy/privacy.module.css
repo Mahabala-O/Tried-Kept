@@ -1,0 +1,105 @@
+.hero {
+  display: grid;
+  gap: 14px;
+  padding: 24px 20px 28px;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: var(--fg);
+}
+
+.hero h1 {
+  color: var(--fg);
+}
+
+.hero :global(.lede) {
+  color: var(--fg-soft);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+
+.who {
+  gap: 10px;
+}
+
+.who h2,
+.body h2 {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+}
+
+.whoHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: var(--border);
+  border-radius: 50%;
+}
+
+.icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.public .icon {
+  background: var(--optic);
+}
+
+.private .icon {
+  background: var(--ink);
+  color: var(--optic);
+}
+
+.body {
+  display: grid;
+  gap: 28px;
+  max-width: 68ch;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  position: relative;
+  padding-left: 30px;
+}
+
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.4em;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--optic);
+}
+
+@media (min-width: 700px) {
+  .split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    padding: 40px 36px 44px;
+  }
+}

@@ -1,10 +1,19 @@
 import Link from "next/link";
+import { BallArt, hashSeed } from "@/components/art";
 import HelpfulButton, { DeleteReportButton } from "@/components/HelpfulButton";
+import { ProductImage } from "@/components/MediaFrame";
 import { formatDate } from "@/components/ui";
 import { getProduct, productLabel } from "@/lib/catalog";
-import { outcomeLabel, surfaceLabel, type ReportView } from "@/lib/reports";
+import { outcomeLabel, surfaceLabel, type Outcome, type ReportView } from "@/lib/reports";
+import styles from "./reports.module.css";
 
-const USER_TEXT = { whiteSpace: "pre-wrap", overflowWrap: "anywhere" } as const;
+/** The short word on the sticker. The full label stays for screen readers. */
+const STICKER_WORD: Record<Outcome, string> = {
+  kept: "Kept",
+  returned: "Returned",
+  rejected: "Rejected",
+  testing: "Testing",
+};
 
 function ModelName({ slug }: { slug: string }) {
   const product = getProduct(slug);
@@ -12,82 +21,124 @@ function ModelName({ slug }: { slug: string }) {
   return <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link>;
 }
 
+function initialOf(name: string): string {
+  const first = Array.from(name.trim())[0];
+  return first ? first.toLocaleUpperCase("en-US") : "?";
+}
+
+/** A pill linking to the author's profile, with their initial on a colored ball. */
+export function AuthorChip({ username, displayName }: { username: string; displayName: string }) {
+  const tone = hashSeed(username) % 5;
+  return (
+    <Link href={`/u/${encodeURIComponent(username)}`} className={styles.author}>
+      <span className={`${styles.avatar} ${styles[`avatar_${tone}`]}`} aria-hidden="true">
+        {initialOf(displayName)}
+      </span>
+      <span className={styles.authorText}>
+        <span className={styles.authorName}>{displayName}</span>
+        <span className={styles.authorHandle}>@{username}</span>
+      </span>
+    </Link>
+  );
+}
+
 export default function ReportCard({ report, viewerId }: { report: ReportView; viewerId: number | null }) {
   const isAuthor = viewerId === report.user_id;
-  const isRacquet = getProduct(report.product_slug)?.category === "racquet";
+  const product = getProduct(report.product_slug);
+  const isRacquet = product?.category === "racquet";
 
-  const facts: string[] = [];
+  const facts: { text: string; kind?: "surface" | "comfort" }[] = [];
   const missing: string[] = [];
-  const note = (label: string, given: boolean, text: string) => {
-    if (given) facts.push(text);
+  const note = (label: string, given: boolean, text: string, kind?: "surface" | "comfort") => {
+    if (given) facts.push({ text, kind });
     else missing.push(label);
   };
   note("size", report.size !== "", `Size ${report.size}`);
   if (!isRacquet || report.width !== "") note("width", report.width !== "", `Width ${report.width}`);
-  note("surface", report.surface !== "", surfaceLabel(report.surface));
+  note("surface", report.surface !== "", surfaceLabel(report.surface), "surface");
   note("hours", report.hours !== null, `${report.hours} ${report.hours === 1 ? "hour" : "hours"}`);
-  note("comfort", report.comfort !== null, `Comfort ${report.comfort} of 5`);
+  note("comfort", report.comfort !== null, `Comfort ${report.comfort} of 5`, "comfort");
+
+  const tilt = report.id % 2 === 0 ? "tilt-right" : "tilt-left";
 
   return (
-    <article className="card" id={`report-${report.id}`} style={{ overflowWrap: "anywhere" }}>
-      <div className="row between">
-        <span className={`tag tag-${report.outcome}`}>{outcomeLabel(report.outcome)}</span>
-        <span className="small muted">{formatDate(report.created_at)}</span>
+    <article className={`card ${styles.card}`} id={`report-${report.id}`}>
+      <div className={styles.top}>
+        {product ? (
+          <ProductImage product={product} ratio="1 / 1" className={styles.thumb} />
+        ) : (
+          <div className={styles.thumbGone}>
+            <BallArt />
+          </div>
+        )}
+        <div className={styles.headline}>
+          <span className={`sticker wiggle ${tilt} ${styles.outcome} ${styles[`outcome_${report.outcome}`]}`}>
+            <span aria-hidden="true">{STICKER_WORD[report.outcome] ?? outcomeLabel(report.outcome)}</span>
+            <span className="sr-only">Outcome: {outcomeLabel(report.outcome)}</span>
+          </span>
+          <h3 className={styles.title}>
+            <ModelName slug={report.product_slug} />
+          </h3>
+          <span className={styles.date}>{formatDate(report.created_at)}</span>
+        </div>
       </div>
 
-      <h3>
-        <ModelName slug={report.product_slug} />
-      </h3>
-
-      <p className="small muted">
-        Reported by <Link href={`/u/${encodeURIComponent(report.username)}`}>{report.display_name}</Link> (@{report.username})
-      </p>
-
-      {report.switched_from_slug && (
-        <p className="small">
-          Switched from <ModelName slug={report.switched_from_slug} />
-        </p>
-      )}
+      <div className={styles.byline}>
+        <span className="sr-only">Reported by</span>
+        <AuthorChip username={report.username} displayName={report.display_name} />
+        {report.switched_from_slug && (
+          <span className={styles.switched}>
+            <span className={styles.switchedArrow} aria-hidden="true">
+              &#8634;
+            </span>
+            <span>
+              Switched from <ModelName slug={report.switched_from_slug} />
+            </span>
+          </span>
+        )}
+      </div>
 
       {facts.length > 0 && (
-        <div className="row">
+        <ul className={styles.facts} aria-label="Details">
           {facts.map((fact) => (
-            <span key={fact} className="tag">
-              {fact}
-            </span>
+            <li key={fact.text} className={`${styles.fact} ${fact.kind ? styles[`fact_${fact.kind}`] : ""}`}>
+              {fact.text}
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
-      <div>
-        <p className="small muted">Reason</p>
-        <p style={USER_TEXT}>{report.reason}</p>
+      <div className={styles.notes}>
+        <div className={styles.note}>
+          <p className={styles.noteLabel}>Reason</p>
+          <p className={`${styles.noteText} ${styles.reason}`}>{report.reason}</p>
+        </div>
+
+        {report.felt_different && (
+          <div className={styles.note}>
+            <p className={styles.noteLabel}>What felt different</p>
+            <p className={styles.noteText}>{report.felt_different}</p>
+          </div>
+        )}
+
+        {report.wear_location && (
+          <div className={styles.note}>
+            <p className={styles.noteLabel}>Where it wore</p>
+            <p className={styles.noteText}>{report.wear_location}</p>
+          </div>
+        )}
+
+        {report.string_setup && (
+          <div className={styles.note}>
+            <p className={styles.noteLabel}>String, gauge and tension</p>
+            <p className={styles.noteText}>{report.string_setup}</p>
+          </div>
+        )}
       </div>
 
-      {report.felt_different && (
-        <div>
-          <p className="small muted">What felt different</p>
-          <p style={USER_TEXT}>{report.felt_different}</p>
-        </div>
-      )}
+      {missing.length > 0 && <p className={styles.missing}>Not reported: {missing.join(", ")}.</p>}
 
-      {report.wear_location && (
-        <div>
-          <p className="small muted">Where it wore</p>
-          <p style={USER_TEXT}>{report.wear_location}</p>
-        </div>
-      )}
-
-      {report.string_setup && (
-        <div>
-          <p className="small muted">String, gauge and tension</p>
-          <p style={USER_TEXT}>{report.string_setup}</p>
-        </div>
-      )}
-
-      {missing.length > 0 && <p className="small muted">Not reported: {missing.join(", ")}.</p>}
-
-      <div className="row between">
+      <div className={styles.actions}>
         <HelpfulButton
           reportId={report.id}
           count={report.helpful_count}

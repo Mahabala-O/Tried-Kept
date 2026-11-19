@@ -32,8 +32,8 @@ export default function AddToLockerForm({
           ))}
         </select>
       </div>
-      <div className="row">
-        <button type="submit" className="btn btn-primary" disabled={pending}>
+      <div className="cta-row">
+        <button type="submit" className="btn btn-optic" disabled={pending}>
           {pending ? "Saving" : currentStatus ? "Update locker" : "Add to locker"}
         </button>
         {currentStatus && (

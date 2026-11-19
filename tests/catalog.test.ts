@@ -154,6 +154,7 @@ describe("labelled gaps", () => {
     const gaps = missingFacts(getProduct("yonex-ezone-98-2025")!);
     expect(gaps).not.toContain("court surface");
     expect(gaps).not.toContain("cushioning location");
+    expect(gaps).not.toContain("retail line (men's or women's)");
   });
 });
 

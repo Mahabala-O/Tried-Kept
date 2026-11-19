@@ -98,11 +98,14 @@ function toItem(match: FinderMatch, answers: FinderAnswers): GearMatchItem {
 /** Explains why nothing matched, using only what the catalog does and does not hold. */
 function gapFor(answers: FinderAnswers): GearMatchGap {
   if (answers.surface === "clay") {
+    // Only mention the wide-forefoot thread when the player asked for more room.
+    const roomier = answers.fit === "wide" || answers.fit === "roomy";
     return {
       title: "Clay is not covered yet",
-      message:
-        "No shoe here is recorded as a clay version. A wide forefoot with a narrow heel on clay is also a need we cannot answer yet.",
-      source: sources.wideClayThread,
+      message: roomier
+        ? "No shoe here is recorded as a clay version. A wide forefoot with a narrow heel on clay is also a need we cannot answer yet."
+        : "No shoe here is recorded as a clay version yet. Try Any surface to see the shoes we do track.",
+      source: roomier ? sources.wideClayThread : null,
     };
   }
 

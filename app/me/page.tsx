@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import RacquetArt from "@/components/art/RacquetArt";
+import ShoeArt from "@/components/art/ShoeArt";
 import ShareProfile from "@/components/ShareProfile";
 import UserReports from "@/components/UserReports";
-import { GapNote, XpBar } from "@/components/ui";
+import { GapNote } from "@/components/ui";
 import { logoutAction } from "@/lib/actions/account";
 import { requireUser } from "@/lib/auth";
 import { productLabel, products } from "@/lib/catalog";
 import { getDb } from "@/lib/db";
 import { XP, badgesFor, levelFor, totalXp } from "@/lib/gamification";
+import { countReports } from "@/lib/reports";
 import AccountSettings from "./_components/AccountSettings";
+import BadgeSheet from "./_components/BadgeSheet";
+import Drawer from "./_components/Drawer";
 import { LockerItemCard } from "./_components/LockerItemCard";
+import PlayerCard from "./_components/PlayerCard";
 import ProfileForm from "./_components/ProfileForm";
 import QuickAddForm, { type QuickAddGroup } from "./_components/QuickAddForm";
 import { getLocker } from "./_data";
 import { LOCKER_STATUSES } from "./_shared";
+import styles from "./me.module.css";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +45,9 @@ export default async function MePage() {
   const xp = totalXp(db, user.id);
   const level = levelFor(xp);
   const badges = badgesFor(db, user.id);
+  const earnedCount = badges.filter((badge) => badge.earned).length;
   const locker = getLocker(user.id);
+  const reportCount = countReports({ userId: user.id });
   const groups = quickAddGroups(new Set(locker.map((item) => item.product_slug)));
 
   const profileBonusPaid = Boolean(
@@ -47,12 +56,23 @@ export default async function MePage() {
 
   return (
     <div className="wrap page">
-      <header className="stack">
-        <span className="eyebrow">My locker</span>
-        <h1 style={{ overflowWrap: "anywhere" }}>{user.display_name}</h1>
-        <p className="muted">@{user.username}</p>
-        <div className="row">
-          <Link href={`/u/${user.username}`} className="btn">
+      <PlayerCard
+        displayName={user.display_name}
+        username={user.username}
+        level={level}
+        xp={xp}
+        surface={user.home_surface}
+        stats={[
+          { label: locker.length === 1 ? "Item" : "Items", value: locker.length },
+          { label: reportCount === 1 ? "Report" : "Reports", value: reportCount },
+          { label: `of ${badges.length} badges`, value: earnedCount },
+        ]}
+      >
+        <p className={styles.xpNote}>
+          XP rewards useful detail. It never depends on a positive review or a retailer click.
+        </p>
+        <div className={styles.actions}>
+          <Link href={`/u/${user.username}`} className="btn btn-primary">
             View public profile
           </Link>
           <ShareProfile username={user.username} displayName={user.display_name} />
@@ -62,38 +82,45 @@ export default async function MePage() {
             </button>
           </form>
         </div>
-      </header>
-
-      <section className="card" aria-labelledby="level-heading">
-        <div className="row between">
-          <h2 id="level-heading">{level.name}</h2>
-          <span className="tag">{xp} XP</span>
-        </div>
-        <XpBar progress={level.progress} label="Progress to the next level" />
-        <p className="small muted">
-          {level.next ? `${level.next.minXp - xp} XP to ${level.next.name}.` : "You have reached the top level."} XP
-          rewards useful detail. It never depends on a positive review or a retailer click.
-        </p>
-      </section>
+      </PlayerCard>
 
       <div className="split">
         <div className="stack-lg">
           <section className="stack-lg" aria-labelledby="locker-heading">
-            <h2 id="locker-heading">Your gear</h2>
+            <div className={styles.sectionHead}>
+              <h2 id="locker-heading">Your gear</h2>
+              {locker.length > 0 && (
+                <nav className={styles.statusChips} aria-label="Jump to a locker shelf">
+                  {LOCKER_STATUSES.map((status) => (
+                    <a key={status.value} href={`#shelf-${status.value}`} className="chip">
+                      {status.label}
+                      <span className={styles.count}>
+                        {locker.filter((item) => item.status === status.value).length}
+                      </span>
+                    </a>
+                  ))}
+                </nav>
+              )}
+            </div>
 
             {locker.length === 0 ? (
-              <div className="card">
+              <div className={`card ${styles.empty}`}>
+                <div className={styles.emptyArt} aria-hidden="true">
+                  <ShoeArt seed="empty-locker" variant={1} />
+                  <RacquetArt seed="empty-locker" tilt={-18} />
+                </div>
                 <h3>Start with what is in your bag</h3>
                 <p>
                   Your locker is empty. Add the shoes or racquet you play with now, then see how they compare and log
                   what you learn.
                 </p>
+                <span className="sticker sticker-xp sticker-sm tilt-left">
+                  +{XP.lockerItem} XP for each new model
+                </span>
                 <QuickAddForm groups={groups} />
-                <GapNote>
-                  The catalog holds {products.length} models so far, so yours may not be listed yet.
-                </GapNote>
+                <GapNote>The catalog holds {products.length} models so far, so yours may not be listed yet.</GapNote>
                 <p className="small muted">Not sure where to begin?</p>
-                <div className="row">
+                <div className="cta-row">
                   <Link href="/pros" className="btn">
                     Start from a pro
                   </Link>
@@ -110,24 +137,32 @@ export default async function MePage() {
                 {LOCKER_STATUSES.map((status) => {
                   const items = locker.filter((item) => item.status === status.value);
                   return (
-                    <div className="stack" key={status.value}>
-                      <h3>
-                        {status.label} ({items.length})
+                    <div className="stack" key={status.value} id={`shelf-${status.value}`}>
+                      <h3 className={styles.groupHead}>
+                        {status.label}
+                        <span className={styles.count}>{items.length}</span>
                       </h3>
                       {items.length === 0 ? (
-                        <p className="small muted">Nothing here yet.</p>
+                        <p className={`small ${styles.emptyGroup}`}>Nothing here yet.</p>
                       ) : (
-                        items.map((item) => <LockerItemCard key={item.id} item={item} />)
+                        <div className={styles.lockerGrid}>
+                          {items.map((item) => (
+                            <LockerItemCard key={item.id} item={item} />
+                          ))}
+                        </div>
                       )}
                     </div>
                   );
                 })}
 
                 {groups.length > 0 && (
-                  <div className="card">
-                    <h3>Add another item</h3>
+                  <Drawer
+                    title="Add another item"
+                    hint="Pick a model from the catalog"
+                    sticker={<span className="sticker sticker-xp sticker-sm tilt-right">+{XP.lockerItem} XP</span>}
+                  >
                     <QuickAddForm groups={groups} />
-                  </div>
+                  </Drawer>
                 )}
               </>
             )}
@@ -136,42 +171,51 @@ export default async function MePage() {
           <UserReports userId={user.id} />
         </div>
 
-        <div className="stack-lg">
+        <div className={`stack-lg ${styles.aside}`}>
           <section className="stack" aria-labelledby="badges-heading">
-            <h2 id="badges-heading">Badges</h2>
-            {badges.map((badge) => (
-              <div key={badge.id} className={badge.earned ? "badge badge-earned" : "badge"}>
-                <strong>{badge.name}</strong>
-                <span className="small">{badge.description}</span>
-                <span className="small">{badge.earned ? "Earned" : "Not earned yet"}</span>
-              </div>
-            ))}
+            <div className={styles.sectionHead}>
+              <h2 id="badges-heading">Badges</h2>
+              <span className="sticker sticker-ink sticker-sm tilt-right">
+                {earnedCount} of {badges.length}
+              </span>
+            </div>
+            <BadgeSheet badges={badges} label="Your badges, earned and locked" />
           </section>
 
-          <section className="stack" aria-labelledby="profile-heading">
-            <h2 id="profile-heading">Profile</h2>
-            {!profileBonusPaid && (
+          <section className="stack" aria-labelledby="settings-heading">
+            <h2 id="settings-heading">Settings</h2>
+            <Drawer
+              id="profile"
+              title="Profile"
+              hint={profileBonusPaid ? "Name, bio, surface and level" : "Fill it in for a one-time bonus"}
+              sticker={
+                profileBonusPaid ? undefined : (
+                  <span className="sticker sticker-xp sticker-sm tilt-left">+{XP.profileComplete} XP</span>
+                )
+              }
+            >
+              {!profileBonusPaid && (
+                <p className="small muted">
+                  Add a bio, home surface, play level and weekly hours to earn {XP.profileComplete} XP once.
+                </p>
+              )}
+              <ProfileForm
+                values={{
+                  displayName: user.display_name,
+                  bio: user.bio,
+                  homeSurface: user.home_surface,
+                  playLevel: user.play_level,
+                  weeklyHours: user.weekly_hours,
+                }}
+              />
+            </Drawer>
+
+            <Drawer id="account" title="Account" hint="Password, devices and deleting your account">
+              <AccountSettings />
               <p className="small muted">
-                Add a bio, home surface, play level and weekly hours to earn {XP.profileComplete} XP once.
+                <Link href="/privacy">How we handle your data</Link>
               </p>
-            )}
-            <ProfileForm
-              values={{
-                displayName: user.display_name,
-                bio: user.bio,
-                homeSurface: user.home_surface,
-                playLevel: user.play_level,
-                weeklyHours: user.weekly_hours,
-              }}
-            />
-          </section>
-
-          <section className="stack" aria-labelledby="account-heading">
-            <h2 id="account-heading">Account</h2>
-            <AccountSettings />
-            <p className="small muted">
-              <Link href="/privacy">How we handle your data</Link>
-            </p>
+            </Drawer>
           </section>
         </div>
       </div>

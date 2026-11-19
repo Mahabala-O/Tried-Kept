@@ -252,7 +252,7 @@ export const products: Product[] = [
     name: "EZONE 98 (2025)",
     brand: "Yonex",
     category: "racquet",
-    summary: "The current generation in the research. Tennis Warehouse playtested it against the 2022 frame with the same string and tension.",
+    summary: "The newer EZONE 98. Tennis Warehouse playtested it against the 2022 frame with the same string and tension.",
     sources: [S.ezoneThread, S.twEzone],
   },
 ];
@@ -290,7 +290,7 @@ export function missingFacts(product: Product): string[] {
   const isShoe = product.category === "shoe";
   const checks: [boolean, string][] = [
     [product.priceUsd === null, "U.S. price"],
-    [product.line === null, "retail line (men's or women's)"],
+    [isShoe && product.line === null, "retail line (men's or women's)"],
     [isShoe && product.surface === null, "court surface"],
     [isShoe && product.sku === null, "style number"],
     [isShoe && product.forefootWidthMm === null, "interior width at the ball of the foot"],

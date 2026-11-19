@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProductImage } from "@/components/MediaFrame";
 import { offerHref, type EntryPoint } from "@/lib/affiliate";
 import { datedPrice, formatDate, productLabel, retailers, type Product, type Source } from "@/lib/catalog";
 
@@ -16,18 +17,31 @@ export function SourceLink({ source, standalone = false }: { source: Source; sta
   );
 }
 
+/** An inline line of sources on wide screens, a compact "Sources (n)" toggle on phones. */
 export function SourceList({ sources }: { sources: Source[] }) {
   if (sources.length === 0) return null;
   return (
-    <p className="small muted">
-      Sources:{" "}
-      {sources.map((s, i) => (
-        <span key={s.url}>
-          {i > 0 && " · "}
-          <SourceLink source={s} />
-        </span>
-      ))}
-    </p>
+    <>
+      <p className="small muted sources-inline">
+        Sources:{" "}
+        {sources.map((s, i) => (
+          <span key={s.url}>
+            {i > 0 && " · "}
+            <SourceLink source={s} />
+          </span>
+        ))}
+      </p>
+      <details className="sources-details small">
+        <summary>Sources ({sources.length})</summary>
+        <ul>
+          {sources.map((s) => (
+            <li key={s.url}>
+              <SourceLink source={s} standalone />
+            </li>
+          ))}
+        </ul>
+      </details>
+    </>
   );
 }
 
@@ -42,7 +56,7 @@ export function OfferButtons({ product, from }: { product: Product; from: EntryP
   }
   return (
     <div className="stack">
-      <div className="row">
+      <div className="cta-row">
         {product.offers.map((offer) => (
           <a
             key={offer.id}
@@ -64,21 +78,43 @@ export function OfferButtons({ product, from }: { product: Product; from: EntryP
   );
 }
 
+/** The price as a sticker, always with the day it was checked. */
+export function PriceSticker({ product, tilt = "tilt-left", short = false }: { product: Product; tilt?: string; short?: boolean }) {
+  if (product.priceUsd === null) {
+    return <span className="tag">{short ? "No price yet" : "Price not recorded"}</span>;
+  }
+  if (!product.priceCheckedOn) {
+    return <span className={`sticker sticker-paper sticker-sm sticker-plain ${tilt}`}>{datedPrice(product)}</span>;
+  }
+  return (
+    <>
+      <span className={`sticker sticker-xp sticker-plain ${tilt}`}>${product.priceUsd}</span>
+      <span className="price-date">Checked {formatDate(product.priceCheckedOn)}</span>
+    </>
+  );
+}
+
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href={`/gear/${product.slug}`} className="card card-link">
-      <span className="eyebrow">{product.brand}</span>
-      <h3>
-        {product.name}
-        {product.line ? ` (${product.line})` : ""}
-      </h3>
-      <p className="small muted">{product.summary}</p>
-      <div className="row">
-        <span className="tag">{datedPrice(product)}</span>
-        {product.wideVariant && <span className="tag">Wide</span>}
-        {product.surface === "hard" && <span className="tag">Hard court</span>}
+    <article className="card card-link product-card">
+      <ProductImage product={product} />
+      <div className="product-card-body">
+        <span className="eyebrow">{product.brand}</span>
+        <h3>
+          <Link href={`/gear/${product.slug}`} className="stretched-link">
+            {product.name}
+            {product.line ? ` (${product.line})` : ""}
+          </Link>
+        </h3>
+        <p className="small muted">{product.summary}</p>
       </div>
-    </Link>
+      <div className="price-row">
+        <PriceSticker product={product} />
+        {product.wideVariant && <span className="sticker sticker-sm sticker-paper tilt-right">Wide</span>}
+        {product.surface === "hard" && <span className="sticker sticker-sm sticker-blue tilt-right">Hard court</span>}
+        {product.category === "racquet" && <span className="sticker sticker-sm sticker-paper tilt-right">Racquet</span>}
+      </div>
+    </article>
   );
 }
 

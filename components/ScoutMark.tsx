@@ -1,4 +1,5 @@
 import Link from "next/link";
+import s from "@/components/games.module.css";
 import { scoutComparison } from "@/lib/actions/game";
 import { currentUser } from "@/lib/auth";
 import { getComparison } from "@/lib/catalog";
@@ -13,10 +14,13 @@ export default async function ScoutMark({ comparisonSlug }: { comparisonSlug: st
 
   if (!user) {
     return (
-      <div className="card">
-        <h3>Worked through this one?</h3>
+      <div className={`card seam ${s.scout}`}>
+        <div className={s.scoutHead}>
+          <h3>Worked through this one?</h3>
+          <span className="sticker sticker-xp sticker-sm tilt-right">+{XP.comparisonScouted} XP</span>
+        </div>
         <p className="small muted">Join to mark this comparison as worked through and earn {XP.comparisonScouted} XP.</p>
-        <div className="row">
+        <div className="cta-row">
           <Link href={`/signup?next=${encodeURIComponent(`/compare/${comparison.slug}`)}`} className="btn btn-primary">
             Join
           </Link>
@@ -34,9 +38,9 @@ export default async function ScoutMark({ comparisonSlug }: { comparisonSlug: st
 
   if (done) {
     return (
-      <div className="card">
+      <div className={`card ${s.scout} ${s.scoutDone}`}>
         <div className="row">
-          <span className="tag tag-kept">Worked through</span>
+          <span className="sticker sticker-kept tilt-left">Worked through</span>
         </div>
         <p className="small muted">You marked this comparison as worked through. Its XP is counted.</p>
       </div>
@@ -44,12 +48,15 @@ export default async function ScoutMark({ comparisonSlug }: { comparisonSlug: st
   }
 
   return (
-    <form action={scoutComparison} className="card">
+    <form action={scoutComparison} className={`card seam ${s.scout}`}>
       <input type="hidden" name="slug" value={comparison.slug} />
-      <h3>Worked through this one?</h3>
+      <div className={s.scoutHead}>
+        <h3>Worked through this one?</h3>
+        <span className="sticker sticker-xp sticker-sm tilt-right">+{XP.comparisonScouted} XP</span>
+      </div>
       <p className="small muted">Mark it once you have read both sides. Your pick does not matter for XP.</p>
-      <div className="row">
-        <button type="submit" className="btn btn-primary">
+      <div className="cta-row">
+        <button type="submit" className="btn btn-optic btn-lg">
           Mark as worked through (+{XP.comparisonScouted} XP)
         </button>
       </div>

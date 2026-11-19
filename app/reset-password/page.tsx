@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import AuthShell from "@/app/signup/_auth/AuthShell";
 import { getDb } from "@/lib/db";
 import { tokenIsLive } from "@/lib/tokens";
 import ResetPasswordForm from "./ResetPasswordForm";
@@ -17,18 +18,22 @@ export default async function ResetPasswordPage({
   const live = typeof token === "string" && tokenIsLive(getDb(), token, "reset");
 
   return (
-    <div className="wrap page">
-      <div className="stack">
-        <span className="eyebrow">Account</span>
-        <h1>Choose a new password</h1>
-      </div>
+    <AuthShell
+      eyebrow="Account"
+      title="Choose a new password"
+      court="clay"
+      lede={live ? "Almost there. Pick a new one and you are back on court." : undefined}
+    >
       {live ? (
         <ResetPasswordForm token={token} />
       ) : (
-        <p>
-          This link has expired or was already used. <Link href="/forgot-password">Ask for a new one</Link>.
-        </p>
+        <div className="stack">
+          <span className="sticker sticker-returned sticker-sm tilt-left">Link expired</span>
+          <p>
+            This link has expired or was already used. <Link href="/forgot-password">Ask for a new one</Link>.
+          </p>
+        </div>
       )}
-    </div>
+    </AuthShell>
   );
 }

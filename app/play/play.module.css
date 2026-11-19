@@ -1,0 +1,196 @@
+/* Play hub and game headers. Mobile first at 375px; motion only inside prefers-reduced-motion: no-preference. */
+
+/* Hub hero --------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-bottom: var(--border);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(230, 255, 61, 0.6) 0 110px, transparent 111px),
+    var(--cream);
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  padding-block: 24px 36px;
+}
+.heroCopy { display: grid; gap: 14px; align-content: start; }
+.heroTitle {
+  font-size: clamp(2.75rem, 12vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+.heroWord {
+  display: inline-block;
+  margin-top: 0.06em;
+  padding: 0 0.14em 0.06em;
+  background: var(--optic);
+  border: var(--border);
+  border-radius: 0.2em;
+  box-shadow: var(--shadow);
+  transform: rotate(-3deg);
+}
+.heroSide { position: relative; display: grid; gap: 12px; align-content: start; }
+.heroBall { position: absolute; z-index: 2; width: 48px; height: 48px; right: 12px; top: -20px; pointer-events: none; }
+.levelCard { gap: 10px; }
+.levelName { font-size: clamp(1.75rem, 5vw + 0.5rem, 2.5rem); }
+
+@media (min-width: 900px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: center;
+    gap: 48px;
+    padding-block: 56px 72px;
+  }
+  .heroBall { width: 72px; height: 72px; top: -56px; right: 18px; }
+}
+
+/* Game cards ------------------------------------------------------------- */
+
+.games {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.games > li { display: grid; min-width: 0; }
+@media (min-width: 900px) {
+  .games { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+}
+
+.gameCard { padding: 0; gap: 0; overflow: hidden; }
+.gameArt {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  border-bottom: var(--border);
+  overflow: hidden;
+  /* Decoration only: taps fall through to the card's stretched link. */
+  pointer-events: none;
+}
+@media (min-width: 900px) { .gameArt { aspect-ratio: 4 / 3; } }
+.artHard { background: var(--hardcourt-deep); }
+.artClay { background: var(--clay); }
+.artGrass { background: var(--grass); }
+
+.gameShoe { position: relative; z-index: 1; width: 74%; height: auto; transform: rotate(-6deg); filter: drop-shadow(4px 5px 0 var(--ink)); }
+.gameBall { width: 34%; height: auto; }
+.gameCourt { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gameQ1, .gameQ2 { position: absolute; font-size: 1.5rem; padding: 4px 14px; }
+.gameQ1 { left: 12%; top: 18%; }
+.gameQ2 { right: 14%; bottom: 20%; }
+.gameRate { position: absolute; z-index: 1; left: 50%; top: 50%; translate: -50% -50%; font-size: 1.375rem; }
+.gameSticker { position: absolute; z-index: 2; top: 12px; right: 12px; }
+
+.gameBody { display: grid; gap: 10px; align-content: start; padding: 18px 18px 20px; }
+.gameTitle { font-size: clamp(1.75rem, 3vw + 1rem, 2.25rem); letter-spacing: -0.035em; }
+.fauxBtn { justify-self: start; margin-top: 6px; pointer-events: none; }
+@media (max-width: 599.98px) { .fauxBtn { justify-self: stretch; } }
+
+/* XP rules --------------------------------------------------------------- */
+
+.rules {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) { .rules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .rules { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.rule { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; padding: 14px 16px; }
+.ruleSticker { min-width: 76px; justify-content: center; }
+.ruleText { display: grid; gap: 2px; min-width: 0; }
+
+/* Level ladder: a vertical rally path on phones, a row from 900px. ------- */
+
+.ladder {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ladder::before {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 24px;
+  bottom: 24px;
+  border-left: 3px dashed rgba(14, 42, 42, 0.4);
+}
+.rung {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  min-height: 60px;
+  padding: 6px 0;
+}
+.rungBall {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: var(--stroke) dashed rgba(14, 42, 42, 0.5);
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--ink-soft);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.125rem;
+}
+.rung[data-reached="true"] .rungBall { border-style: solid; border-color: var(--ink); background: var(--optic); color: var(--ink); box-shadow: var(--shadow-sm); }
+.rung[data-current="true"] .rungBall { width: 56px; height: 56px; margin-left: -4px; margin-right: -4px; font-size: 1.375rem; box-shadow: var(--shadow); }
+.rungText { display: grid; gap: 0; min-width: 0; }
+.rungText strong { font-family: var(--display); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+.rungText .small { color: var(--fg-soft); }
+
+@media (min-width: 900px) {
+  .ladder { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+  .ladder::before { left: 24px; right: 24px; top: 30px; bottom: auto; border-left: 0; border-top: 3px dashed rgba(14, 42, 42, 0.4); }
+  .rung { flex-direction: column; align-items: flex-start; }
+  .rung[data-current="true"] .rungBall { margin: -4px 0 0; }
+}
+
+/* Game headers ----------------------------------------------------------- */
+
+.gameHead:global(.band) { padding-block: 12px 24px; }
+.gameHeadInner { position: relative; z-index: 1; display: grid; gap: 10px; }
+.back { justify-self: start; min-height: 44px; padding: 6px 14px 6px 10px; box-shadow: var(--shadow-sm); }
+.back svg { width: 18px; height: 18px; }
+.gameHeadRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+.gameHeadCopy { display: grid; gap: 8px; min-width: 0; }
+.gameHeadCopy h1 { font-size: clamp(2.25rem, 8vw + 0.5rem, 4.25rem); letter-spacing: -0.045em; }
+.gameHeadCopy :global(.lede) { font-size: 1.0625rem; max-width: 46ch; }
+.gameHeadArt { width: 84px; flex: none; }
+.gameHeadArt svg { display: block; width: 100%; height: auto; }
+
+@media (min-width: 700px) {
+  .gameHead:global(.band) { padding-block: 20px 40px; }
+  .gameHeadArt { width: 160px; }
+  .gameHeadCopy :global(.lede) { font-size: 1.1875rem; }
+}
+
+/* Motion ---------------------------------------------------------------- */
+
+@keyframes hero-in { from { transform: rotate(-3deg) scale(0.7); opacity: 0; } to { transform: rotate(-3deg) scale(1); opacity: 1; } }
+@keyframes shoe-hop { 0%, 100% { transform: rotate(-6deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-8px); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroWord { animation: hero-in 0.6s var(--ease-bounce) 0.1s both; }
+  .gameCard:hover .gameShoe { animation: shoe-hop 0.6s var(--ease-bounce); }
+  .gameShoe { transition: transform 0.25s var(--ease-bounce); }
+}

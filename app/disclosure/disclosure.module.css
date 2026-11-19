@@ -1,0 +1,28 @@
+/* How this site works. A readable column of numbered cards. */
+
+.hero { padding-block: 28px 32px; }
+.heroCopy { display: grid; gap: 14px; }
+.heroTitle { font-size: clamp(2.75rem, 12vw, 5.5rem); line-height: 0.9; letter-spacing: -0.05em; }
+
+.promises { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); }
+.promise {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  background: var(--paper); border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm);
+  font-family: var(--display); font-size: 1.125rem; font-weight: 750; line-height: 1.2; letter-spacing: -0.01em;
+}
+.promiseBall { flex: none; width: 32px; height: 32px; }
+@media (min-width: 700px) { .promises { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.jump { list-style: none; margin-block: 0; }
+
+.sections { display: grid; gap: 22px; max-width: 72ch; }
+.section:global(.card) { gap: 14px; padding: 20px 18px; scroll-margin-top: calc(var(--header-h) + 16px); }
+.sectionHead { display: flex; align-items: center; gap: 12px; }
+.num {
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px;
+  border: var(--border); border-radius: 50%; background: var(--optic); color: var(--ink);
+  font-family: var(--display); font-size: 1.25rem; font-weight: 800;
+  transform: rotate(-6deg);
+}
+.section p { font-size: 1.0625rem; line-height: 1.6; max-width: 64ch; }
+@media (min-width: 900px) { .section:global(.card) { padding: 28px 32px; } }

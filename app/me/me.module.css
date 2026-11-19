@@ -1,0 +1,733 @@
+/* Locker, player card and public profile. Mobile first; the card widens from 700px. */
+
+/* Player card ------------------------------------------------------------ */
+
+.player {
+  --fg: var(--ink);
+  --fg-soft: var(--ink-soft);
+  --link: var(--hardcourt-deep);
+  --link-hover: var(--clay-deep);
+  --focus: var(--hardcourt-deep);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow-lg);
+}
+
+.playerTop {
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  min-height: 150px;
+  padding: 18px;
+  border-bottom: var(--border);
+  color: var(--fg);
+}
+
+/* A soft diagonal sheen, like the foil on a trading card. */
+.playerTop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.22) 45%, transparent 60%);
+}
+
+.levelSticker {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+}
+
+.xpSticker {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+}
+
+.monogram {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 104px;
+  height: 104px;
+  margin-top: 10px;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--optic);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font-family: var(--display);
+  font-size: 3.25rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  overflow: hidden;
+}
+
+/* The two seam curves of a tennis ball. */
+.monogram::before,
+.monogram::after {
+  content: "";
+  position: absolute;
+  top: 8%;
+  width: 70%;
+  height: 84%;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.monogram::before {
+  left: -48%;
+}
+
+.monogram::after {
+  right: -48%;
+}
+
+.monogram span {
+  position: relative;
+  z-index: 1;
+}
+
+.playerBody {
+  display: grid;
+  gap: 14px;
+  padding: 18px 18px 20px;
+  min-width: 0;
+}
+
+.playerName {
+  display: grid;
+  gap: 4px;
+}
+
+.playerName h1,
+.playerName h2 {
+  font-size: clamp(2rem, 8vw, 3.25rem);
+  overflow-wrap: anywhere;
+}
+
+.handle {
+  color: var(--ink-soft);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.xpRow {
+  display: grid;
+  gap: 8px;
+}
+
+.xpLine {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 12px;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.xpLine strong {
+  font-family: var(--display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.stats > div {
+  display: grid;
+  gap: 2px;
+  padding: 10px 8px;
+  text-align: center;
+  background: var(--cream);
+}
+
+.stats > div + div {
+  border-left: 2px dashed rgba(14, 42, 42, 0.25);
+}
+
+.stats dt {
+  order: 2;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1.2;
+}
+
+.stats dd {
+  order: 1;
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.facts .factGap {
+  border-style: dashed;
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.bio {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.actions > * {
+  flex: 1 1 auto;
+}
+
+.actions :global(.btn) {
+  width: 100%;
+}
+
+.xpNote {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 700px) {
+  .wide {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+
+  .wide .playerTop {
+    min-height: 100%;
+    border-bottom: 0;
+    border-right: var(--border);
+  }
+
+  .wide .monogram {
+    width: 136px;
+    height: 136px;
+    font-size: 4.25rem;
+  }
+
+  .wide .playerBody {
+    padding: 24px 26px 26px;
+  }
+
+  .actions > * {
+    flex: 0 0 auto;
+  }
+
+  .actions :global(.btn) {
+    width: auto;
+  }
+}
+
+/* The public version stands up like a trading card. */
+.portrait {
+  width: 100%;
+  max-width: 440px;
+}
+
+.portrait .playerTop {
+  min-height: 200px;
+}
+
+.portrait .monogram {
+  width: 128px;
+  height: 128px;
+  font-size: 4rem;
+}
+
+@media (min-width: 900px) {
+  .portrait {
+    transform: rotate(-1.2deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portrait {
+    transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s var(--ease-bounce);
+  }
+
+  .portrait:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 8px 10px 0 var(--ink);
+  }
+
+  .monogram {
+    animation: monogram-in 0.7s var(--ease-bounce) both;
+  }
+}
+
+@keyframes monogram-in {
+  from {
+    transform: translateY(-24px) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* Sections --------------------------------------------------------------- */
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.statusChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.statusChips :global(.chip) {
+  min-height: 44px;
+}
+
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.groupHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lockerGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 700px) {
+  .lockerGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.emptyGroup {
+  padding: 14px 16px;
+  border: var(--stroke) dashed rgba(14, 42, 42, 0.35);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+}
+
+/* Locker item card ------------------------------------------------------- */
+
+.item {
+  padding: 12px 12px 16px;
+  gap: 12px;
+}
+
+.item :global(.media-box) {
+  border-radius: 12px;
+}
+
+.itemBody {
+  display: grid;
+  gap: 10px;
+  padding-inline: 4px;
+  min-width: 0;
+}
+
+.itemTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.itemTitle h3,
+.itemTitle h4 {
+  font-size: 1.25rem;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.itemTitle a {
+  color: var(--ink);
+  text-decoration-thickness: 2px;
+}
+
+.cost {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9375rem;
+}
+
+.note {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  font-size: 0.9375rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.note b {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.compare {
+  display: grid;
+  gap: 2px;
+}
+
+.compare a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+}
+
+.itemActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.itemActions :global(.btn) {
+  min-height: 46px;
+  padding-inline: 12px;
+}
+
+.editor > summary {
+  width: 100%;
+  list-style: none;
+}
+
+.editor > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Drawers (collapsible form sections) ------------------------------------ */
+
+.drawer {
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  --fg: var(--ink);
+  --fg-soft: var(--ink-soft);
+}
+
+.drawer > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius);
+}
+
+.drawer > summary::-webkit-details-marker {
+  display: none;
+}
+
+.drawer > summary:focus-visible {
+  outline-offset: -4px;
+}
+
+.drawerTitle {
+  display: grid;
+  gap: 2px;
+  margin-right: auto;
+  min-width: 0;
+}
+
+.drawerTitle strong {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.drawerTitle span {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.chevron {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--optic);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.chevron::before {
+  content: "+";
+}
+
+.drawer[open] .chevron::before {
+  content: "\2212";
+}
+
+.drawer[open] > summary {
+  border-bottom: 2px dashed rgba(14, 42, 42, 0.2);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.drawerBody {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Badge sticker sheet ---------------------------------------------------- */
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 16px 12px;
+  list-style: none;
+  background: var(--cream-deep);
+  border: var(--border);
+  border-radius: var(--radius);
+  background-image: radial-gradient(rgba(14, 42, 42, 0.1) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+.badge {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  padding: 14px 10px 12px;
+  text-align: center;
+  border-radius: 20px;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.badge:nth-child(4n + 1) {
+  --tilt: -2.5deg;
+}
+
+.badge:nth-child(4n + 2) {
+  --tilt: 2deg;
+}
+
+.badge:nth-child(4n + 3) {
+  --tilt: 1.5deg;
+}
+
+.badge:nth-child(4n) {
+  --tilt: -1.5deg;
+}
+
+.badge strong {
+  font-family: var(--display);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+}
+
+.badge p {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.emblem {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: var(--border);
+}
+
+.emblem svg {
+  width: 26px;
+  height: 26px;
+}
+
+.earned {
+  background: var(--optic);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.earned .emblem {
+  background: var(--grass);
+  color: var(--ink);
+}
+
+.earned p {
+  color: var(--ink);
+}
+
+.locked {
+  background: var(--cream);
+  color: var(--ink-soft);
+  border: var(--stroke) dashed rgba(14, 42, 42, 0.45);
+}
+
+.locked .emblem {
+  background: var(--paper);
+  border-style: dashed;
+  border-color: rgba(14, 42, 42, 0.45);
+  color: var(--ink-soft);
+}
+
+.locked p {
+  color: var(--ink-soft);
+}
+
+.badgeState {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 600px) {
+  .sheet {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* In the narrow side column the sheet stays at two across. */
+@media (min-width: 900px) {
+  .aside .sheet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Empty locker ----------------------------------------------------------- */
+
+.empty {
+  gap: 16px;
+}
+
+.emptyArt {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+  padding: 14px;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--grass-soft);
+}
+
+.emptyArt svg {
+  width: 100%;
+  height: auto;
+}
+
+/* Public profile layout -------------------------------------------------- */
+
+.profileLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 36px;
+}
+
+.cardColumn {
+  display: grid;
+  gap: 16px;
+  justify-items: stretch;
+  align-content: start;
+}
+
+@media (min-width: 600px) {
+  .cardColumn {
+    justify-items: start;
+  }
+}
+
+@media (min-width: 900px) {
+  .profileLayout {
+    grid-template-columns: 420px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .cardColumn {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+}
+
+/* Add to locker (product pages) ------------------------------------------ */
+
+.addCard {
+  gap: 14px;
+}
+
+.addHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}

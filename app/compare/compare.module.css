@@ -1,0 +1,194 @@
+/* Compare list and comparison pages. Mobile first at 375px. */
+
+/* List hero ------------------------------------------------------------------ */
+
+.hero { padding-block: 32px 36px; }
+.heroGrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: center; }
+.heroCopy { position: relative; z-index: 1; display: grid; gap: 14px; min-width: 0; }
+.heroTitle { font-size: clamp(3.25rem, 15vw, 6.5rem); line-height: 0.88; letter-spacing: -0.055em; }
+.heroStats { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.heroVs {
+  display: none; justify-self: center; place-items: center;
+  width: 200px; height: 200px; border: 4px solid var(--ink); border-radius: 50%;
+  background: var(--ink); color: var(--optic); box-shadow: 8px 8px 0 rgba(14, 42, 42, 0.35);
+  font-family: var(--display); font-size: 5rem; font-weight: 800; letter-spacing: -0.04em;
+  transform: rotate(-10deg);
+}
+@media (min-width: 900px) {
+  .hero { padding-block: 56px 64px; }
+  .heroGrid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); }
+  .heroVs { display: grid; }
+}
+
+/* Comparison cards ------------------------------------------------------------ */
+
+.cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
+.cmpCard:global(.card) { gap: 12px; }
+.cmpThumbs { position: relative; display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 10px; }
+.cmpThumbs :global(.media-box) { border-radius: 12px; }
+.cmpThumbs3 :global(.art-label) { display: none; }
+.cmpVs {
+  position: absolute; left: 50%; top: 50%; z-index: 2; pointer-events: none;
+  display: grid; place-items: center; width: 46px; height: 46px;
+  border: 3px solid var(--paper); border-radius: 50%; box-shadow: 0 0 0 2.5px var(--ink);
+  background: var(--ink); color: var(--optic);
+  font-family: var(--display); font-size: 1rem; font-weight: 800;
+  transform: translate(-50%, -50%) rotate(-10deg);
+}
+.cmpQuestion { font-size: clamp(1.375rem, 1.5vw + 1rem, 1.75rem); line-height: 1.08; }
+.cmpMeta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+
+/* Comparison page head --------------------------------------------------------- */
+
+.head { display: grid; gap: 12px; }
+.title { font-size: clamp(2.25rem, 9vw, 4.25rem); line-height: 0.95; letter-spacing: -0.045em; }
+
+/* The VS hero: every model side by side, even on a 375px phone. */
+.vsHero {
+  position: relative; container-type: inline-size;
+  display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 14px;
+}
+.vsSide { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.vsSide :global(.media-box) { border-radius: 20px; box-shadow: var(--shadow); }
+.vsHero3 { gap: 10px; }
+.vsHero3 :global(.art-label) { display: none; }
+.vsHero3 .vsName { font-size: 1rem; }
+.vsName { font-family: var(--display); font-size: clamp(1.125rem, 2.5vw + 0.6rem, 1.6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; overflow-wrap: anywhere; }
+.vsName a { color: var(--ink); text-decoration: none; }
+.vsName a:hover { color: var(--ink); text-decoration: underline; }
+.vsBrand { display: block; font-family: var(--sans); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.vsPrice { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.vsBadge {
+  position: absolute; z-index: 3; left: 50%; top: 25%; top: calc((100cqw - 14px) / 4);
+  display: grid; place-items: center; width: 58px; height: 58px;
+  border: 3px solid var(--cream); border-radius: 50%; box-shadow: 0 0 0 2.5px var(--ink);
+  background: var(--ink); color: var(--optic);
+  font-family: var(--display); font-size: 1.25rem; font-weight: 800;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  pointer-events: none;
+}
+.gapLine { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 1.0625rem; font-weight: 600; }
+.gapSticker { --tilt: -5deg; padding: 4px 18px; font-size: clamp(2.5rem, 11vw, 4rem); line-height: 1; }
+
+/* Three models on a phone: a swipe rail with a peek of the next card, so names and prices are not crushed. */
+@media (max-width: 599.98px) {
+  .vsHero3 {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 46%;
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+    margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 12px; scroll-padding-inline: var(--gutter);
+    scrollbar-width: thin;
+  }
+  .vsHero3 .vsSide { scroll-snap-align: start; }
+}
+
+/* On wide screens the art is capped, so the prices and the gap sit in the first screen. */
+@media (min-width: 900px) {
+  .vsHero { gap: 28px; }
+  .vsSide :global(.media-box) { aspect-ratio: auto; height: 260px; }
+  .vsHero3 .vsSide :global(.media-box) { height: 220px; }
+  .vsBadge { top: 130px; }
+  .vsHero3 .vsName { font-size: 1.375rem; }
+  .vsHero3 :global(.art-label) { display: inline; }
+}
+
+/* Sticky side by side ------------------------------------------------------------ */
+
+/* overflow: clip keeps the rounded corners without making a scroll box, so the head can stick. */
+.vsGrid:global(.vs-grid) { overflow: clip; }
+.stickyHead {
+  position: sticky; top: calc(var(--header-h) + var(--stroke)); z-index: 5;
+  border-bottom: var(--border);
+}
+.stickyHead :global(.vs-value) { padding-block: 10px; }
+.mini { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 1rem; line-height: 1.1; }
+.miniThumb { flex: none; width: 40px; height: 40px; overflow: hidden; border: 2px solid var(--ink); border-radius: 10px; }
+.miniThumb :global(.art-frame) { width: 100%; height: 100%; aspect-ratio: auto; }
+.miniThumb :global(.art-frame > svg) { width: 96%; height: 96%; }
+.miniName { min-width: 0; overflow-wrap: anywhere; }
+.valueSub { margin-top: 2px; }
+
+@media (max-width: 380px) {
+  .miniThumb { width: 32px; height: 32px; }
+  .mini { font-size: 0.9375rem; gap: 6px; }
+}
+
+/* Compact sources ----------------------------------------------------------------- */
+
+.details > summary {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 16px;
+  border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink);
+  font-weight: 700; cursor: pointer; list-style: none; width: fit-content;
+}
+.details > summary::-webkit-details-marker { display: none; }
+.details > summary::before { content: "+"; font-family: var(--display); font-weight: 800; font-size: 1.125rem; line-height: 1; }
+.details[open] > summary::before { content: "\2212"; }
+.details > ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; }
+.details li { display: grid; padding-top: 8px; border-top: 2px dashed rgba(14, 42, 42, 0.16); }
+.details li:first-child { border-top: 0; }
+.detailLabel { font-size: 0.9375rem; font-weight: 700; }
+
+/* Takeaway ------------------------------------------------------------------------- */
+
+.takeaway:global(.callout) { gap: 14px; padding: 22px 18px; box-shadow: var(--shadow-lg); }
+.takeaway.takeaway > p.takeawayText {
+  font-family: var(--display); font-size: clamp(1.375rem, 3vw + 0.8rem, 2.25rem);
+  font-weight: 750; line-height: 1.15; letter-spacing: -0.02em;
+}
+.open:global(.card) { gap: 12px; border-style: dashed; box-shadow: none; }
+@media (min-width: 900px) { .takeaway:global(.callout) { padding: 32px; } }
+
+/* Worked example -------------------------------------------------------------------- */
+
+.example:global(.card) { gap: 18px; padding: 20px 18px; }
+.equation {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-family: var(--display); font-weight: 800; font-size: clamp(1.375rem, 5vw, 2rem); letter-spacing: -0.02em;
+}
+.eqTile {
+  display: inline-grid; gap: 4px; padding: 8px 14px; line-height: 1;
+  background: var(--cream); border: var(--border); border-radius: 14px; box-shadow: var(--shadow-sm);
+}
+.eqUnit { font-family: var(--sans); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
+.eqOp { font-size: 1.25em; line-height: 1; }
+.eqAnswer { background: var(--optic); }
+.bars { display: grid; gap: 16px; list-style: none; margin: 0; padding: 0; }
+.bar { display: grid; gap: 6px; }
+.barHead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 10px; font-weight: 700; }
+.barHours { font-family: var(--display); font-weight: 800; }
+.barTrack {
+  position: relative; height: 34px; overflow: hidden;
+  border: var(--border); border-radius: 999px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(12.5% - 2px), rgba(14, 42, 42, 0.14) calc(12.5% - 2px) 12.5%),
+    var(--cream);
+}
+.barFill { height: 100%; width: var(--w); border-right: var(--border); border-radius: 999px; background: var(--optic); transform-origin: left center; }
+.barFillPricier { background: var(--clay); }
+.exampleBall { width: 40px; height: 40px; }
+
+@keyframes bar-grow { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .barFill { animation: bar-grow 1.1s var(--ease-bounce) both; }
+  .barFillPricier { animation-delay: 0.2s; }
+}
+
+/* Firsthand replies ------------------------------------------------------------------ */
+
+.replies { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.reply:global(.card) { gap: 12px; }
+.replyHead { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; align-items: center; }
+.replyHead :global(.media-box) { border-radius: 12px; }
+.replyHead :global(.art-label) { display: none; }
+.replyName { font-size: 1.1875rem; }
+.bubble {
+  position: relative; margin: 0; padding: 14px 16px;
+  background: var(--cream); border: var(--border); border-radius: 16px 16px 16px 4px;
+  font-size: 1.0625rem; line-height: 1.45;
+}
+
+/* Shop and demo --------------------------------------------------------------------- */
+
+.shopGrid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.shopCard:global(.card) { gap: 10px; }
+.shopPrice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.demo:global(.card) { background: var(--hardcourt-soft); }

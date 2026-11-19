@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { safeNext } from "@/app/me/_shared";
+import AuthShell from "@/app/signup/_auth/AuthShell";
 import { currentUser } from "@/lib/auth";
 import LoginForm from "./LoginForm";
 
@@ -20,22 +21,26 @@ export default async function LoginPage({
   if (await currentUser()) redirect(destination);
 
   return (
-    <div className="wrap page">
-      <div className="stack">
-        <span className="eyebrow">Welcome back</span>
-        <h1>Log in</h1>
-      </div>
-
+    <AuthShell
+      eyebrow="Welcome back"
+      title="Log in"
+      court="grass"
+      lede="Your locker, badges and reports are right where you left them."
+      perks={["Pick up your XP where you left it", "Update the hours on your gear", "Report what you kept or returned"]}
+      below={
+        <>
+          <p>
+            <Link href="/forgot-password" className="tap-link">
+              Forgot your password?
+            </Link>
+          </p>
+          <p>
+            New here? <Link href={`/signup?next=${encodeURIComponent(destination)}`}>Create an account</Link>
+          </p>
+        </>
+      }
+    >
       <LoginForm next={destination} />
-
-      <p>
-        <Link href="/forgot-password" className="tap-link">
-          Forgot your password?
-        </Link>
-      </p>
-      <p>
-        New here? <Link href={`/signup?next=${encodeURIComponent(destination)}`}>Create an account</Link>
-      </p>
-    </div>
+    </AuthShell>
   );
 }

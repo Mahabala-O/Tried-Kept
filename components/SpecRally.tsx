@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useActionState, useEffect, useRef, type CSSProperties } from "react";
+import BallRally, { type RallyBallState } from "@/components/BallRally";
+import s from "@/components/games.module.css";
+import { SourceLink } from "@/components/ui";
 import { checkRallyAnswer } from "@/lib/actions/game";
 import type { Source } from "@/lib/catalog";
-import { SourceLink, XpBar } from "@/components/ui";
 
 export type RallyQuestion = { id: string; prompt: string; options: string[] };
 
@@ -25,6 +27,8 @@ type Game = {
   streak: number;
   best: number;
   xpEarned: number;
+  /** Right or wrong for each question answered this round, for the ball rally. */
+  results: boolean[];
   feedback: Feedback | null;
   finished: boolean;
   error: string | null;
@@ -37,21 +41,62 @@ const FRESH: Game = {
   streak: 0,
   best: 0,
   xpEarned: 0,
+  results: [],
   feedback: null,
   finished: false,
   error: null,
 };
 
-function optionStyle(index: number, feedback: Feedback | null): CSSProperties {
-  const base: CSSProperties = { width: "100%", justifyContent: "flex-start", textAlign: "left" };
-  if (!feedback) return base;
-  if (index === feedback.answerIndex) {
-    return { ...base, opacity: 1, background: "var(--mint)", borderColor: "var(--court)", color: "var(--court-deep)" };
-  }
-  if (index === feedback.picked) {
-    return { ...base, opacity: 1, background: "var(--clay-soft)", borderColor: "var(--clay)", color: "var(--clay-deep)" };
-  }
-  return base;
+const LETTERS = ["A", "B", "C", "D", "E", "F"];
+const BURST = [0, 45, 90, 135, 180, 225, 270, 315];
+
+function answerState(index: number, feedback: Feedback | null): "idle" | "correct" | "wrong" | "dim" {
+  if (!feedback) return "idle";
+  if (index === feedback.answerIndex) return "correct";
+  if (index === feedback.picked) return "wrong";
+  return "dim";
+}
+
+function rallyStates(game: Game, total: number): RallyBallState[] {
+  return Array.from({ length: total }, (_, i) => {
+    if (i < game.results.length) return game.results[i] ? "right" : "wrong";
+    if (i === game.index && !game.finished) return "current";
+    return "todo";
+  });
+}
+
+function finalLine(score: number, total: number): string {
+  if (score === total) return "A clean sweep. Every answer in.";
+  if (score * 2 >= total) return "A solid rally. Replay to chase the ones that went out.";
+  return "Every miss came with its source. Give them a read and go again.";
+}
+
+function Scoreboard({ game, total }: { game: Game; total: number }) {
+  const shown = Math.min(game.index + 1, total);
+  const hot = game.streak >= 2;
+  return (
+    <dl className={s.scoreboard} aria-label="Scoreboard">
+      <div className={s.scoreCell}>
+        <dt className={s.scoreLabel}>Question</dt>
+        <dd className={s.scoreValue}>
+          {shown}
+          <small>/{total}</small>
+        </dd>
+      </div>
+      <div className={s.scoreCell}>
+        <dt className={s.scoreLabel}>Score</dt>
+        <dd className={s.scoreValue}>{game.score}</dd>
+      </div>
+      <div key={hot ? `hot-${game.streak}` : "cold"} className={hot ? `${s.scoreCell} ${s.scoreHot}` : s.scoreCell}>
+        <dt className={s.scoreLabel}>Streak</dt>
+        <dd className={s.scoreValue}>{game.streak}</dd>
+      </div>
+      <div className={s.scoreCell}>
+        <dt className={s.scoreLabel}>Best</dt>
+        <dd className={s.scoreValue}>{game.best}</dd>
+      </div>
+    </dl>
+  );
 }
 
 export default function SpecRally({ questions, loggedIn }: { questions: RallyQuestion[]; loggedIn: boolean }) {
@@ -90,6 +135,7 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
         streak,
         best: Math.max(current.best, streak),
         xpEarned: current.xpEarned + result.xpAwarded,
+        results: [...current.results, result.correct],
         feedback: {
           picked,
           correct: result.correct,
@@ -113,7 +159,12 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
   useEffect(() => {
     if (lastViewKey.current !== viewKey) {
       lastViewKey.current = viewKey;
-      headingRef.current?.focus();
+      const heading = headingRef.current;
+      if (heading) {
+        // The heading's scroll margin clears the sticky header and the score strip.
+        heading.scrollIntoView({ block: "start" });
+        heading.focus({ preventScroll: true });
+      }
     }
   }, [viewKey]);
 
@@ -127,14 +178,22 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
 
   if (game.finished) {
     return (
-      <form action={act} className="card">
+      <form action={act} className={`card ${s.panel} ${s.final} ${s.game} ${s.rise}`}>
         <span className="eyebrow">Final score</span>
-        <h2 ref={headingRef} tabIndex={-1}>
+        <p className={s.bigScore} aria-hidden="true">
+          {game.score}
+          <span>/{questions.length}</span>
+        </p>
+        <h2 ref={headingRef} tabIndex={-1} className={`${s.prompt} ${s.finalTitle}`}>
           {game.score} of {questions.length} correct
         </h2>
+        <p className="lede">{finalLine(game.score, questions.length)}</p>
+        <BallRally states={rallyStates(game, questions.length)} />
         <div className="row">
-          <span className="tag">Best streak {game.best}</span>
-          {loggedIn && <span className="tag">+{game.xpEarned} XP this rally</span>}
+          <span className="sticker sticker-paper sticker-plain tilt-left">Best streak {game.best}</span>
+          {loggedIn && (
+            <span className="sticker sticker-xp sticker-plain tilt-right pop-in">+{game.xpEarned} XP this rally</span>
+          )}
         </div>
         {loggedIn && game.xpEarned === 0 && (
           <p className="small muted">XP pays once per question, so a replay only adds XP for questions you have not got right yet.</p>
@@ -144,8 +203,8 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
             <Link href={`/signup?next=${encodeURIComponent("/play/rally")}`}>Join</Link> to earn XP for each question you get right.
           </p>
         )}
-        <div className="row">
-          <button type="submit" name="intent" value="replay" className="btn btn-primary" disabled={pending}>
+        <div className="cta-row">
+          <button type="submit" name="intent" value="replay" className="btn btn-optic btn-lg" disabled={pending}>
             Play again
           </button>
           <Link href="/play" className="btn">
@@ -161,73 +220,110 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
   const isLast = game.index + 1 >= questions.length;
 
   return (
-    <form action={act} className="card">
-      <div className="stack">
-        <div className="row between">
-          <p className="small muted">
+    <div className={s.game}>
+      <Scoreboard game={game} total={questions.length} />
+
+      <form action={act} className={`card ${s.panel}`}>
+        <div className="stack">
+          <p className={s.progressText}>
             Question {game.index + 1} of {questions.length}
           </p>
-          <div className="row">
-            <span className="tag">Streak {game.streak}</span>
-            <span className="tag">Best {game.best}</span>
-          </div>
+          <BallRally states={rallyStates(game, questions.length)} />
         </div>
-        <XpBar progress={(game.index + (feedback ? 1 : 0)) / questions.length} label="Spec Rally progress" />
-      </div>
 
-      <h2 ref={headingRef} tabIndex={-1}>
-        {question.prompt}
-      </h2>
+        <div key={`${game.round}-${game.index}`} className={s.stepIn} data-dir={game.index === 0 && game.round === 0 ? "none" : "next"}>
+          <h2 ref={headingRef} tabIndex={-1} className={s.prompt}>
+            {question.prompt}
+          </h2>
+        </div>
 
-      <div className="stack">
-        {question.options.map((option, index) => (
-          <button
-            key={option}
-            type="submit"
-            name="optionIndex"
-            value={index}
-            className="btn"
-            disabled={pending || feedback !== null}
-            style={optionStyle(index, feedback)}
-          >
-            {option}
-            {feedback && index === feedback.answerIndex ? " (correct answer)" : ""}
-            {feedback && index === feedback.picked && !feedback.correct ? " (your pick)" : ""}
-          </button>
-        ))}
-      </div>
+        <ul className={s.answers}>
+          {question.options.map((option, index) => {
+            const state = answerState(index, feedback);
+            return (
+              <li key={option}>
+                <button
+                  type="submit"
+                  name="optionIndex"
+                  value={index}
+                  className={s.answer}
+                  data-state={state}
+                  data-picked={feedback ? index === feedback.picked : undefined}
+                  data-busy={pending && !feedback ? true : undefined}
+                  disabled={pending || feedback !== null}
+                >
+                  <span className={s.mark} aria-hidden="true">
+                    {LETTERS[index] ?? index + 1}
+                  </span>
+                  <span className={s.answerText}>{option}</span>
+                  {state === "correct" && (
+                    <span className={`sticker sticker-sm sticker-paper sticker-plain tilt-right ${s.answerTag}`}>
+                      <span className="sr-only">, </span>Correct answer
+                    </span>
+                  )}
+                  {state === "wrong" && (
+                    <span className={`sticker sticker-sm sticker-paper sticker-plain tilt-left ${s.answerTag}`}>
+                      <span className="sr-only">, </span>Your pick
+                    </span>
+                  )}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
 
-      {game.error && (
-        <p className="form-error" role="alert">
-          {game.error}
-        </p>
-      )}
-
-      <div aria-live="polite" className="stack">
-        {feedback && (
-          <>
-            <p className={feedback.correct ? "form-ok" : "form-error"}>
-              {feedback.correct ? "Correct." : "Not this time."}
-              {feedback.xpAwarded > 0 ? ` +${feedback.xpAwarded} XP.` : ""}
-              {feedback.alreadyCounted ? " XP for this question is already counted." : ""}
-            </p>
-            <p>{feedback.explanation}</p>
-            {feedback.source && (
-              <p className="small muted">
-                Source: <SourceLink source={feedback.source} />
-              </p>
-            )}
-          </>
+        {game.error && (
+          <p className="form-error" role="alert">
+            {game.error}
+          </p>
         )}
-      </div>
 
-      {feedback && (
-        <div className="row">
-          <button ref={nextRef} type="submit" name="intent" value="next" className="btn btn-primary" disabled={pending}>
-            {isLast ? "See final score" : "Next question"}
-          </button>
+        <div aria-live="polite" className={s.feedback}>
+          {feedback && (
+            <>
+              <div className={`${s.verdict} ${s.rise}`}>
+                {feedback.correct && (
+                  <span className={s.burst} aria-hidden="true">
+                    {BURST.map((angle) => (
+                      <i key={angle} style={{ "--a": `${angle}deg` } as CSSProperties} />
+                    ))}
+                  </span>
+                )}
+                <span
+                  className={`sticker ${feedback.correct ? "sticker-kept pop-in" : `sticker-returned ${s.callWrong}`} ${s.callSticker} tilt-left`}
+                  aria-hidden="true"
+                >
+                  {feedback.correct ? "In" : "Out"}
+                </span>
+                <p className={s.verdictText}>
+                  {feedback.correct ? "Correct." : "Not this time."}
+                  {feedback.xpAwarded > 0 && <span className="sr-only"> +{feedback.xpAwarded} XP.</span>}
+                </p>
+                {feedback.xpAwarded > 0 && (
+                  <span className="sticker sticker-xp sticker-sm tilt-right pop-in" aria-hidden="true">
+                    +{feedback.xpAwarded} XP
+                  </span>
+                )}
+              </div>
+              {feedback.alreadyCounted && <p className="small muted">XP for this question is already counted.</p>}
+              <p className={s.explain}>{feedback.explanation}</p>
+              {feedback.source && (
+                <p className="small muted">
+                  Source: <SourceLink source={feedback.source} />
+                </p>
+              )}
+            </>
+          )}
         </div>
-      )}
-    </form>
+
+        {feedback && (
+          <div className="cta-row">
+            <button ref={nextRef} type="submit" name="intent" value="next" className="btn btn-primary btn-lg" disabled={pending}>
+              {isLast ? "See final score" : "Next question"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
   );
 }

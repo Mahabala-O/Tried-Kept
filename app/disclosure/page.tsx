@@ -1,81 +1,132 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import BallArt from "@/components/art/BallArt";
 import { SourceLink, formatDate } from "@/components/ui";
 import { RESEARCH_DATE, sources } from "@/lib/catalog";
+import s from "./disclosure.module.css";
 
 export const metadata: Metadata = {
   title: "Disclosure",
   description: "How affiliate links, evidence, dates, points and lab data work on Tried & Kept.",
 };
 
+const SECTIONS = [
+  { id: "affiliate", title: "Affiliate links" },
+  { id: "evidence", title: "Evidence and dates" },
+  { id: "points", title: "Points and badges" },
+  { id: "lab-data", title: "Lab data" },
+  { id: "your-data", title: "Your data" },
+] as const;
+
+const PROMISES = ["Some links may earn a commission", "Missing facts stay missing", "No points for praise"];
+
+function Section({ index, children }: { index: number; children: ReactNode }) {
+  const { id, title } = SECTIONS[index];
+  return (
+    <section id={id} className={`card ${s.section}`} aria-labelledby={`${id}-title`}>
+      <div className={s.sectionHead}>
+        <span className={s.num} aria-hidden="true">
+          {index + 1}
+        </span>
+        <h2 id={`${id}-title`}>{title}</h2>
+      </div>
+      {children}
+    </section>
+  );
+}
+
 export default function DisclosurePage() {
   return (
-    <div className="wrap page">
-      <div className="stack">
-        <h1>How this site works</h1>
-        <p className="lede">How we make money, where our facts come from, and what they can and cannot tell you.</p>
+    <>
+      <section className={`band band-optic ${s.hero}`} aria-labelledby="disclosure-title">
+        <div className={`wrap ${s.heroCopy}`}>
+          <span className="eyebrow">The fine print, in plain words</span>
+          <h1 id="disclosure-title" className={s.heroTitle}>
+            How this site works
+          </h1>
+          <p className="lede">How we make money, where our facts come from, and what they can and cannot tell you.</p>
+          <ul className={s.promises}>
+            {PROMISES.map((line) => (
+              <li key={line} className={s.promise}>
+                <BallArt className={s.promiseBall} />
+                {line}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <div className="wrap page">
+        <nav aria-label="On this page">
+          <ul className={`chip-scroll ${s.jump}`}>
+            {SECTIONS.map((section) => (
+              <li key={section.id}>
+                <a href={`#${section.id}`} className="chip">
+                  {section.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className={s.sections}>
+          <Section index={0}>
+            <p>
+              Some links to retailers are affiliate links. If you buy something after using one, we may earn a commission at
+              no cost to you.
+            </p>
+            <p>
+              Retailer buttons say &ldquo;Check price at&rdquo; and the retailer&apos;s name. When you use one, we record which
+              offer you chose, which part of the site you came from, and your account if you are logged in. Then we send you to
+              the retailer.
+            </p>
+            <p>Gear Match ranks shoes only on the facts we hold. Commissions play no part in its results.</p>
+          </Section>
+
+          <Section index={1}>
+            <p>
+              Catalog facts cover the U.S. market and were checked on {formatDate(RESEARCH_DATE)}. Prices can change after that
+              date, and we do not confirm stock or size availability.
+            </p>
+            <p>When we do not have a fact, we label it as missing. We do not estimate it or fill it in from a similar model.</p>
+            <p>
+              Pro gear always appears with the date it was identified and the source. A pro may use a custom or different
+              model from the retail version, and may have changed gear since that date.
+            </p>
+            <p>
+              Forum replies are short accounts from individual players. Player reports on this site are written by members, and
+              we do not verify their purchases. Treat both as one person&apos;s experience.
+            </p>
+          </Section>
+
+          <Section index={2}>
+            <p>
+              Points reward useful detail. A report on a pair you returned earns the same points as an equally detailed report
+              on a pair you kept.
+            </p>
+            <p>You earn no points for a positive review, for clicking a retailer link or for buying anything.</p>
+          </Section>
+
+          <Section index={3}>
+            <p>
+              Weights and interior widths come from RunRepeat&apos;s lab. They describe the shoes it tested, so your size and
+              width may measure differently. Use them to compare models, then confirm the fit on your own foot.
+            </p>
+            <SourceLink source={sources.rrMethods} standalone />
+          </Section>
+
+          <Section index={4}>
+            <p>
+              <Link href="/privacy">Our privacy page</Link> covers what we store, how long we keep it and how to delete your
+              account.
+            </p>
+            <p>
+              <Link href="/credits">Photo and GIF credits</Link> lists who made each picture and under which license.
+            </p>
+          </Section>
+        </div>
       </div>
-
-      <div className="stack-lg" style={{ maxWidth: "68ch" }}>
-        <section className="stack" aria-labelledby="affiliate">
-          <h2 id="affiliate">Affiliate links</h2>
-          <p>
-            Some links to retailers are affiliate links. If you buy something after using one, we may earn a commission
-            at no cost to you.
-          </p>
-          <p>
-            Retailer buttons say &ldquo;Check price at&rdquo; and the retailer&apos;s name. When you use one, we record which
-            offer you chose, which part of the site you came from, and your account if you are logged in. Then we send you
-            to the retailer.
-          </p>
-          <p>Gear Match ranks shoes only on the facts we hold. Commissions play no part in its results.</p>
-        </section>
-
-        <section className="stack" aria-labelledby="evidence">
-          <h2 id="evidence">Evidence and dates</h2>
-          <p>
-            Catalog facts cover the U.S. market and were checked on {formatDate(RESEARCH_DATE)}. Prices can change after
-            that date, and we do not confirm stock or size availability.
-          </p>
-          <p>
-            When we do not have a fact, we label it as missing. We do not estimate it or fill it in from a similar model.
-          </p>
-          <p>
-            Pro gear always appears with the date it was identified and the source. A pro may use a custom or different
-            model from the retail version, and may have changed gear since that date.
-          </p>
-          <p>
-            Forum replies are short accounts from individual players. Player reports on this site are written by members,
-            and we do not verify their purchases. Treat both as one person&apos;s experience.
-          </p>
-        </section>
-
-        <section className="stack" aria-labelledby="points">
-          <h2 id="points">Points and badges</h2>
-          <p>
-            Points reward useful detail. A report on a pair you returned earns the same points as an equally detailed
-            report on a pair you kept.
-          </p>
-          <p>You earn no points for a positive review, for clicking a retailer link or for buying anything.</p>
-        </section>
-
-        <section className="stack" aria-labelledby="lab-data">
-          <h2 id="lab-data">Lab data</h2>
-          <p>
-            Weights and interior widths come from RunRepeat&apos;s lab. They describe the shoes it tested, so your size and
-            width may measure differently. Use them to compare models, then confirm the fit on your own foot.
-          </p>
-          <SourceLink source={sources.rrMethods} standalone />
-        </section>
-
-        <section className="stack" aria-labelledby="your-data">
-          <h2 id="your-data">Your data</h2>
-          <p>
-            <Link href="/privacy">Our privacy page</Link> covers what we store, how long we keep it and how to delete your
-            account.
-          </p>
-        </section>
-      </div>
-    </div>
+    </>
   );
 }

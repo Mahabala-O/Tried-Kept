@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import CourtArt from "@/components/art/CourtArt";
 import CostCalculator from "@/components/CostCalculator";
+import GameHeader from "../GameHeader";
 
 export const metadata: Metadata = {
   title: "Court Cost",
@@ -9,15 +10,16 @@ export const metadata: Metadata = {
 
 export default function CourtCostPage() {
   return (
-    <div className="wrap page">
-      <header className="stack">
-        <Link href="/play" className="small tap-link">
-          Back to games
-        </Link>
-        <h1>Court Cost</h1>
-        <p className="lede">A pricier pair can cost less per hour if it lasts longer. See how much longer it needs to last.</p>
-      </header>
-      <CostCalculator />
-    </div>
+    <>
+      <GameHeader
+        title="Court Cost"
+        lede="A pricier pair can cost less per hour if it lasts longer. See how much longer it needs to last."
+        tone="grass"
+        art={<CourtArt variant="hard" />}
+      />
+      <div className="wrap page">
+        <CostCalculator />
+      </div>
+    </>
   );
 }

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { FormMessage } from "@/app/me/_components/FormMessage";
 import type { ActionState } from "@/app/me/_shared";
+import styles from "@/app/signup/_auth/auth.module.css";
 import { confirmEmailAction } from "@/lib/actions/account";
 
 const initial: ActionState = {};
@@ -14,12 +15,11 @@ export default function ConfirmEmailForm({ token }: { token: string }) {
   return (
     <form className="form" action={action}>
       <input type="hidden" name="token" value={token} />
+      <p>One tap and your locker is open.</p>
       <FormMessage state={state} />
-      <div>
-        <button type="submit" className="btn btn-primary" disabled={pending}>
-          {pending ? "Confirming" : "Confirm and log in"}
-        </button>
-      </div>
+      <button type="submit" className={`btn btn-optic btn-lg ${styles.submit}`} disabled={pending}>
+        {pending ? "Confirming" : "Confirm and log in"}
+      </button>
     </form>
   );
 }

@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BadgeSheet from "@/app/me/_components/BadgeSheet";
 import { LockerFacts } from "@/app/me/_components/LockerFacts";
+import PlayerCard from "@/app/me/_components/PlayerCard";
 import { getPublicLocker, getPublicProfile } from "@/app/me/_data";
 import { LOCKER_STATUSES, PLAY_LEVELS, SURFACES, USERNAME_PATTERN, labelFor } from "@/app/me/_shared";
+import styles from "@/app/me/me.module.css";
+import { ProductImage } from "@/components/MediaFrame";
 import ShareProfile from "@/components/ShareProfile";
 import UserReports from "@/components/UserReports";
 import { currentUser } from "@/lib/auth";
 import { getProduct, productLabel } from "@/lib/catalog";
 import { getDb } from "@/lib/db";
 import { badgesFor, levelFor, totalXp } from "@/lib/gamification";
+import { countReports } from "@/lib/reports";
 
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ username: string }> };
+
+const STATUS_STICKER = { using: "sticker-kept", retired: "sticker-paper", want: "sticker-blue" } as const;
 
 function loadProfile(raw: string) {
   const username = raw.toLowerCase();
@@ -39,7 +46,9 @@ export default async function PublicProfilePage({ params }: Props) {
   const xp = totalXp(db, profile.id);
   const level = levelFor(xp);
   const earned = badgesFor(db, profile.id).filter((badge) => badge.earned);
+  // Only public columns: no price paid, no notes.
   const locker = getPublicLocker(profile.id);
+  const reportCount = countReports({ userId: profile.id });
   const viewer = await currentUser();
   const isOwner = viewer?.id === profile.id;
 
@@ -48,80 +57,100 @@ export default async function PublicProfilePage({ params }: Props) {
 
   return (
     <div className="wrap page">
-      <header className="stack">
-        <span className="eyebrow">Player profile</span>
-        <h1 style={{ overflowWrap: "anywhere" }}>{profile.display_name}</h1>
-        <p className="muted">@{profile.username}</p>
-        <p style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }} className={profile.bio ? undefined : "muted"}>
-          {profile.bio || "No bio yet."}
-        </p>
-        <div className="row">
-          <span className="tag">{level.name}</span>
-          <span className="tag">{xp} XP</span>
-          <span className="tag">{surface ? `${surface} courts` : "Home surface not set"}</span>
-          <span className="tag">{playLevel ?? "Play level not set"}</span>
+      <div className={styles.profileLayout}>
+        <div className={styles.cardColumn}>
+          <span className="eyebrow">Player card</span>
+          <PlayerCard
+            layout="portrait"
+            displayName={profile.display_name}
+            username={profile.username}
+            level={level}
+            xp={xp}
+            surface={profile.home_surface}
+            stats={[
+              { label: locker.length === 1 ? "Item" : "Items", value: locker.length },
+              { label: reportCount === 1 ? "Report" : "Reports", value: reportCount },
+              { label: earned.length === 1 ? "Badge" : "Badges", value: earned.length },
+            ]}
+          >
+            <p className={`${styles.bio} ${profile.bio ? "" : "muted"}`}>{profile.bio || "No bio yet."}</p>
+            <div className={styles.facts}>
+              <span className="tag">{surface ? `${surface} courts` : "Home surface not set"}</span>
+              <span className="tag">{playLevel ?? "Play level not set"}</span>
+            </div>
+            <div className={styles.actions}>
+              <ShareProfile
+                username={profile.username}
+                displayName={profile.display_name}
+                className="btn btn-optic"
+              />
+              {isOwner && (
+                <Link href="/me" className="btn">
+                  Edit my locker
+                </Link>
+              )}
+            </div>
+          </PlayerCard>
         </div>
-        <div className="row">
-          <ShareProfile username={profile.username} displayName={profile.display_name} />
-          {isOwner && (
-            <Link href="/me" className="btn">
-              Edit my locker
-            </Link>
-          )}
+
+        <div className="stack-lg">
+          <section className="stack-lg" aria-labelledby="locker-heading">
+            <h2 id="locker-heading">In the bag</h2>
+            {locker.length === 0 ? (
+              <p className={`small ${styles.emptyGroup}`}>Nothing in this locker yet.</p>
+            ) : (
+              LOCKER_STATUSES.map((status) => {
+                const items = locker.filter((item) => item.status === status.value);
+                if (items.length === 0) return null;
+                return (
+                  <div className="stack" key={status.value}>
+                    <h3 className={styles.groupHead}>
+                      {status.label}
+                      <span className={styles.count}>{items.length}</span>
+                    </h3>
+                    <div className={styles.lockerGrid}>
+                      {items.map((item) => {
+                        const product = getProduct(item.product_slug);
+                        return (
+                          <article className={`card ${styles.item}`} key={item.id}>
+                            {product && <ProductImage product={product} ratio="16 / 10" />}
+                            <div className={styles.itemBody}>
+                              <div className={styles.itemTitle}>
+                                <h4>
+                                  {product ? (
+                                    <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link>
+                                  ) : (
+                                    <span className="muted">Model no longer listed</span>
+                                  )}
+                                </h4>
+                                <span className={`sticker sticker-sm ${STATUS_STICKER[item.status]} tilt-right`}>
+                                  {status.label}
+                                </span>
+                              </div>
+                              <LockerFacts item={item} />
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </section>
+
+          <section className="stack" aria-labelledby="badges-heading">
+            <h2 id="badges-heading">Badges</h2>
+            {earned.length === 0 ? (
+              <p className={`small ${styles.emptyGroup}`}>No badges earned yet.</p>
+            ) : (
+              <BadgeSheet badges={earned} label={`Badges ${profile.display_name} has earned`} />
+            )}
+          </section>
+
+          <UserReports userId={profile.id} />
         </div>
-      </header>
-
-      <section className="stack-lg" aria-labelledby="locker-heading">
-        <h2 id="locker-heading">Locker</h2>
-        {locker.length === 0 ? (
-          <p className="muted">Nothing in this locker yet.</p>
-        ) : (
-          LOCKER_STATUSES.map((status) => {
-            const items = locker.filter((item) => item.status === status.value);
-            if (items.length === 0) return null;
-            return (
-              <div className="stack" key={status.value}>
-                <h3>{status.label}</h3>
-                <div className="grid">
-                  {items.map((item) => {
-                    const product = getProduct(item.product_slug);
-                    return (
-                      <article className="card" key={item.id}>
-                        {product ? (
-                          <Link href={`/gear/${product.slug}`} className="tap-link">
-                            {productLabel(product)}
-                          </Link>
-                        ) : (
-                          <span className="muted">Model no longer listed</span>
-                        )}
-                        <LockerFacts item={item} />
-                      </article>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })
-        )}
-      </section>
-
-      <section className="stack" aria-labelledby="badges-heading">
-        <h2 id="badges-heading">Badges</h2>
-        {earned.length === 0 ? (
-          <p className="muted">No badges earned yet.</p>
-        ) : (
-          <div className="grid">
-            {earned.map((badge) => (
-              <div key={badge.id} className="badge badge-earned">
-                <strong>{badge.name}</strong>
-                <span className="small">{badge.description}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <UserReports userId={profile.id} />
+      </div>
     </div>
   );
 }

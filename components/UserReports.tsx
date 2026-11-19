@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { BallArt } from "@/components/art";
 import ReportCard from "@/components/ReportCard";
 import { currentUser } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { countReports, listReports } from "@/lib/reports";
+import styles from "./reports.module.css";
 
 const SHOWN = 50;
 
@@ -16,12 +18,16 @@ export default async function UserReports({ userId }: { userId: number }) {
       <section className="stack" aria-labelledby="user-reports-heading">
         <h2 id="user-reports-heading">Reports</h2>
         {viewerId === userId ? (
-          <div className="callout">
-            <p>You have not reported on any gear yet.</p>
-            <div className="row">
-              <Link href="/report/new" className="btn btn-primary">
-                Write your first report
-              </Link>
+          <div className={`callout ${styles.empty}`}>
+            <BallArt bounce className={styles.emptyBall} />
+            <div className="stack">
+              <p>You have not reported on any gear yet.</p>
+              <span className="small">Kept it, returned it or still testing? Every honest report helps the next player.</span>
+              <div className="cta-row">
+                <Link href="/report/new" className="btn btn-primary">
+                  Write your first report
+                </Link>
+              </div>
             </div>
           </div>
         ) : (
@@ -37,16 +43,18 @@ export default async function UserReports({ userId }: { userId: number }) {
     | undefined;
 
   return (
-    <section className="stack" aria-labelledby="user-reports-heading">
-      <div className="row between">
-        <h2 id="user-reports-heading">Reports</h2>
+    <section className="stack-lg" aria-labelledby="user-reports-heading">
+      <div className={styles.sectionHead}>
+        <h2 id="user-reports-heading">
+          Reports <span className={`sticker sticker-paper sticker-sm tilt-right ${styles.headCount}`}>{total}</span>
+        </h2>
         {viewerId === userId && (
-          <Link href="/report/new" className="btn">
+          <Link href="/report/new" className="btn btn-optic">
             Add a report
           </Link>
         )}
       </div>
-      <div className="stack">
+      <div className={styles.list}>
         {reports.map((report) => (
           <ReportCard key={report.id} report={report} viewerId={viewerId} />
         ))}

@@ -1,0 +1,185 @@
+/* The report form: numbered sections, tappable tiles and a sticky XP meter.
+   Mobile first at 375px; motion only inside prefers-reduced-motion: no-preference. */
+
+.form { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; max-width: 680px; }
+/* Fields scrolled to by keyboard or the section chips clear the header and the dock. */
+.form :is(input, select, textarea) { scroll-margin-block: calc(var(--header-h) + 16px) calc(var(--bottom-nav-h) + 96px); }
+
+/* Section jump chips */
+.steps { margin-bottom: -6px; }
+.steps ol { list-style: none; margin-block: 0; }
+.steps li { display: flex; }
+.stepNum {
+  display: grid; place-items: center; width: 24px; height: 24px; flex: none;
+  border: 2px solid var(--ink); border-radius: 50%; background: var(--paper);
+  font-family: var(--display); font-weight: 800; font-size: 0.8125rem; line-height: 1;
+}
+.stepDone .stepNum { background: var(--grass); }
+
+/* Section cards */
+.section {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px;
+  padding: 18px 16px 20px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.sectionHead { display: flex; align-items: center; gap: 12px; }
+.sectionNum {
+  display: grid; place-items: center; width: 44px; height: 44px; flex: none;
+  border: var(--border); border-radius: 50%;
+  background: var(--optic); color: var(--ink);
+  font-family: var(--display); font-weight: 800; font-size: 1.375rem; line-height: 1;
+  box-shadow: var(--shadow-sm);
+  transform: rotate(-6deg);
+}
+.num_2 { background: var(--clay); }
+.num_3 { background: var(--hardcourt-soft); }
+.sectionTitle { font-size: clamp(1.5rem, 3vw + 0.9rem, 2rem); }
+.sectionSub { color: var(--ink-soft); font-size: 0.9375rem; }
+
+/* A label with its XP tag on the right. */
+.labelRow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 10px; }
+.labelRow label, .labelRow legend { font-weight: 700; }
+.legendRow { width: 100%; font-weight: 700; }
+.optional { font-weight: 500; color: var(--ink-soft); }
+.required {
+  display: inline-block; margin-left: 6px; padding: 1px 8px;
+  border: 2px solid var(--ink); border-radius: 999px; background: var(--clay-soft);
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: 2px;
+}
+.xpTag {
+  display: inline-flex; align-items: center; gap: 4px; flex: none;
+  padding: 2px 10px; border: 2px dashed rgba(14, 42, 42, 0.45); border-radius: 999px;
+  background: transparent; color: var(--ink-soft);
+  font-family: var(--display); font-size: 0.8125rem; font-weight: 800; line-height: 1.3;
+}
+.xpTagOn { border-style: solid; border-color: var(--ink); background: var(--optic); color: var(--ink); transform: rotate(-3deg); }
+
+.counter { justify-self: end; font-size: 0.8125rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* Selected product preview */
+.preview {
+  display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 14px; align-items: center;
+  padding: 10px; background: var(--cream); border: 2px solid var(--ink); border-radius: 14px;
+}
+.preview :global(.media-box) { border-radius: 12px; }
+.preview :global(.art-label) { top: 4px; left: 4px; padding: 0 5px; font-size: 0.5625rem; border-width: 1.5px; }
+.preview :global(.art-label-long) { display: none; }
+.preview :global(.art-label-short) { display: inline; }
+.preview :global(.art-frame > svg) { width: 78%; height: 78%; margin-top: 8%; }
+.previewName { font-family: var(--display); font-weight: 800; font-size: 1.125rem; line-height: 1.15; letter-spacing: -0.015em; overflow-wrap: anywhere; }
+
+/* Tiles and chips that wrap a visually hidden radio. The radio still takes focus and clicks. */
+.pick { position: relative; cursor: pointer; }
+.pick > input {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+  opacity: 0; cursor: pointer; z-index: 1;
+}
+.pick:has(input:focus-visible) { outline: 3px solid var(--hardcourt-deep); outline-offset: 3px; }
+
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; border: 0; }
+/* Doubled up with the parent class so these always beat the generic form label rule. */
+.tiles .tile {
+  display: grid; gap: 4px; align-content: start; min-height: 96px; padding: 12px;
+  border: var(--border); border-radius: 16px; background: var(--cream); color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.tileWord {
+  justify-self: start;
+  font-family: var(--display); font-weight: 800; font-size: 1.125rem; line-height: 1.1; letter-spacing: -0.01em;
+}
+.tileNote { font-size: 0.875rem; color: var(--ink-soft); line-height: 1.3; }
+.tiles .tile:hover { background: var(--cream-deep); }
+.tile:has(input:checked) { transform: rotate(-1.5deg); box-shadow: var(--shadow); }
+.tile_kept:has(input:checked) { background: var(--grass); }
+.tile_returned:has(input:checked) { background: var(--clay); }
+.tile_rejected:has(input:checked) { background: var(--ink); color: var(--optic); }
+.tile_testing:has(input:checked) { background: var(--optic); }
+.tile:has(input:checked) .tileNote { color: var(--ink); }
+.tile_rejected:has(input:checked) .tileNote { color: var(--cream); }
+
+.chipSet { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+.chipSet .chipPick {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-width: 48px; min-height: 48px; padding: 8px 14px;
+  border: var(--border); border-radius: 999px; background: var(--paper); color: var(--ink);
+  font-weight: 700; line-height: 1.2; box-shadow: var(--shadow-sm);
+}
+.chipSet .chipPick:hover { background: var(--cream-deep); }
+.chipPick:has(input:checked) { background: var(--optic); box-shadow: 3px 3px 0 var(--ink); }
+.comfortBall { width: 18px; height: 18px; }
+
+.pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+@media (min-width: 600px) {
+  .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section { padding: 24px 24px 26px; }
+}
+@media (min-width: 700px) {
+  .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.fine { color: var(--ink-soft); font-size: 0.9375rem; }
+
+/* Sticky XP dock: sits above the phone tab bar so Publish stays in thumb reach. */
+.dock {
+  position: sticky;
+  bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + 8px);
+  z-index: 20;
+  display: grid; gap: 8px;
+  padding: 6px 6px 6px 10px;
+  background: var(--ink); color: var(--cream);
+  --fg: var(--cream); --fg-soft: #c9d6d3; --focus: var(--optic);
+  border: var(--border); border-radius: 20px;
+  box-shadow: 4px 4px 0 rgba(14, 42, 42, 0.35);
+}
+@media (min-width: 900px) {
+  .dock { bottom: 16px; padding: 14px 14px 14px 18px; }
+}
+.dockRow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; }
+.xpNow {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  padding: 6px 12px; border: 2px solid var(--cream); border-radius: 999px;
+  background: var(--optic); color: var(--ink);
+  font-family: var(--display); font-weight: 800; line-height: 1; white-space: nowrap;
+  transform: rotate(-4deg);
+  font-variant-numeric: tabular-nums;
+}
+.xpNumber { font-size: 1.5rem; letter-spacing: -0.03em; }
+.xpUnit { font-size: 0.875rem; }
+.meterCol { display: grid; gap: 4px; min-width: 0; }
+.meter { position: relative; height: 14px; overflow: hidden; background: rgba(255, 247, 230, 0.16); border: 2px solid var(--cream); border-radius: 999px; }
+.meterFill {
+  position: absolute; inset: 0; border-radius: 999px;
+  background: repeating-linear-gradient(-45deg, var(--optic) 0 8px, #d4f01f 8px 16px);
+  transform-origin: left center;
+}
+.meterText { font-size: 0.8125rem; line-height: 1.25; color: #c9d6d3; }
+.meterLong { display: none; }
+@media (min-width: 600px) {
+  .meterShort { display: none; }
+  .meterLong { display: inline; }
+}
+.publish { min-height: 48px; padding-inline: 16px; white-space: nowrap; background: var(--optic); color: var(--ink); border-color: var(--cream); box-shadow: none; }
+.publish:hover { background: #f0ff7a; color: var(--ink); }
+.dockError {
+  margin: 0; padding: 8px 12px;
+  background: var(--clay-soft); color: var(--ink);
+  border: 2px solid var(--clay); border-radius: 12px;
+  font-weight: 700;
+}
+
+/* One row on every phone (about 64px tall), so the dock covers as little of the form as possible. */
+@media (max-width: 389.98px) {
+  .xpNumber { font-size: 1.25rem; }
+  .publish { padding-inline: 12px; }
+}
+
+@keyframes bump { 0% { transform: rotate(-4deg) scale(1); } 40% { transform: rotate(3deg) scale(1.18); } 100% { transform: rotate(-4deg) scale(1); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .meterFill { transition: transform 0.5s var(--ease-bounce); }
+  .xpBump { animation: bump 0.45s var(--ease-bounce); }
+  .tile, .chipPick, .xpTag { transition: transform 0.2s var(--ease-bounce), background-color 0.15s ease, box-shadow 0.2s var(--ease-bounce); }
+  .tile:hover, .chipPick:hover { transform: translateY(-2px); }
+  .tile:has(input:checked):hover { transform: rotate(-1.5deg) translateY(-2px); }
+}

@@ -4,6 +4,7 @@ import { useActionState, useId, useState } from "react";
 import { removeLockerItemAction, updateLockerItemAction } from "@/lib/actions/locker";
 import type { LockerRow } from "../_data";
 import { LIMITS, LOCKER_STATUSES, type ActionState } from "../_shared";
+import styles from "../me.module.css";
 import { FormMessage } from "./FormMessage";
 import { submitKeepingValues } from "./submit";
 
@@ -16,7 +17,7 @@ export default function LockerItemEditor({ item, label }: { item: LockerRow; lab
   const id = useId();
 
   return (
-    <details>
+    <details className={styles.editor}>
       <summary className="btn" aria-label={`Edit details for ${label}`}>
         Edit details
       </summary>

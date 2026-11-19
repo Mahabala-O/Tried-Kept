@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
+import MediaFrame, { ProImage, ProductImage } from "@/components/MediaFrame";
 import { GapNote, OfferButtons, SourceLink, formatDate } from "@/components/ui";
 import {
   comparisonsFor,
@@ -11,6 +13,8 @@ import {
   type BagItem,
   type Product,
 } from "@/lib/catalog";
+import { proMedia } from "@/lib/media";
+import s from "../pros.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -44,8 +48,16 @@ function BagEntry({ item }: { item: BagItem }) {
 
   if (!product || !item.identifiedOn) {
     return (
-      <article className="card">
-        <span className="eyebrow">{item.slot}</span>
+      <article className={`card ${s.unknownCard}`}>
+        <div className={s.unknownTop}>
+          <div className={s.unknownArt} aria-hidden="true">
+            <span className={s.unknownMark}>?</span>
+          </div>
+          <div className={s.gearStickers}>
+            <span className="sticker sticker-ink sticker-sm tilt-left">{item.slot}</span>
+            <span className="sticker sticker-paper sticker-sm sticker-plain tilt-right">Not identified yet</span>
+          </div>
+        </div>
         <GapNote>{item.evidence}</GapNote>
         <p className="small muted">
           Reference: <SourceLink source={item.source} />
@@ -57,22 +69,27 @@ function BagEntry({ item }: { item: BagItem }) {
   const cheaper = lowerPricedChoice(product);
 
   return (
-    <article className="card">
-      <span className="eyebrow">{item.slot}</span>
-      <h3>
+    <article className={`card ${s.gearCard}`}>
+      <ProductImage product={product} ratio="4 / 3" />
+      <div className={s.gearStickers}>
+        <span className="sticker sticker-ink sticker-sm tilt-left">{item.slot}</span>
+        <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-right">Identified {formatDate(item.identifiedOn)}</span>
+      </div>
+      <h3 className={s.gearName}>
         <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link>
       </h3>
-      <p className="small">
-        <strong>Identified {formatDate(item.identifiedOn)}.</strong> {item.evidence}
-      </p>
+      <p className="small">{item.evidence}</p>
       <SourceLink source={item.source} standalone />
       <OfferButtons product={product} from="pro" />
       {cheaper && (
-        <div className="stack">
-          <p className="small muted">
-            The {cheaper.other.name} was ${cheaper.saving} less at {datedPrice(cheaper.other)}.
+        <div className={s.cheaper}>
+          <p className="small">
+            <strong>
+              The {cheaper.other.name} was ${cheaper.saving} less
+            </strong>{" "}
+            at {datedPrice(cheaper.other)}.
           </p>
-          <div className="row">
+          <div className="cta-row">
             <Link href={`/compare/${cheaper.comparison.slug}`} className="btn">
               Compare with the {cheaper.other.name}
             </Link>
@@ -88,31 +105,87 @@ export default async function ProPage({ params }: Props) {
   const pro = getPro(slug);
   if (!pro) notFound();
 
+  const media = proMedia[pro.slug];
+  const heroGif = media?.gifs[0] ?? null;
+  // The hero shows the first clip (or the portrait when there is no clip). The gallery shows the rest.
+  const galleryGifs = heroGif ? (media?.gifs.slice(1) ?? []) : [];
+  const galleryPhoto = heroGif ? (media?.portrait ?? null) : null;
+  const hasGallery = galleryGifs.length > 0 || galleryPhoto !== null;
+
+  const dates = pro.bag.flatMap((item) => (item.productSlug && item.identifiedOn ? [item.identifiedOn] : []));
+  const latest = dates.length > 0 ? dates.reduce((a, b) => (a > b ? a : b)) : null;
+
   return (
-    <div className="wrap page">
-      <div className="stack">
-        <Link href="/pros" className="small tap-link">
-          All pros
-        </Link>
-        <h1>{pro.name}</h1>
-        <p className="lede">
-          What was identified, when, and who says so. This may not be what {pro.name} is using today.
-        </p>
-      </div>
-
-      <div className="callout">
-        <span className="eyebrow">Before you copy a pro</span>
-        <p>{pro.caveat}</p>
-      </div>
-
-      <section className="stack" aria-labelledby="bag">
-        <h2 id="bag">Dated bag</h2>
-        <div className="grid">
-          {pro.bag.map((item) => (
-            <BagEntry key={item.slot} item={item} />
-          ))}
+    <>
+      <section className={`band band-hardcourt court-lines ${s.hero}`} aria-labelledby="pro-title">
+        <div className={`wrap ${s.heroGrid} ${s.heroGridMediaFirst}`}>
+          <div className={s.heroCopy}>
+            <Link href="/pros" className={`small tap-link ${s.back}`}>
+              All pros
+            </Link>
+            <span className="eyebrow">Pro bag</span>
+            <h1 id="pro-title" className={s.heroTitle}>
+              {pro.name}
+            </h1>
+            <p className="lede">
+              What was identified, when, and who says so. This may not be what {pro.name} is using today.
+            </p>
+            <div className={s.heroStats}>
+              <span className="sticker sticker-xp sticker-plain tilt-left">
+                {dates.length} dated {dates.length === 1 ? "item" : "items"}
+              </span>
+              {latest && (
+                <span className="sticker sticker-paper sticker-plain sticker-wrap tilt-right">Latest: {formatDate(latest)}</span>
+              )}
+            </div>
+          </div>
+          <div className={s.heroMedia}>
+            <ProImage slug={pro.slug} prefer="gif" ratio="1 / 1" eager artBg="#E6FF3D" note="Shows the player, not the gear in the bag below." />
+            <span className={`sticker sticker-ink ${s.heroSticker}`} style={{ "--tilt": "-6deg" } as CSSProperties}>
+              Dated bag
+            </span>
+          </div>
         </div>
       </section>
-    </div>
+
+      <div className="wrap page">
+        <div className="callout">
+          <span className="eyebrow">Before you copy a pro</span>
+          <p>{pro.caveat}</p>
+        </div>
+
+        <section className="stack-lg" aria-labelledby="bag">
+          <h2 id="bag">Dated bag</h2>
+          <div className={s.bag}>
+            {pro.bag.map((item) => (
+              <BagEntry key={item.slot} item={item} />
+            ))}
+          </div>
+        </section>
+
+        {hasGallery && (
+          <section className="stack-lg" aria-labelledby="on-court">
+            <div className="stack">
+              <h2 id="on-court">On court</h2>
+              <p className="muted">
+                Clips and photos of {pro.name}. They show the player, not the gear in the bag above.
+              </p>
+            </div>
+            <ul className={s.gallery} aria-label={`Clips and photos of ${pro.name}`} tabIndex={0}>
+              {galleryGifs.map((gif) => (
+                <li key={gif.id}>
+                  <MediaFrame gif={gif} fallback={null} ratio="4 / 3" />
+                </li>
+              ))}
+              {galleryPhoto && (
+                <li>
+                  <MediaFrame photo={galleryPhoto} fallback={null} ratio="4 / 3" />
+                </li>
+              )}
+            </ul>
+          </section>
+        )}
+      </div>
+    </>
   );
 }

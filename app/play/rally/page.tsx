@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import BallArt from "@/components/art/BallArt";
 import SpecRally, { type RallyQuestion } from "@/components/SpecRally";
 import { currentUser } from "@/lib/auth";
 import { quizQuestions } from "@/lib/quiz";
+import GameHeader from "../GameHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -22,15 +23,16 @@ export default async function SpecRallyPage() {
   }));
 
   return (
-    <div className="wrap page">
-      <header className="stack">
-        <Link href="/play" className="small tap-link">
-          Back to games
-        </Link>
-        <h1>Spec Rally</h1>
-        <p className="lede">One question at a time. Every fact comes with its source.</p>
-      </header>
-      <SpecRally questions={questions} loggedIn={user !== null} />
-    </div>
+    <>
+      <GameHeader
+        title="Spec Rally"
+        lede="One question at a time. Every fact comes with its source."
+        tone="clay"
+        art={<BallArt bounce />}
+      />
+      <div className="wrap page">
+        <SpecRally questions={questions} loggedIn={user !== null} />
+      </div>
+    </>
   );
 }

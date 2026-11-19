@@ -148,3 +148,10 @@ export function getDb(): DatabaseSync {
   }
   return globalForDb.__triedKeptDb;
 }
+
+/** Closes the shared database if it was opened. Safe to call more than once. */
+export function closeDb(): void {
+  const db = globalForDb.__triedKeptDb;
+  globalForDb.__triedKeptDb = undefined;
+  db?.close();
+}

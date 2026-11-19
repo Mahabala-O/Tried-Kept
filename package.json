@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p ${PORT:-3000}",
+    "start": "NEXT_MANUAL_SIG_HANDLE=true exec next start -p ${PORT:-3000}",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

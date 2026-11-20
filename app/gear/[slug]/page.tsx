@@ -1,5 +1,6 @@
 import { bagDateLabel } from "@/lib/discovery";
 import GearEvidence from "@/components/GearEvidence";
+import ShoeRatings from "@/components/ShoeRatings";
 import StoryCard from "@/components/StoryCard";
 import { storiesForProduct } from "@/lib/editorial";
 import type { Metadata } from "next";
@@ -208,6 +209,7 @@ export default async function ProductPage({ params }: Props) {
       </section>
 
       <div className="wrap page">
+        <ShoeRatings productSlug={product.slug} />
         <GearEvidence productSlug={product.slug} />
         <KeyFacts product={product} />
         {product.offers.length > 0 && (

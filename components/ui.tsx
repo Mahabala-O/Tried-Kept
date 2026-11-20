@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShoeRatingLine } from "@/components/ShoeRatings";
 import { ProductImage } from "@/components/MediaFrame";
 import { offerHref, type EntryPoint } from "@/lib/affiliate";
 import { datedPrice, formatDate, productLabel, retailers, type Product, type Source } from "@/lib/catalog";
@@ -107,6 +108,7 @@ export function ProductCard({ product }: { product: Product }) {
           </Link>
         </h3>
         <p className="small muted">{product.summary}</p>
+        <ShoeRatingLine productSlug={product.slug} />
       </div>
       <div className="price-row">
         <PriceSticker product={product} />

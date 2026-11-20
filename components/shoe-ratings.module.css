@@ -1,0 +1,230 @@
+.section {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+  scroll-margin-top: 100px;
+}
+.heading {
+  display: grid;
+  gap: 8px;
+}
+.heading p {
+  max-width: 65ch;
+  color: var(--fg-soft);
+}
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 16px;
+}
+.overview:empty {
+  display: none;
+}
+.average,
+.experts {
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  min-width: 0;
+}
+.average {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+}
+.label {
+  font-weight: 800;
+}
+.bigScore {
+  font: 800 clamp(2.4rem, 5vw, 3.5rem) / 1.1 var(--display);
+  letter-spacing: -0.04em;
+}
+.bigScore small,
+.sourceScore small,
+.experts small,
+.metrics small {
+  font-size: 0.55em;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.count {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+.experts {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  margin: 0;
+}
+.experts > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.experts dt {
+  font-weight: 700;
+  flex: 1 1 8rem;
+  min-width: 0;
+}
+.experts dd {
+  margin: 0;
+  text-align: right;
+}
+.experts strong {
+  font-size: 1.5rem;
+}
+.subtle {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.sources {
+  display: grid;
+  gap: 10px;
+}
+.source {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.source summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  min-height: 64px;
+  cursor: pointer;
+  list-style: none;
+}
+.source summary::-webkit-details-marker {
+  display: none;
+}
+.sourceName {
+  font-weight: 800;
+}
+.sourceName::before {
+  content: "+ ";
+  color: var(--link-default);
+}
+.source[open] .sourceName::before {
+  content: "− ";
+}
+.sourceScore {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.sourceBody {
+  display: grid;
+  gap: 14px;
+  padding: 0 16px 16px;
+  min-width: 0;
+}
+.scope {
+  grid-column: 1 / -1;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 16px 0;
+  border-block: 1px solid var(--ink-soft);
+}
+.metrics dt {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+.metrics dd {
+  margin: 4px 0 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.note,
+.checked {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 44px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--link-default);
+}
+.gap {
+  padding: 14px 16px;
+  border-left: 4px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+.method summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.method summary::after {
+  content: " +";
+  white-space: pre;
+}
+.method[open] summary::after {
+  content: " −";
+}
+.method > div {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+  max-width: 75ch;
+  color: var(--fg-soft);
+  font-size: 0.875rem;
+}
+.section summary:focus-visible,
+.sourceLink:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+.section p {
+  margin: 0;
+}
+.cardLine {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.cardLine span {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+@media (max-width: 359px) {
+  .source summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sourceScore {
+    text-align: left;
+  }
+}

@@ -1,0 +1,420 @@
+{
+  "checkedOn": "2026-11-20",
+  "note": "Public pages checked during research. HTTP 200 alone does not verify a rating; only curated observations are displayed. Blocked, missing, wrong-variant and uncounted pools are not averaged. Search-index-only figures were not imported.",
+  "sources": [
+    {
+      "url": "https://www.tenniswarehouse-europe.com/learning_center/shoe_reviews/asics_court_ff_3_mens.html?lang=en",
+      "resolvedUrl": "https://www.tenniswarehouse-europe.com/learning_center/shoe_reviews/asics_court_ff_3_mens.html?lang=en",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_solution_speed_ff_4_womens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_solution_speed_ff_4_womens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_X_womens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_X_womens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.asics.com/us/en-us/solution-speed-ff-4-clay/p/ANA_1042A305-400.html",
+      "resolvedUrl": "https://www.asics.com/us/en-us/solution-speed-ff-4-clay/p/ANA_1042A305-400.html",
+      "status": 403,
+      "used": false
+    },
+    {
+      "url": "https://www.nike.com/t/vapor-12-mens-hard-court-tennis-shoes-45fp1Une/FV5552-003",
+      "resolvedUrl": "https://www.nike.com/t/zoom-vapor-12-prm-mens-clay-court-tennis-shoes-45fp1Une",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/nike-vapor-12",
+      "resolvedUrl": "https://runrepeat.com/nike-vapor-12",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.nike.com/t/vapor-pro-3-mens-hard-court-tennis-shoes-SpZRz675/FZ2161-101",
+      "resolvedUrl": "https://www.nike.com/t/vapor-pro-3-mens-hard-court-tennis-shoes-SpZRz675/FZ2161-101",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/nike-vapor-pro-3",
+      "resolvedUrl": "https://runrepeat.com/nike-vapor-pro-3",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/asics-gel-resolution-9",
+      "resolvedUrl": "https://runrepeat.com/asics-gel-resolution-9",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.asics.com/us/en-us/gel-resolution-x-wide/p/ANA_1041A487-104.html",
+      "resolvedUrl": "https://www.asics.com/us/en-us/gel-resolution-x-wide/p/ANA_1041A487-104.html",
+      "status": 403,
+      "used": false
+    },
+    {
+      "url": "https://www.asics.com/us/en-us/gel-resolution-x-wide/p/ANA_1042A278-102.html",
+      "resolvedUrl": "https://www.asics.com/us/en-us/gel-resolution-x-wide/p/ANA_1042A278-102.html",
+      "status": 403,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/asics-solution-speed-ff-4",
+      "resolvedUrl": "https://runrepeat.com/asics-solution-speed-ff-4",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Learning_Center/shoe_reviews/asics_solution_speed_ff_4_mens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Learning_Center/shoe_reviews/asics_solution_speed_ff_4_mens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.asics.com/us/en-us/solution-speed-ff-4/p/ANA_1041A532-100.html",
+      "resolvedUrl": "https://www.asics.com/us/en-us/solution-speed-ff-4/p/ANA_1041A532-100.html",
+      "status": 403,
+      "used": false
+    },
+    {
+      "url": "https://kswiss.com/collections/mens-tennis-shoes/products/04603-002-m",
+      "resolvedUrl": "https://kswiss.com/collections/mens-tennis-shoes/products/04603-002-m",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/nike-vapor-pro-2",
+      "resolvedUrl": "https://runrepeat.com/nike-vapor-pro-2",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/asics-court-ff-3",
+      "resolvedUrl": "https://runrepeat.com/asics-court-ff-3",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/asics-gel-resolution-x",
+      "resolvedUrl": "https://runrepeat.com/asics-gel-resolution-x",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/mizuno-wave-exceed-tour-5",
+      "resolvedUrl": "https://runrepeat.com/mizuno-wave-exceed-tour-5",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/yonex-eclipsion-5",
+      "resolvedUrl": "https://runrepeat.com/yonex-eclipsion-5",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/k-swiss-hypercourt-express-2",
+      "resolvedUrl": "https://runrepeat.com/k-swiss-hypercourt-express-2",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/k-swiss-hypercourt-express-3",
+      "resolvedUrl": "https://runrepeat.com/k-swiss-hypercourt-express-3",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/nike-gp-challenge-1-5",
+      "resolvedUrl": "https://runrepeat.com/nike-gp-challenge-1-5",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/nike-zoom-nxt",
+      "resolvedUrl": "https://runrepeat.com/nike-zoom-nxt",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/new-balance-coco-cg2",
+      "resolvedUrl": "https://runrepeat.com/new-balance-coco-cg2",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/on-the-roger-pro-fire",
+      "resolvedUrl": "https://runrepeat.com/on-the-roger-pro-fire",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/on-the-roger-pro-3-clay",
+      "resolvedUrl": "https://runrepeat.com/on-the-roger-pro-3-clay",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Learning_Center/shoe_reviews/nike_zoom_vapor_12_mens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Learning_Center/shoe_reviews/nike_zoom_vapor_12_mens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/how-we-test-tennis-shoes",
+      "resolvedUrl": "https://runrepeat.com/how-we-test-tennis-shoes",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/corescore",
+      "resolvedUrl": "https://runrepeat.com/testing-methodology",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://runrepeat.com/about-us",
+      "resolvedUrl": "https://runrepeat.com/about-us",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/mizuno_wave_exceed_tour_5_mens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/mizuno_wave_exceed_tour_5_mens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/nikecourt_zoom_nxt.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/nikecourt_zoom_nxt.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/nike_vapor_pro_2.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/nike_vapor_pro_2.html",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/yonex_eclipsion_5_men.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/yonex_eclipsion_5_men.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/new_balance_coco_cg2.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/new_balance_coco_cg2.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/on_the_roger_pro_fire_mens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/on_the_roger_pro_fire_mens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/on_the_roger_pro_fire_womens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/on_the_roger_pro_fire_womens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Nike_Vapor_Pro_3_White_Black_Mens_Shoes/descpage-NMP3WHB.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Nike_Vapor_Pro_3_White_Black_Mens_Shoes/descpage-NMP3WHB.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/KSwiss_Hypercourt_Express_2_Black_White_Mens_Shoes/descpageMSKSWISS-MKHE2BW.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/KSwiss_Hypercourt_Express_2_Black_White_Mens_Shoes/descpageMSKSWISS-MKHE2BW.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/KSwiss_Hypercourt_Express_3_Black_White_Mens_Shoes/descpageMSKSWISS-MKH3BKW.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/KSwiss_Hypercourt_Express_3_Black_White_Mens_Shoes/descpageMSKSWISS-MKH3BKW.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Yonex_PC_Eclipsion_5_Blue_White_Mens_Shoes/descpageMSYONEX-YPE5BLW.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Yonex_PC_Eclipsion_5_Blue_White_Mens_Shoes/descpageMSYONEX-YPE5BLW.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/New_Balance_Coco_CG2_B_White_Black_Womens_Shoe/descpageWSNB-NBC2WBB.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/New_Balance_Coco_CG2_B_White_Black_Womens_Shoe/descpageWSNB-NBC2WBB.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X__Wide_Wh_Morganite_Womens_Shoes/descpageWSASICS-AWGXWWM.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X__Wide_Wh_Morganite_Womens_Shoes/descpageWSASICS-AWGXWWM.html",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.asics.com/ca/en-ca/gel-resolution-x-wide-1041a487-402",
+      "resolvedUrl": "https://www.asics.com/ca/en-ca/gel-resolution-x-wide-1041a487-402",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://www.asics.com/ca/en-ca/gel-resolution-x-wide-1042a278-104",
+      "resolvedUrl": "https://www.asics.com/ca/en-ca/gel-resolution-x-wide-1042a278-104",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://www.asics.com/us/en-us/product/solution-speed-ff-4/p/ANA_1041A532-100.html",
+      "resolvedUrl": "https://www.asics.com/us/en-us/product/solution-speed-ff-4/p/ANA_1041A532-100.html",
+      "status": 403,
+      "used": false
+    },
+    {
+      "url": "https://tennisexpress.com/collections/asics-nyc-collection/products/mens-gel-resolution-x-wide-tennis-shoes-greige-and-soft-oat",
+      "resolvedUrl": "https://tennisexpress.com/collections/asics-nyc-collection/products/mens-gel-resolution-x-wide-tennis-shoes-greige-and-soft-oat",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://tennisexpress.com/products/mens-the-roger-pro-3-clay-tennis-shoes-thistle-and-pink",
+      "resolvedUrl": "https://tennisexpress.com/products/mens-the-roger-pro-3-clay-tennis-shoes-thistle-and-pink",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://thesportsconceptstore.co.za/collections/mens-shoes/products/the-roger-pro-3-clay-m",
+      "resolvedUrl": "https://thesportsconceptstore.co.za/products/the-roger-pro-3-clay-m",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.supersports.co.th/en/products/nike-tennis-men-ni083sh821ezth-iq5180-005",
+      "resolvedUrl": "https://www.supersports.co.th/en/products/nike-tennis-men-ni083sh821ezth-iq5180-005",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/ON_The_Roger_Pro_Fire_White_Pink_Mens_Shoe/descpage-OMRFWPK.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/ON_The_Roger_Pro_Fire_White_Pink_Mens_Shoe/descpage-OMRFWPK.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/nikecourt-vapor-pro-2",
+      "resolvedUrl": "https://runrepeat.com/nikecourt-vapor-pro-2",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://runrepeat.com/nikecourt-zoom-nxt",
+      "resolvedUrl": "https://runrepeat.com/nikecourt-zoom-nxt",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.zappos.com/p/womens-asics-solution-speed-ff-4-bluebell-white/product/10046994/color/127002",
+      "resolvedUrl": "https://www.zappos.com/p/womens-asics-solution-speed-ff-4-bluebell-white/product/10046994/color/127002",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://tennisexpress.com/products/womens-solution-speed-ff-4-tennis-shoes-cantaloupe-and-black-coffee",
+      "resolvedUrl": "https://tennisexpress.com/products/womens-solution-speed-ff-4-tennis-shoes-cantaloupe-and-black-coffee",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.asics.com/nz/en-nz/gel-solution-speed-ff-4-clay-womens-1042a305-102",
+      "resolvedUrl": "https://www.asics.com/nz/en-nz/gel-solution-speed-ff-4-clay-womens-1042a305-102",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Court_FF_3_White_Black_Mens_Shoes/descpageMSASICS-AMCFF3W.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Court_FF_3_White_Black_Mens_Shoes/descpageMSASICS-AMCFF3W.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.asics.com/ca/en-ca/solution-speed-ff-4-1041a532-101",
+      "resolvedUrl": "https://www.asics.com/ca/en-ca/solution-speed-ff-4-1041a532-101",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_9_mens.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_9_mens.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_WhiteSilver_Womens_Shoes/descpageWSASICS-AWGXWHS.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_WhiteSilver_Womens_Shoes/descpageWSASICS-AWGXWHS.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_2E_Grey_Pistachio_Mens_Shoes/descpageMSASICS-AGRXWGP.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_2E_Grey_Pistachio_Mens_Shoes/descpageMSASICS-AGRXWGP.html",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_Wide_Wh_Morganite_Womens_Shoes/descpageWSASICS-AWGXWWM.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_Wide_Wh_Morganite_Womens_Shoes/descpageWSASICS-AWGXWWM.html",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_9_White_Black_Mens_Shoes/descpageMSASICS-AGR9WB.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_9_White_Black_Mens_Shoes/descpageMSASICS-AGR9WB.html",
+      "status": 404,
+      "used": false
+    },
+    {
+      "url": "https://www.nike.com/t/vapor-12-mens-hard-court-tennis-shoes-45fp1Une/reviews",
+      "resolvedUrl": "https://www.nike.com/t/vapor-12-mens-hard-court-tennis-shoes-45fp1Une/reviews",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://www.nike.com/t/vapor-pro-3-mens-hard-court-tennis-shoes-SpZRz675/reviews",
+      "resolvedUrl": "https://www.nike.com/t/vapor-pro-3-mens-hard-court-tennis-shoes-SpZRz675/reviews",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Nike_Zoom_Vapor_12_Black_White_Mens_Shoes_/descpage-NM12BKG.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Nike_Zoom_Vapor_12_Black_White_Mens_Shoes_/descpage-NM12BKG.html",
+      "status": 200,
+      "used": true
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Best-Selling_Womens_Tennis_Shoe_Models/catpage-WSBESTSELL.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Best-Selling_Womens_Tennis_Shoe_Models/catpage-WSBESTSELL.html",
+      "status": 200,
+      "used": false
+    },
+    {
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_2E_Grey_Pistachio_Mens_Shoes/descpage-AGRXWGP.html",
+      "resolvedUrl": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_2E_Grey_Pistachio_Mens_Shoes/descpage-AGRXWGP.html",
+      "status": 404,
+      "used": false
+    }
+  ]
+}

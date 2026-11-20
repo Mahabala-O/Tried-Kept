@@ -1,0 +1,1454 @@
+{
+  "observations": [
+    {
+      "id": "asics-court-ff-3-0",
+      "productSlug": "asics-court-ff-3",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tenniswarehouse-europe.com/learning_center/shoe_reviews/asics_court_ff_3_mens.html?lang=en",
+      "kind": "playtest",
+      "value": 9.0,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s standard-width hard-court playtest",
+      "match": "matched",
+      "poolId": "asics-court-ff-3-0",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.0,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 7.8,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 9.0,
+          "scale": 10
+        }
+      ],
+      "panel": ["Chris", "Mark", "Jason", "Troy"]
+    },
+    {
+      "id": "asics-court-ff-3-16",
+      "productSlug": "asics-court-ff-3",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/asics-court-ff-3",
+      "kind": "publisher",
+      "value": 93.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s standard-width lab review",
+      "match": "matched",
+      "poolId": "asics-court-ff-3-16",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 70.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 97.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 86.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "asics-court-ff-3-205",
+      "productSlug": "asics-court-ff-3",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Asics_Court_FF_3_White_Black_Mens_Shoes/descpageMSASICS-AMCFF3W.html",
+      "kind": "customer",
+      "value": 3.7,
+      "scale": 5,
+      "sampleSize": 57,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court listing; shared model pool",
+      "match": "matched",
+      "poolId": "asics-court-ff-3-205",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified. The same pool also appears on an omnicourt listing; this is not an outsole-specific sample.",
+      "metrics": []
+    },
+    {
+      "id": "asics-solution-speed-ff-4-womens-1",
+      "productSlug": "asics-solution-speed-ff-4-womens",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_solution_speed_ff_4_womens.html",
+      "kind": "playtest",
+      "value": 8.8,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Women’s standard-width hard-court playtest",
+      "match": "matched",
+      "poolId": "asics-solution-speed-ff-4-womens-1",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.5,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 7.9,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 9.1,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 9.2,
+          "scale": 10
+        }
+      ],
+      "panel": ["Zsofi", "Brittany", "Michelle", "Tiffani"]
+    },
+    {
+      "id": "asics-solution-speed-ff-4-womens-202",
+      "productSlug": "asics-solution-speed-ff-4-womens",
+      "publisher": "Zappos",
+      "url": "https://www.zappos.com/p/womens-asics-solution-speed-ff-4-bluebell-white/product/10046994/color/127002",
+      "kind": "customer",
+      "value": 4,
+      "scale": 5,
+      "sampleSize": 7,
+      "sampleUnit": "reviews",
+      "scope": "Women’s standard-width listing, Bluebell/White",
+      "match": "matched",
+      "poolId": "asics-solution-speed-ff-4-womens-202",
+      "checkedOn": "2026-11-20",
+      "notes": "Published stars are rounded. Includes reviews marked as originating at ASICS; not seven independently verified purchasers. Percentages in the fit survey have no published respondent N, so they are not imported.",
+      "metrics": []
+    },
+    {
+      "id": "asics-solution-speed-ff-4-womens-203",
+      "productSlug": "asics-solution-speed-ff-4-womens",
+      "publisher": "Tennis Express",
+      "url": "https://tennisexpress.com/products/womens-solution-speed-ff-4-tennis-shoes-cantaloupe-and-black-coffee",
+      "kind": "customer",
+      "value": 4.35,
+      "scale": 5,
+      "sampleSize": 20,
+      "sampleUnit": "reviews",
+      "scope": "Women’s hard-court listing, Cantaloupe/Black Coffee",
+      "match": "matched",
+      "poolId": "asics-solution-speed-ff-4-womens-203",
+      "checkedOn": "2026-11-20",
+      "notes": "Listing-level customer pool; review text sometimes names only the Solution Speed FF family. Generation-specific membership is not independently verifiable.",
+      "metrics": []
+    },
+    {
+      "id": "asics-gel-resolution-x-womens-2",
+      "productSlug": "asics-gel-resolution-x-womens",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_X_womens.html",
+      "kind": "playtest",
+      "value": 8.0,
+      "scale": 10,
+      "sampleSize": 3,
+      "sampleUnit": "playtesters",
+      "scope": "Women’s standard-width hard-court playtest",
+      "match": "matched",
+      "poolId": "asics-gel-resolution-x-womens-2",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 7.6,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 7.5,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 9.1,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 9.1,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 8.4,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 7.2,
+          "scale": 10
+        }
+      ],
+      "panel": ["Michelle", "Tiffani", "Brittany"]
+    },
+    {
+      "id": "asics-gel-resolution-x-womens-301",
+      "productSlug": "asics-gel-resolution-x-womens",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Asics_Gel_Resolution_X_WhiteSilver_Womens_Shoes/descpageWSASICS-AWGXWHS.html",
+      "kind": "customer",
+      "value": 2.7,
+      "scale": 5,
+      "sampleSize": 42,
+      "sampleUnit": "reviews",
+      "scope": "Women’s standard-width hard-court listing",
+      "match": "matched",
+      "poolId": "asics-gel-resolution-x-womens-301",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "metrics": []
+    },
+    {
+      "id": "asics-solution-speed-ff-4-clay-womens-204",
+      "productSlug": "asics-solution-speed-ff-4-clay-womens",
+      "publisher": "ASICS New Zealand",
+      "url": "https://www.asics.com/nz/en-nz/gel-solution-speed-ff-4-clay-womens-1042a305-102",
+      "kind": "customer",
+      "value": 3.5,
+      "scale": 5,
+      "sampleSize": 2,
+      "sampleUnit": "reviews",
+      "scope": "Women’s clay, style 1042A305-102 (different colour)",
+      "match": "matched",
+      "poolId": "asics-solution-speed-ff-4-clay-womens-204",
+      "checkedOn": "2026-11-20",
+      "notes": "Manufacturer listing pool has just two reviews, one marked promotional. Different colour from catalogue SKU 1042A305-400. This small pool should not be treated as a reliable fit verdict.",
+      "metrics": []
+    },
+    {
+      "id": "nike-vapor-12-27",
+      "productSlug": "nike-vapor-12",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Learning_Center/shoe_reviews/nike_zoom_vapor_12_mens.html",
+      "kind": "playtest",
+      "value": 8.7,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s hard-court playtest",
+      "match": "matched",
+      "poolId": "nike-vapor-12-27",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 8.4,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.1,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.1,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.2,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 8.9,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 8.8,
+          "scale": 10
+        }
+      ],
+      "panel": ["Chris", "Jason", "Munish", "Troy"]
+    },
+    {
+      "id": "nike-vapor-12-5",
+      "productSlug": "nike-vapor-12",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/nike-vapor-12",
+      "kind": "publisher",
+      "value": 86.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court lab review",
+      "match": "matched",
+      "poolId": "nike-vapor-12-5",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 82.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 89.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 82.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "nike-vapor-12-400",
+      "productSlug": "nike-vapor-12",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Nike_Zoom_Vapor_12_Black_White_Mens_Shoes_/descpage-NM12BKG.html",
+      "kind": "customer",
+      "value": 4.2,
+      "scale": 5,
+      "sampleSize": 19,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court Black/White listing",
+      "match": "matched",
+      "poolId": "nike-vapor-12-400",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified. Premium and Hypersmash pools are not added.",
+      "metrics": []
+    },
+    {
+      "id": "nike-vapor-pro-3-7",
+      "productSlug": "nike-vapor-pro-3",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/nike-vapor-pro-3",
+      "kind": "publisher",
+      "value": 85.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court lab review",
+      "match": "matched",
+      "poolId": "nike-vapor-pro-3-7",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 78.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 88.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 80.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "nike-vapor-pro-3-107",
+      "productSlug": "nike-vapor-pro-3",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Nike_Vapor_Pro_3_White_Black_Mens_Shoes/descpage-NMP3WHB.html",
+      "kind": "customer",
+      "value": 3.9,
+      "scale": 5,
+      "sampleSize": 28,
+      "sampleUnit": "reviews",
+      "scope": "Men’s White/Black hard-court listing",
+      "match": "matched",
+      "poolId": "nike-vapor-pro-3-107",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified. This pool also appears on some clay listings; it is not a hard-court-only sample.",
+      "metrics": []
+    },
+    {
+      "id": "nike-vapor-pro-2-200",
+      "productSlug": "nike-vapor-pro-2",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/nikecourt-vapor-pro-2",
+      "kind": "publisher",
+      "value": 87.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s standard-width lab review",
+      "match": "context",
+      "poolId": "nike-vapor-pro-2-200",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average. Catalogue line and surface are not yet specified.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 80.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 90.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 82.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "asics-gel-resolution-9-300",
+      "productSlug": "asics-gel-resolution-9",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_9_mens.html",
+      "kind": "playtest",
+      "value": 9.0,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s standard-width hard-court playtest",
+      "match": "matched",
+      "poolId": "asics-gel-resolution-9-300",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.4,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 9.4,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 9.4,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 8.4,
+          "scale": 10
+        }
+      ],
+      "panel": ["Troy", "Jason", "Chris", "Mark"]
+    },
+    {
+      "id": "asics-gel-resolution-9-8",
+      "productSlug": "asics-gel-resolution-9",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/asics-gel-resolution-9",
+      "kind": "publisher",
+      "value": 87.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Gel Resolution 9 PADEL test shoe",
+      "match": "context",
+      "poolId": "asics-gel-resolution-9-8",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average. The source explicitly tested the Padel outsole on an outdoor tarmac court. Not the catalogue hard-court outsole; excluded from the matched summary.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 65.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 93.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 77.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "asics-gel-resolution-x-wide-mens-116",
+      "productSlug": "asics-gel-resolution-x-wide-mens",
+      "publisher": "Tennis Express",
+      "url": "https://tennisexpress.com/collections/asics-nyc-collection/products/mens-gel-resolution-x-wide-tennis-shoes-greige-and-soft-oat",
+      "kind": "customer",
+      "value": 4.529412,
+      "scale": 5,
+      "sampleSize": 17,
+      "sampleUnit": "reviews",
+      "scope": "Men’s 2E wide listing, Greige/Soft Oat",
+      "match": "matched",
+      "poolId": "asics-gel-resolution-x-wide-mens-116",
+      "checkedOn": "2026-11-20",
+      "notes": "Visible review module publishes 4.529412/5; JSON-LD rounds this to 4.5. Uses the visible value. Listing pool may include syndicated reviews.",
+      "metrics": []
+    },
+    {
+      "id": "asics-gel-resolution-x-wide-mens-17",
+      "productSlug": "asics-gel-resolution-x-wide-mens",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/asics-gel-resolution-x",
+      "kind": "publisher",
+      "value": 90.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s STANDARD-width Gel Resolution X lab review",
+      "match": "context",
+      "poolId": "asics-gel-resolution-x-wide-mens-17",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average. Not a 2E-wide test. Do not use its fit or score as wide-version evidence.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 60.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 98.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 87.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "asics-gel-resolution-x-wide-womens-2",
+      "productSlug": "asics-gel-resolution-x-wide-womens",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/asics_gel_resolution_X_womens.html",
+      "kind": "playtest",
+      "value": 8.0,
+      "scale": 10,
+      "sampleSize": 3,
+      "sampleUnit": "playtesters",
+      "scope": "Women’s STANDARD-width Gel Resolution X playtest",
+      "match": "context",
+      "poolId": "asics-gel-resolution-x-wide-womens-2",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 7.6,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 7.5,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 9.1,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 9.1,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 8.4,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 7.2,
+          "scale": 10
+        }
+      ],
+      "panel": ["Michelle", "Tiffani", "Brittany"]
+    },
+    {
+      "id": "mizuno-wave-exceed-tour-5-100",
+      "productSlug": "mizuno-wave-exceed-tour-5",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/mizuno_wave_exceed_tour_5_mens.html",
+      "kind": "playtest",
+      "value": 4.1,
+      "scale": 5,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s standard-width hard-court playtest",
+      "match": "context",
+      "poolId": "mizuno-wave-exceed-tour-5-100",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 4.4,
+          "scale": 5
+        },
+        {
+          "label": "Ventilation",
+          "value": 3.9,
+          "scale": 5
+        },
+        {
+          "label": "Arch Support",
+          "value": 4.3,
+          "scale": 5
+        },
+        {
+          "label": "Support / stability",
+          "value": 3.6,
+          "scale": 5
+        },
+        {
+          "label": "Outsole durability",
+          "value": 3.7,
+          "scale": 5
+        },
+        {
+          "label": "Toe Durability",
+          "value": 3.9,
+          "scale": 5
+        },
+        {
+          "label": "Traction",
+          "value": 4.6,
+          "scale": 5
+        },
+        {
+          "label": "Weight",
+          "value": 4.9,
+          "scale": 5
+        }
+      ],
+      "panel": ["Sage", "Chris", "Mark", "Jason"]
+    },
+    {
+      "id": "asics-solution-speed-ff-4-12",
+      "productSlug": "asics-solution-speed-ff-4",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Learning_Center/shoe_reviews/asics_solution_speed_ff_4_mens.html",
+      "kind": "playtest",
+      "value": 9.2,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s standard-width hard-court playtest",
+      "match": "matched",
+      "poolId": "asics-solution-speed-ff-4-12",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 9.0,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.7,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 9.2,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 9.2,
+          "scale": 10
+        }
+      ],
+      "panel": ["Chris", "Oak", "Jason", "Munish"]
+    },
+    {
+      "id": "asics-solution-speed-ff-4-11",
+      "productSlug": "asics-solution-speed-ff-4",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/asics-solution-speed-ff-4",
+      "kind": "publisher",
+      "value": 90.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s standard-width hard-court lab review",
+      "match": "matched",
+      "poolId": "asics-solution-speed-ff-4-11",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 90.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 85.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 95.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "yonex-eclipsion-5-103",
+      "productSlug": "yonex-eclipsion-5",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/yonex_eclipsion_5_men.html",
+      "kind": "playtest",
+      "value": 8.0,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s standard-width hard-court playtest",
+      "match": "context",
+      "poolId": "yonex-eclipsion-5-103",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 8.1,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 7.7,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.1,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.2,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 8.4,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 7.7,
+          "scale": 10
+        }
+      ],
+      "panel": ["Chris", "Mark", "Troy", "Oak"]
+    },
+    {
+      "id": "yonex-eclipsion-5-110",
+      "productSlug": "yonex-eclipsion-5",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/Yonex_PC_Eclipsion_5_Blue_White_Mens_Shoes/descpageMSYONEX-YPE5BLW.html",
+      "kind": "customer",
+      "value": 4.3,
+      "scale": 5,
+      "sampleSize": 14,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court Blue/White listing",
+      "match": "context",
+      "poolId": "yonex-eclipsion-5-110",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "metrics": []
+    },
+    {
+      "id": "k-swiss-hypercourt-express-2-20",
+      "productSlug": "k-swiss-hypercourt-express-2",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/k-swiss-hypercourt-express-2",
+      "kind": "publisher",
+      "value": 86.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Men’s standard-width lab review",
+      "match": "context",
+      "poolId": "k-swiss-hypercourt-express-2-20",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 84.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 84.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 84.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "k-swiss-hypercourt-express-2-108",
+      "productSlug": "k-swiss-hypercourt-express-2",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/KSwiss_Hypercourt_Express_2_Black_White_Mens_Shoes/descpageMSKSWISS-MKHE2BW.html",
+      "kind": "customer",
+      "value": 4.1,
+      "scale": 5,
+      "sampleSize": 53,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court listing; pool also shown on 2E",
+      "match": "context",
+      "poolId": "k-swiss-hypercourt-express-2-108",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "metrics": []
+    },
+    {
+      "id": "k-swiss-hypercourt-express-3-109",
+      "productSlug": "k-swiss-hypercourt-express-3",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/KSwiss_Hypercourt_Express_3_Black_White_Mens_Shoes/descpageMSKSWISS-MKH3BKW.html",
+      "kind": "customer",
+      "value": 4.1,
+      "scale": 5,
+      "sampleSize": 7,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court Black/White listing",
+      "match": "matched",
+      "poolId": "k-swiss-hypercourt-express-3-109",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "metrics": []
+    },
+    {
+      "id": "k-swiss-hypercourt-express-3-14",
+      "productSlug": "k-swiss-hypercourt-express-3",
+      "publisher": "K-Swiss",
+      "url": "https://kswiss.com/collections/mens-tennis-shoes/products/04603-002-m",
+      "kind": "customer",
+      "value": 4.6,
+      "scale": 5,
+      "sampleSize": 80,
+      "sampleUnit": "reviews",
+      "scope": "Men’s Black/White listing, 04603-002-M",
+      "match": "matched",
+      "poolId": "k-swiss-hypercourt-express-3-14",
+      "checkedOn": "2026-11-20",
+      "notes": "Manufacturer model listing. The catalogue’s older Hypercourt Express 2 source URL now names Hypercourt Express 3; assigned only to generation 3.",
+      "metrics": []
+    },
+    {
+      "id": "nike-gp-challenge-1-5-119",
+      "productSlug": "nike-gp-challenge-1-5",
+      "publisher": "Supersports Thailand",
+      "url": "https://www.supersports.co.th/en/products/nike-tennis-men-ni083sh821ezth-iq5180-005",
+      "kind": "customer",
+      "value": 4.67,
+      "scale": 5,
+      "sampleSize": 3,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court GP Challenge 1.5, IQ5180-005",
+      "match": "context",
+      "poolId": "nike-gp-challenge-1-5-119",
+      "checkedOn": "2026-11-20",
+      "notes": "Three reviews: two five-star and one four-star. Two reviews marked as collected from another provider. GP Challenge 1 scores are excluded.",
+      "metrics": []
+    },
+    {
+      "id": "nike-zoom-nxt-101",
+      "productSlug": "nike-zoom-nxt",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/nikecourt_zoom_nxt.html",
+      "kind": "playtest",
+      "value": 3.7,
+      "scale": 5,
+      "sampleSize": 5,
+      "sampleUnit": "playtesters",
+      "scope": "Mixed men’s/women’s hard-court playtest",
+      "match": "context",
+      "poolId": "nike-zoom-nxt-101",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 3.9,
+          "scale": 5
+        },
+        {
+          "label": "Ventilation",
+          "value": 4.4,
+          "scale": 5
+        },
+        {
+          "label": "Arch Support",
+          "value": 4.0,
+          "scale": 5
+        },
+        {
+          "label": "Support / stability",
+          "value": 3.0,
+          "scale": 5
+        },
+        {
+          "label": "Outsole durability",
+          "value": 3.7,
+          "scale": 5
+        },
+        {
+          "label": "Toe Durability",
+          "value": 4.2,
+          "scale": 5
+        },
+        {
+          "label": "Traction",
+          "value": 3.8,
+          "scale": 5
+        },
+        {
+          "label": "Weight",
+          "value": 3.9,
+          "scale": 5
+        }
+      ],
+      "panel": ["Chris", "Michelle", "Jason", "Tiffani", "Brittany"]
+    },
+    {
+      "id": "new-balance-coco-cg2-104",
+      "productSlug": "new-balance-coco-cg2",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/new_balance_coco_cg2.html",
+      "kind": "playtest",
+      "value": 7.9,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Women’s standard-width hard-court playtest",
+      "match": "matched",
+      "poolId": "new-balance-coco-cg2-104",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 8.4,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 7.4,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.3,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 8.9,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 9.0,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 7.7,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 7.3,
+          "scale": 10
+        }
+      ],
+      "panel": ["Michelle", "Tiffani", "Brittany", "Zsofi"]
+    },
+    {
+      "id": "new-balance-coco-cg2-24",
+      "productSlug": "new-balance-coco-cg2",
+      "publisher": "RunRepeat",
+      "url": "https://runrepeat.com/new-balance-coco-cg2",
+      "kind": "publisher",
+      "value": 92.0,
+      "scale": 100,
+      "sampleSize": null,
+      "sampleUnit": "reviews",
+      "scope": "Women’s Coco CG2 lab review",
+      "match": "matched",
+      "poolId": "new-balance-coco-cg2-24",
+      "checkedOn": "2026-11-20",
+      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "metrics": [
+        {
+          "label": "Speed",
+          "value": 90.0,
+          "scale": 100
+        },
+        {
+          "label": "Stability",
+          "value": 94.0,
+          "scale": 100
+        },
+        {
+          "label": "Cushioning",
+          "value": 95.0,
+          "scale": 100
+        }
+      ]
+    },
+    {
+      "id": "new-balance-coco-cg2-111",
+      "productSlug": "new-balance-coco-cg2",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/New_Balance_Coco_CG2_B_White_Black_Womens_Shoe/descpageWSNB-NBC2WBB.html",
+      "kind": "customer",
+      "value": 3.9,
+      "scale": 5,
+      "sampleSize": 7,
+      "sampleUnit": "reviews",
+      "scope": "Women’s B-width White/Black hard-court listing",
+      "match": "matched",
+      "poolId": "new-balance-coco-cg2-111",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "metrics": []
+    },
+    {
+      "id": "on-the-roger-pro-fire-105",
+      "productSlug": "on-the-roger-pro-fire",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/on_the_roger_pro_fire_mens.html",
+      "kind": "playtest",
+      "value": 8.3,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Men’s standard-width hard-court playtest",
+      "match": "context",
+      "poolId": "on-the-roger-pro-fire-105",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 7.6,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.0,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 7.9,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.0,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 8.8,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 8.2,
+          "scale": 10
+        }
+      ],
+      "panel": ["Chris", "Troy", "Mark", "Oak"]
+    },
+    {
+      "id": "on-the-roger-pro-fire-106",
+      "productSlug": "on-the-roger-pro-fire",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/learning_center/shoe_reviews/on_the_roger_pro_fire_womens.html",
+      "kind": "playtest",
+      "value": 8.6,
+      "scale": 10,
+      "sampleSize": 4,
+      "sampleUnit": "playtesters",
+      "scope": "Women’s standard-width hard-court playtest",
+      "match": "context",
+      "poolId": "on-the-roger-pro-fire-106",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "metrics": [
+        {
+          "label": "Comfort",
+          "value": 8.1,
+          "scale": 10
+        },
+        {
+          "label": "Ventilation",
+          "value": 8.9,
+          "scale": 10
+        },
+        {
+          "label": "Arch Support",
+          "value": 8.5,
+          "scale": 10
+        },
+        {
+          "label": "Support / stability",
+          "value": 8.9,
+          "scale": 10
+        },
+        {
+          "label": "Outsole durability",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Toe Durability",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Traction",
+          "value": 8.6,
+          "scale": 10
+        },
+        {
+          "label": "Weight",
+          "value": 8.5,
+          "scale": 10
+        }
+      ],
+      "panel": ["Zsofi", "Tiffani", "Brittany", "Ana"]
+    },
+    {
+      "id": "on-the-roger-pro-fire-120",
+      "productSlug": "on-the-roger-pro-fire",
+      "publisher": "Tennis Warehouse",
+      "url": "https://www.tennis-warehouse.com/ON_The_Roger_Pro_Fire_White_Pink_Mens_Shoe/descpage-OMRFWPK.html",
+      "kind": "customer",
+      "value": 4.4,
+      "scale": 5,
+      "sampleSize": 7,
+      "sampleUnit": "reviews",
+      "scope": "Men’s hard-court White/Pink listing",
+      "match": "context",
+      "poolId": "on-the-roger-pro-fire-120",
+      "checkedOn": "2026-11-20",
+      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "metrics": []
+    },
+    {
+      "id": "on-the-roger-pro-3-clay-117",
+      "productSlug": "on-the-roger-pro-3-clay",
+      "publisher": "Tennis Express",
+      "url": "https://tennisexpress.com/products/mens-the-roger-pro-3-clay-tennis-shoes-thistle-and-pink",
+      "kind": "customer",
+      "value": 4.8235292,
+      "scale": 5,
+      "sampleSize": 17,
+      "sampleUnit": "reviews",
+      "scope": "Men’s clay, Thistle/Pink listing",
+      "match": "context",
+      "poolId": "on-the-roger-pro-3-clay-117",
+      "checkedOn": "2026-11-20",
+      "notes": "Visible review module value; schema rounds to 4.8. Catalogue line is not yet specified, so excluded from the headline customer average.",
+      "metrics": []
+    },
+    {
+      "id": "on-the-roger-pro-3-clay-118",
+      "productSlug": "on-the-roger-pro-3-clay",
+      "publisher": "The Sports Concept Store",
+      "url": "https://thesportsconceptstore.co.za/products/the-roger-pro-3-clay-m",
+      "kind": "customer",
+      "value": 5,
+      "scale": 5,
+      "sampleSize": 1,
+      "sampleUnit": "reviews",
+      "scope": "Men’s clay, Ivory/Jay listing",
+      "match": "context",
+      "poolId": "on-the-roger-pro-3-clay-118",
+      "checkedOn": "2026-11-20",
+      "notes": "Only one reviewer, who describes using this clay shoe for PADEL. Not evidence of tennis-court performance.",
+      "metrics": []
+    }
+  ],
+  "coverage": [
+    {
+      "productSlug": "asics-court-ff-3",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "asics-solution-speed-ff-4-womens",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "asics-gel-resolution-x-womens",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "asics-solution-speed-ff-4-clay-womens",
+      "checkedOn": "2026-11-20",
+      "note": "One matching rating source recovered so far. Other sources checked did not expose a verifiable current score and sample count for this variant."
+    },
+    {
+      "productSlug": "nike-vapor-12",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "nike-vapor-pro-3",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "nike-vapor-pro-2",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "asics-gel-resolution-9",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "asics-gel-resolution-x-wide-mens",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "asics-gel-resolution-x-wide-womens",
+      "checkedOn": "2026-11-20",
+      "note": "No current, directly verifiable customer average for the women’s wide version was recovered. Standard-width playtest shown only as related context."
+    },
+    {
+      "productSlug": "mizuno-wave-exceed-tour-5",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "asics-solution-speed-ff-4",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "yonex-eclipsion-5",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "k-swiss-hypercourt-express-2",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "k-swiss-hypercourt-express-3",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "nike-gp-challenge-1-5",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "nike-zoom-nxt",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "new-balance-coco-cg2",
+      "checkedOn": "2026-11-20",
+      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+    },
+    {
+      "productSlug": "on-the-roger-pro-fire",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    },
+    {
+      "productSlug": "on-the-roger-pro-3-clay",
+      "checkedOn": "2026-11-20",
+      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+    }
+  ]
+}

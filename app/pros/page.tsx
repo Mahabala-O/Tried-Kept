@@ -70,15 +70,15 @@ export default async function ProsPage({
             Pros
           </h1>
           <p className="lede">
-            Explore reported gear and brand-listed retail references. See the
-            evidence, then find a version for your own game.
+            Explore the gear linked to your favourite pros. See what’s
+            confirmed, then find a version for your own game.
           </p>
           <div className={s.heroStats}>
             <span className="sticker sticker-xp sticker-plain tilt-left">
               {pros.length} {pros.length === 1 ? "pro" : "pros"}
             </span>
             <span className="sticker sticker-paper sticker-plain tilt-right">
-              {datedCount} dated references
+              {datedCount} gear links with dates
             </span>
           </div>
         </div>
@@ -142,20 +142,22 @@ export default async function ProsPage({
         />
         <details className="card stack">
           <summary className="tap-link">
-            Which retail references appear in this library?
+            Which gear appears in these pro profiles?
           </summary>
           <p className="small muted">
-            Counts within these {pros.length} selected profiles, checked
-            November 19, 2026. Includes sourced brand listings and reported
-            models; excludes family alternatives. These are not tour-wide usage,
-            sales or popularity rankings.
+            These counts cover only the {pros.length} profiles here, checked
+            November 19, 2026. They include gear named by brands or reported in
+            the linked sources. Shop models from the same range are left out
+            when we can’t confirm the exact pro model. Use this to explore the
+            profiles, rather than judge what’s most popular across the whole
+            tour.
           </p>
           {(["racquet", "shoe"] as const).map((category) => (
             <div className="stack" key={category}>
               <h2>
                 {category === "racquet"
-                  ? "Racquet references"
-                  : "Shoe references"}
+                  ? "Racquets linked to these pros"
+                  : "Shoes linked to these pros"}
               </h2>
               {trackedReferences(category)
                 .slice(0, 4)

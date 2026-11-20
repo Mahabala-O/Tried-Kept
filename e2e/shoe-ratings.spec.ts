@@ -1,29 +1,57 @@
 import { test, expect } from "@playwright/test";
 
-test("customer average, N, native panel scales and performance scores remain distinct", async ({
+test("customer stars, review counts and on-court scores read in everyday language", async ({
   page,
 }) => {
-  await page.goto("/gear/k-swiss-hypercourt-express-3");
+  await page.goto("/gear?category=shoe&q=Hypercourt+Express+3");
+  const card = page.locator(
+    '[data-product-card="k-swiss-hypercourt-express-3"]',
+  );
+  await expect(
+    card.getByText("Based on 87 reviews across 2 sites", { exact: true }),
+  ).toBeVisible();
+  await card.getByRole("heading").getByRole("link").tap();
   const ratings = page.locator("[data-shoe-ratings]");
   await expect(
-    ratings.getByText("Pooled customer average", { exact: true }),
+    ratings.getByText("Customer rating", { exact: true }),
   ).toBeVisible();
   await expect(
-    ratings.getByText("N = 87 listed reviews · 2 sources", { exact: true }),
+    ratings.getByText("Based on 87 reviews across 2 sites", { exact: true }),
   ).toBeVisible();
-  await ratings.getByText("How to read these ratings", { exact: true }).tap();
   await expect(
-    ratings.getByText(/cross-store overlap is unknown/),
+    ratings.getByText("Ratings vary by site", { exact: true }),
+  ).toBeVisible();
+  await ratings.getByText("Where the scores come from", { exact: true }).tap();
+  await expect(
+    ratings.getByText(/same person’s review may appear on more than one site/),
   ).toBeVisible();
   await page.goto("/gear/nike-vapor-12");
   const panel = page.locator("[data-shoe-ratings] details[open]").first();
-  await expect(panel.getByText("Comfort", { exact: true })).toBeVisible();
+  await expect(panel.locator("dt").filter({ hasText: /^Comfort/ })).toBeVisible();
   await expect(
-    panel.getByText("Support / stability", { exact: true }),
+    panel.getByText("Side-to-side support", { exact: false }).first(),
   ).toBeVisible();
   await expect(
-    panel.getByRole("link", { name: /Read Tennis Warehouse source/ }),
+    panel.getByRole("link", {
+      name: /Read the full review at Tennis Warehouse/,
+    }),
   ).toHaveAttribute("href", /^https:\/\//);
+});
+
+test("a handful of reviews is presented as early feedback", async ({
+  page,
+}) => {
+  await page.goto("/gear/asics-solution-speed-ff-4-clay-womens");
+  const ratings = page.locator("[data-shoe-ratings]");
+  await expect(
+    ratings.getByText("Based on 2 reviews from 1 site", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    ratings.getByText("Only a few reviews so far", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    ratings.getByText(/Read the fit comments and try the shoe on/),
+  ).toBeVisible();
 });
 
 test("missing width-specific ratings do not become zero stars or a borrowed average", async ({
@@ -32,20 +60,18 @@ test("missing width-specific ratings do not become zero stars or a borrowed aver
   await page.goto("/gear/asics-gel-resolution-x-wide-womens");
   const ratings = page.locator("[data-shoe-ratings]");
   await expect(
-    ratings.getByText(/No matched customer average yet/),
+    ratings.getByText(
+      /We don’t have a customer rating for this exact version yet/,
+    ),
   ).toBeVisible();
   await expect(
-    ratings.getByText(/Playtest panel · Related variant/),
+    ratings.getByText("Different or unconfirmed version.", { exact: true }),
   ).toBeVisible();
   await expect(
-    ratings.getByText("Customer average", { exact: true }),
+    ratings.getByText("Customer rating", { exact: true }),
   ).toHaveCount(0);
   await ratings.locator("summary").first().tap();
-  await expect(
-    ratings.getByText("Women’s STANDARD-width Gel Resolution X playtest", {
-      exact: true,
-    }),
-  ).toBeVisible();
+  await expect(ratings.locator("summary").first()).toBeVisible();
 });
 
 test("expanded rating evidence fits a narrow phone in light and dark themes", async ({
@@ -63,6 +89,9 @@ test("expanded rating evidence fits a narrow phone in light and dark themes", as
         await detail.locator("summary").tap();
     }
     await expect(ratings).toBeVisible();
+    expect(await ratings.innerText()).not.toMatch(
+      /\bN\s*=|N not published|pooled|respondent|scale conversion|JSON-LD/,
+    );
     await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
     const overflow = await ratings.evaluate((element) =>
       [...element.querySelectorAll("*")]

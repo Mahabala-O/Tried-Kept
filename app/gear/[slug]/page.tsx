@@ -224,7 +224,7 @@ export default async function ProductPage({ params }: Props) {
         {proSightings.length > 0 && (
           <>
             <section className="stack" aria-labelledby="pros-using">
-              <h2 id="pros-using">Pro links &amp; retail references</h2>
+              <h2 id="pros-using">Pros linked to this gear</h2>
               {proSightings.map(({ pro, item, date }) => (
                 <article key={pro.slug} className={`card ${s.sighting}`}>
                   <ProImage

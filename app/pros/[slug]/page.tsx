@@ -87,7 +87,7 @@ function BagEntry({ item }: { item: BagItem }) {
       <ProductImage product={product} ratio="4 / 3" />
       <p className="small muted">
         {item.slot}
-        {item.familyAlternative ? " · Retail family alternative" : ""}
+        {item.familyAlternative ? " · Shop model from the same range" : ""}
       </p>
       <h3 className={s.gearName}>
         <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link>
@@ -96,7 +96,7 @@ function BagEntry({ item }: { item: BagItem }) {
         {bagDateLabel(item)} {formatDate(item.identifiedOn)}
       </p>
       <details className={s.referenceDetails}>
-        <summary>Evidence &amp; source</summary>
+        <summary>Why this gear is listed</summary>
         <p>{item.evidence}</p>
         <SourceLink source={item.source} standalone />
       </details>
@@ -213,7 +213,10 @@ export default async function ProPage({ params }: Props) {
         <section className="stack-lg" aria-labelledby="bag">
           <h2 id="bag">Equipment</h2>
           {!pro.bag.some((item) => item.slot === "Shoes") && (
-            <p className="small muted">A shoe model is not yet recorded for this player. The racquet reference below does not identify their footwear.</p>
+            <p className="small muted">
+              A shoe model is not yet recorded for this player. The racquet
+              reference below does not identify their footwear.
+            </p>
           )}
           <div className={s.bag}>
             {pro.bag.map((item) => (

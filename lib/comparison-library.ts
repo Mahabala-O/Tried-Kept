@@ -12,7 +12,7 @@ const framePairs = [
     "Two spin-focused 98s. Which launch and depth can you control?",
     "babolat-pure-aero-98-gen9",
     "yonex-vcore-98-2026",
-    "Both are spin candidates. Test the Aero's more controlled positioning against the VCORE's livelier depth; this is an editorial comparison of separate playtests, not a matched head-to-head experiment.",
+    "Try the Aero if you want to keep spin-heavy shots under control, and the VCORE if you want easier depth. This advice comes from separate reviews; the two racquets weren’t tested together. Try both to see which keeps your shots in.",
   ],
   [
     "speed-mp-2026-vs-gravity-mp-2025",
@@ -20,7 +20,7 @@ const framePairs = [
     "More available pace or a feel-first response?",
     "head-speed-mp-2026",
     "head-gravity-mp-2025",
-    "Investigate Speed for a more powerful, solid response and Gravity for feel and control. The lower static mass of the Gravity does not by itself establish easier handling. Compare defensive depth and late-session timing.",
+    "Try the Speed for power and a solid feel, or the Gravity for touch and control. The Gravity weighs less on the scale, but that alone doesn’t tell you how easy it is to swing. Compare how deep your defensive shots land and how each feels late in a set.",
   ],
   [
     "tfight-305s-vs-blade-98-v10",
@@ -28,7 +28,7 @@ const framePairs = [
     "Two control-oriented 98s. Which is easier to time?",
     "tecnifibre-tfight-305s",
     "wilson-blade-98-16x19-v10",
-    "The TFight playtest emphasizes quicker handling; the Blade test emphasizes feel and stability. Use matched strings and a full session to decide which tradeoff helps you. The mass values below use different measurement bases.",
+    "The TFight review highlights quick handling; the Blade review highlights feel and steadiness. Try both for a full session with the same strings and tension. Their listed weights were measured with and without strings, so check those labels before comparing the numbers.",
   ],
   [
     "pure-drive-2025-vs-clash-100-v3",
@@ -36,7 +36,7 @@ const framePairs = [
     "Easy depth: firm response or flexible feel?",
     "babolat-pure-drive-2025",
     "wilson-clash-100-v3",
-    "Investigate the Pure Drive for pace and spin, watching control and firm feel. Try the Clash for easier movement and a softer-feeling response, checking stability against heavier shots.",
+    "Try the Pure Drive for pace and spin, checking whether its firm feel suits you and your shots stay in. Try the Clash for easier movement and a softer feel, checking whether it stays steady against hard hitters.",
   ],
   [
     "ezone-98-2025-vs-aero-98-gen9",
@@ -44,7 +44,7 @@ const framePairs = [
     "Power-oriented or spin-oriented: which 98 suits your swing?",
     "yonex-ezone-98-2025",
     "babolat-pure-aero-98-gen9",
-    "Yonex positions the EZONE around power and comfort; the Aero playtest emphasizes spin and precision. Evidence depth differs here: manufacturer positioning is not equivalent to an independent playtest. Demo before treating either as your keeper.",
+    "Yonex describes the EZONE as a choice for power and comfort; the Aero review highlights spin and precision. Here we have brand information for the EZONE and on-court testing for the Aero. Try both before choosing which helps your game.",
   ],
 ] as const;
 
@@ -65,9 +65,10 @@ export const expandedComparisons: Comparison[] = framePairs.map(
           valueSources: facts.map((f) => f.source),
         },
         {
-          label: "Mass · check the basis",
+          label: "Weight · with or without strings",
           values: facts.map(
-            (f) => `${f.mass} g · ${f.massBasis.toLowerCase()}`,
+            (f) =>
+              `${f.mass} g · ${f.massBasis === "Unstrung" ? "without strings" : "with strings (reviewer’s measurement)"}`,
           ),
           valueSources: facts.map((f) => f.source),
         },
@@ -78,7 +79,7 @@ export const expandedComparisons: Comparison[] = framePairs.map(
         },
       ],
       firsthand: [],
-      gap: "No matched-string head-to-head test is recorded. String type, tension, sample variation and your swing can change the result.",
+      gap: "We haven’t found a test of both racquets with the same strings and tension. Try them with your usual setup; individual racquets and swings can feel different.",
       sources: [
         ...new Map(
           ids
@@ -101,7 +102,7 @@ expandedComparisons.push({
     "asics-solution-speed-ff-4-womens",
   ],
   takeaway:
-    "The separate women's playtests point toward Resolution X for stability and wear resistance, with significant break-in. FF 4 testers liked cushioning and agility after adjusting size. Try both on; those are different teams' experiences, not a fit prediction.",
+    "The women’s Resolution X testers liked its support and resistance to wear, but it took time to break in. FF 4 testers liked the cushioning and quick movement after adjusting their size. These were separate reviews, so try both on to check your own fit.",
   rows: [
     {
       label: "Version reviewed",
@@ -110,6 +111,6 @@ expandedComparisons.push({
     },
   ],
   firsthand: [],
-  gap: "No same-size lab width comparison is recorded. Men's measurements are not substituted for the women's shoes.",
+  gap: "We don’t have width measurements of these women’s shoes in the same size. The men’s measurements can’t tell us how the women’s versions fit.",
   sources: [librarySources.resWomen, librarySources.speedWomen],
 });

@@ -10,11 +10,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s standard-width hard-court playtest",
+      "scope": "Men’s regular-width hard-court on-court test",
       "match": "matched",
       "poolId": "asics-court-ff-3-0",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -69,11 +69,11 @@
       "scale": 100,
       "sampleSize": null,
       "sampleUnit": "reviews",
-      "scope": "Men’s standard-width lab review",
+      "scope": "Men’s regular-width lab review",
       "match": "matched",
       "poolId": "asics-court-ff-3-16",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. It doesn’t publish a customer review count alongside this score.",
       "metrics": [
         {
           "label": "Speed",
@@ -102,11 +102,11 @@
       "scale": 5,
       "sampleSize": 57,
       "sampleUnit": "reviews",
-      "scope": "Men’s hard-court listing; shared model pool",
+      "scope": "Men’s hard-court listing; reviews grouped across versions",
       "match": "matched",
       "poolId": "asics-court-ff-3-205",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified. The same pool also appears on an omnicourt listing; this is not an outsole-specific sample.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites. This collection also appears on a version made for artificial grass, so it doesn’t describe hard-court soles alone.",
       "metrics": []
     },
     {
@@ -119,11 +119,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Women’s standard-width hard-court playtest",
+      "scope": "Women’s regular-width hard-court on-court test",
       "match": "matched",
       "poolId": "asics-solution-speed-ff-4-womens-1",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -178,11 +178,11 @@
       "scale": 5,
       "sampleSize": 7,
       "sampleUnit": "reviews",
-      "scope": "Women’s standard-width listing, Bluebell/White",
+      "scope": "Women’s regular-width listing, Bluebell/White",
       "match": "matched",
       "poolId": "asics-solution-speed-ff-4-womens-202",
       "checkedOn": "2026-11-20",
-      "notes": "Published stars are rounded. Includes reviews marked as originating at ASICS; not seven independently verified purchasers. Percentages in the fit survey have no published respondent N, so they are not imported.",
+      "notes": "The site rounds its star rating and includes reviews first posted at ASICS. Its fit survey doesn’t say how many people answered, so we don’t use those percentages.",
       "metrics": []
     },
     {
@@ -199,7 +199,7 @@
       "match": "matched",
       "poolId": "asics-solution-speed-ff-4-womens-203",
       "checkedOn": "2026-11-20",
-      "notes": "Listing-level customer pool; review text sometimes names only the Solution Speed FF family. Generation-specific membership is not independently verifiable.",
+      "notes": "Some comments name only the Solution Speed FF range. We can’t confirm that every reviewer wore the FF 4 rather than an earlier version.",
       "metrics": []
     },
     {
@@ -212,11 +212,11 @@
       "scale": 10,
       "sampleSize": 3,
       "sampleUnit": "playtesters",
-      "scope": "Women’s standard-width hard-court playtest",
+      "scope": "Women’s regular-width hard-court on-court test",
       "match": "matched",
       "poolId": "asics-gel-resolution-x-womens-2",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -271,11 +271,11 @@
       "scale": 5,
       "sampleSize": 42,
       "sampleUnit": "reviews",
-      "scope": "Women’s standard-width hard-court listing",
+      "scope": "Women’s regular-width hard-court listing",
       "match": "matched",
       "poolId": "asics-gel-resolution-x-womens-301",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites.",
       "metrics": []
     },
     {
@@ -292,7 +292,7 @@
       "match": "matched",
       "poolId": "asics-solution-speed-ff-4-clay-womens-204",
       "checkedOn": "2026-11-20",
-      "notes": "Manufacturer listing pool has just two reviews, one marked promotional. Different colour from catalogue SKU 1042A305-400. This small pool should not be treated as a reliable fit verdict.",
+      "notes": "Just two customer reviews, including one marked as promotional. The reviewed shoe is a different colour from the one in our catalogue. Try it on before relying on this early feedback.",
       "metrics": []
     },
     {
@@ -305,11 +305,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s hard-court playtest",
+      "scope": "Men’s hard-court on-court test",
       "match": "matched",
       "poolId": "nike-vapor-12-27",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -368,7 +368,7 @@
       "match": "matched",
       "poolId": "nike-vapor-12-5",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. It doesn’t publish a customer review count alongside this score.",
       "metrics": [
         {
           "label": "Speed",
@@ -401,7 +401,7 @@
       "match": "matched",
       "poolId": "nike-vapor-12-400",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified. Premium and Hypersmash pools are not added.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites. Reviews for the Premium and Hypersmash editions aren’t added here.",
       "metrics": []
     },
     {
@@ -418,7 +418,7 @@
       "match": "matched",
       "poolId": "nike-vapor-pro-3-7",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. It doesn’t publish a customer review count alongside this score.",
       "metrics": [
         {
           "label": "Speed",
@@ -451,7 +451,7 @@
       "match": "matched",
       "poolId": "nike-vapor-pro-3-107",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified. This pool also appears on some clay listings; it is not a hard-court-only sample.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites. The collection also appears on some clay-court listings, so it doesn’t describe hard-court soles alone.",
       "metrics": []
     },
     {
@@ -464,11 +464,11 @@
       "scale": 100,
       "sampleSize": null,
       "sampleUnit": "reviews",
-      "scope": "Men’s standard-width lab review",
+      "scope": "Men’s regular-width lab review",
       "match": "context",
       "poolId": "nike-vapor-pro-2-200",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average. Catalogue line and surface are not yet specified.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. Our catalogue hasn’t confirmed the sizing range and court surface for this shoe yet.",
       "metrics": [
         {
           "label": "Speed",
@@ -497,11 +497,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s standard-width hard-court playtest",
+      "scope": "Men’s regular-width hard-court on-court test",
       "match": "matched",
       "poolId": "asics-gel-resolution-9-300",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -556,11 +556,11 @@
       "scale": 100,
       "sampleSize": null,
       "sampleUnit": "reviews",
-      "scope": "Gel Resolution 9 PADEL test shoe",
+      "scope": "Gel Resolution 9 Padel test shoe",
       "match": "context",
       "poolId": "asics-gel-resolution-9-8",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average. The source explicitly tested the Padel outsole on an outdoor tarmac court. Not the catalogue hard-court outsole; excluded from the matched summary.",
+      "notes": "This review tested the Padel version on an outdoor tarmac court. Its sole differs from the hard-court shoe here, so the score stays out of this shoe’s headline figures.",
       "metrics": [
         {
           "label": "Speed",
@@ -593,7 +593,7 @@
       "match": "matched",
       "poolId": "asics-gel-resolution-x-wide-mens-116",
       "checkedOn": "2026-11-20",
-      "notes": "Visible review module publishes 4.529412/5; JSON-LD rounds this to 4.5. Uses the visible value. Listing pool may include syndicated reviews.",
+      "notes": "We use the average shown in the store’s customer review section, rounded here to one decimal place. Some reviews may have been shared from other sites.",
       "metrics": []
     },
     {
@@ -606,11 +606,11 @@
       "scale": 100,
       "sampleSize": null,
       "sampleUnit": "reviews",
-      "scope": "Men’s STANDARD-width Gel Resolution X lab review",
+      "scope": "Men’s regular-width Gel Resolution X lab review",
       "match": "context",
       "poolId": "asics-gel-resolution-x-wide-mens-17",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average. Not a 2E-wide test. Do not use its fit or score as wide-version evidence.",
+      "notes": "This lab review tested the regular-width shoe, not the wide version. It can’t tell you how the wide version fits and stays out of its headline figures.",
       "metrics": [
         {
           "label": "Speed",
@@ -639,11 +639,11 @@
       "scale": 10,
       "sampleSize": 3,
       "sampleUnit": "playtesters",
-      "scope": "Women’s STANDARD-width Gel Resolution X playtest",
+      "scope": "Women’s regular-width Gel Resolution X on-court test",
       "match": "context",
       "poolId": "asics-gel-resolution-x-wide-womens-2",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These players tested the regular-width shoe, not the wide version. Their scores stay separate because the fit may differ.",
       "metrics": [
         {
           "label": "Comfort",
@@ -698,11 +698,11 @@
       "scale": 5,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s standard-width hard-court playtest",
+      "scope": "Men’s regular-width hard-court on-court test",
       "match": "context",
       "poolId": "mizuno-wave-exceed-tour-5-100",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -757,11 +757,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s standard-width hard-court playtest",
+      "scope": "Men’s regular-width hard-court on-court test",
       "match": "matched",
       "poolId": "asics-solution-speed-ff-4-12",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -816,11 +816,11 @@
       "scale": 100,
       "sampleSize": null,
       "sampleUnit": "reviews",
-      "scope": "Men’s standard-width hard-court lab review",
+      "scope": "Men’s regular-width hard-court lab review",
       "match": "matched",
       "poolId": "asics-solution-speed-ff-4-11",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. It doesn’t publish a customer review count alongside this score.",
       "metrics": [
         {
           "label": "Speed",
@@ -849,11 +849,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s standard-width hard-court playtest",
+      "scope": "Men’s regular-width hard-court on-court test",
       "match": "context",
       "poolId": "yonex-eclipsion-5-103",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -912,7 +912,7 @@
       "match": "context",
       "poolId": "yonex-eclipsion-5-110",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites.",
       "metrics": []
     },
     {
@@ -925,11 +925,11 @@
       "scale": 100,
       "sampleSize": null,
       "sampleUnit": "reviews",
-      "scope": "Men’s standard-width lab review",
+      "scope": "Men’s regular-width lab review",
       "match": "context",
       "poolId": "k-swiss-hypercourt-express-2-20",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. It doesn’t publish a customer review count alongside this score.",
       "metrics": [
         {
           "label": "Speed",
@@ -958,11 +958,11 @@
       "scale": 5,
       "sampleSize": 53,
       "sampleUnit": "reviews",
-      "scope": "Men’s hard-court listing; pool also shown on 2E",
+      "scope": "Men’s hard-court listing; reviews also shown on the wide version",
       "match": "context",
       "poolId": "k-swiss-hypercourt-express-2-108",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites.",
       "metrics": []
     },
     {
@@ -979,7 +979,7 @@
       "match": "matched",
       "poolId": "k-swiss-hypercourt-express-3-109",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites.",
       "metrics": []
     },
     {
@@ -996,7 +996,7 @@
       "match": "matched",
       "poolId": "k-swiss-hypercourt-express-3-14",
       "checkedOn": "2026-11-20",
-      "notes": "Manufacturer model listing. The catalogue’s older Hypercourt Express 2 source URL now names Hypercourt Express 3; assigned only to generation 3.",
+      "notes": "Customer reviews on K-Swiss’s page for the Hypercourt Express 3. These aren’t reviews of the older Express 2.",
       "metrics": []
     },
     {
@@ -1013,7 +1013,7 @@
       "match": "context",
       "poolId": "nike-gp-challenge-1-5-119",
       "checkedOn": "2026-11-20",
-      "notes": "Three reviews: two five-star and one four-star. Two reviews marked as collected from another provider. GP Challenge 1 scores are excluded.",
+      "notes": "Three customer reviews: two five-star ratings and one four-star rating. Two were first collected by another review provider. These are for the 1.5, not the earlier GP Challenge 1.",
       "metrics": []
     },
     {
@@ -1026,11 +1026,11 @@
       "scale": 5,
       "sampleSize": 5,
       "sampleUnit": "playtesters",
-      "scope": "Mixed men’s/women’s hard-court playtest",
+      "scope": "Mixed men’s/women’s hard-court on-court test",
       "match": "context",
       "poolId": "nike-zoom-nxt-101",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -1085,11 +1085,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Women’s standard-width hard-court playtest",
+      "scope": "Women’s regular-width hard-court on-court test",
       "match": "matched",
       "poolId": "new-balance-coco-cg2-104",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -1148,7 +1148,7 @@
       "match": "matched",
       "poolId": "new-balance-coco-cg2-24",
       "checkedOn": "2026-11-20",
-      "notes": "Source labels this “Our score”. No audience review count is published with the score; it is not a customer-star average.",
+      "notes": "RunRepeat’s own review score, separate from customer stars. It doesn’t publish a customer review count alongside this score.",
       "metrics": [
         {
           "label": "Speed",
@@ -1181,7 +1181,7 @@
       "match": "matched",
       "poolId": "new-balance-coco-cg2-111",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites.",
       "metrics": []
     },
     {
@@ -1194,11 +1194,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Men’s standard-width hard-court playtest",
+      "scope": "Men’s regular-width hard-court on-court test",
       "match": "context",
       "poolId": "on-the-roger-pro-fire-105",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -1248,11 +1248,11 @@
       "scale": 10,
       "sampleSize": 4,
       "sampleUnit": "playtesters",
-      "scope": "Women’s standard-width hard-court playtest",
+      "scope": "Women’s regular-width hard-court on-court test",
       "match": "context",
       "poolId": "on-the-roger-pro-fire-106",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer playtest panel; the overall score is published by the source, not calculated by Tried & Kept. Feature-score respondent counts are not separately published.",
+      "notes": "These are the reviewer’s on-court test scores. It lists the players who took part, but doesn’t say how many rated each individual feature.",
       "metrics": [
         {
           "label": "Comfort",
@@ -1311,7 +1311,7 @@
       "match": "context",
       "poolId": "on-the-roger-pro-fire-120",
       "checkedOn": "2026-11-20",
-      "notes": "Retailer review pool can include multiple colourways and widths; only one listing from this pool is counted. Reviewer identities and cross-store overlap cannot be verified.",
+      "notes": "The store groups reviews from several colours or widths. We count that collection once. Some of the same reviews may also appear on other sites.",
       "metrics": []
     },
     {
@@ -1328,7 +1328,7 @@
       "match": "context",
       "poolId": "on-the-roger-pro-3-clay-117",
       "checkedOn": "2026-11-20",
-      "notes": "Visible review module value; schema rounds to 4.8. Catalogue line is not yet specified, so excluded from the headline customer average.",
+      "notes": "We use the average shown in the store’s customer review section. Our catalogue hasn’t confirmed the sizing range yet, so these men’s reviews stay separate.",
       "metrics": []
     },
     {
@@ -1345,7 +1345,7 @@
       "match": "context",
       "poolId": "on-the-roger-pro-3-clay-118",
       "checkedOn": "2026-11-20",
-      "notes": "Only one reviewer, who describes using this clay shoe for PADEL. Not evidence of tennis-court performance.",
+      "notes": "Just one review, from someone playing Padel rather than tennis. It doesn’t tell us how the shoe performs on a tennis court.",
       "metrics": []
     }
   ],
@@ -1353,102 +1353,102 @@
     {
       "productSlug": "asics-court-ff-3",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "asics-solution-speed-ff-4-womens",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "asics-gel-resolution-x-womens",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "asics-solution-speed-ff-4-clay-womens",
       "checkedOn": "2026-11-20",
-      "note": "One matching rating source recovered so far. Other sources checked did not expose a verifiable current score and sample count for this variant."
+      "note": "We found one site with a rating and review count for this version. Other sites we checked didn’t share both."
     },
     {
       "productSlug": "nike-vapor-12",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "nike-vapor-pro-3",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "nike-vapor-pro-2",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "asics-gel-resolution-9",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "asics-gel-resolution-x-wide-mens",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "asics-gel-resolution-x-wide-womens",
       "checkedOn": "2026-11-20",
-      "note": "No current, directly verifiable customer average for the women’s wide version was recovered. Standard-width playtest shown only as related context."
+      "note": "We found a test of the regular-width shoe, but no customer average we could check for the women’s wide version. Those test scores are shown separately below."
     },
     {
       "productSlug": "mizuno-wave-exceed-tour-5",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "asics-solution-speed-ff-4",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "yonex-eclipsion-5",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "k-swiss-hypercourt-express-2",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "k-swiss-hypercourt-express-3",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "nike-gp-challenge-1-5",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "nike-zoom-nxt",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "new-balance-coco-cg2",
       "checkedOn": "2026-11-20",
-      "note": "Ratings are a dated snapshot of the sources below, not an exhaustive census or a live feed."
+      "note": "These are the ratings we could check on the date shown. Other reviews may exist, and sites may have newer ratings now."
     },
     {
       "productSlug": "on-the-roger-pro-fire",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     },
     {
       "productSlug": "on-the-roger-pro-3-clay",
       "checkedOn": "2026-11-20",
-      "note": "Catalogue line, width or surface is not fully identified. Related model reviews are available below; no variant-specific average is inferred."
+      "note": "We still need to confirm the sizing range, width or court surface for this catalogue entry. Reviews below may be for a different version, so we keep their scores separate."
     }
   ]
 }

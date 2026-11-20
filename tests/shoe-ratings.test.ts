@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import { products } from "@/lib/catalog";
 import {
   customerAverage,
+  customerGuidance,
+  customerReviewLabel,
+  performanceScores,
+  performanceSummary,
   ratingCoverage,
   ratingOutOf100,
   ratingsFor,
@@ -82,7 +86,105 @@ describe("shoe-rating arithmetic", () => {
     ).toBeNull();
   });
   it("keeps unavailable N distinct from zero reviews", () => {
-    expect(sampleLabel(fixture({ sampleSize: null }))).toBe("N not published");
+    expect(sampleLabel(fixture({ sampleSize: null }))).toBe(
+      "Review count not shared",
+    );
+    expect(sampleLabel(fixture({ kind: "playtest", sampleSize: null }))).toBe(
+      "Tester count not shared",
+    );
+    expect(sampleLabel(fixture({ sampleSize: 1 }))).toBe("1 customer review");
+    expect(sampleLabel(fixture({ kind: "playtest", sampleSize: 4 }))).toBe(
+      "Tested by 4 players",
+    );
+  });
+});
+
+describe("everyday explanations of the analysis", () => {
+  it("explains the review count with familiar units", () => {
+    const average = customerAverage([
+      fixture(),
+      fixture({ poolId: "two", sampleSize: 77 }),
+    ])!;
+    expect(customerReviewLabel(average)).toBe(
+      "Based on 87 reviews across 2 sites",
+    );
+    expect(
+      customerReviewLabel(customerAverage([fixture({ sampleSize: 1 })])!),
+    ).toBe("Based on 1 review from 1 site");
+  });
+  it("gives sparse reviews an early-feedback prompt, without inventing confidence", () => {
+    expect(customerGuidance([fixture({ sampleSize: 2 })])?.title).toBe(
+      "Only a few reviews so far",
+    );
+    expect(customerGuidance([fixture({ sampleSize: 9 })])?.title).toBe(
+      "Only a few reviews so far",
+    );
+    expect(customerGuidance([fixture({ sampleSize: 10 })])?.title).toBe(
+      "One site’s view",
+    );
+    expect(customerGuidance([fixture({ match: "context" })])).toBeNull();
+  });
+  it("describes disagreement between site averages without treating it as a shoe defect", () => {
+    const result = customerGuidance([
+      fixture(),
+      fixture({ poolId: "two", value: 90, scale: 100 }),
+    ]);
+    expect(result?.title).toBe("Ratings vary by site");
+    expect(result?.detail).toContain("4.0 to 4.5 out of 5");
+    expect(
+      customerGuidance([fixture(), fixture({ poolId: "two", value: 4.4 })])
+        ?.title,
+    ).toBe("Similar ratings across sites");
+  });
+  it("does not manufacture agreement from a duplicate pool or expert score", () => {
+    expect(
+      customerGuidance([
+        fixture(),
+        fixture({ value: 5 }),
+        fixture({ kind: "playtest", poolId: "panel", value: 5 }),
+      ])?.title,
+    ).toBe("One site’s view");
+  });
+  it("explains feature scores and compares them only within the matching on-court test", () => {
+    const review = fixture({
+      kind: "playtest",
+      metrics: [
+        { label: "Traction", value: 9, scale: 10 },
+        { label: "Outsole durability", value: 80, scale: 100 },
+      ],
+    });
+    expect(performanceScores(review)[0]).toMatchObject({
+      label: "Grip",
+      meaning: "Grip when stopping and changing direction",
+    });
+    expect(performanceSummary(review)).toContain("grip got the highest mark");
+    expect(performanceSummary(review)).toContain(
+      "Sole wear scored lower in the same test",
+    );
+    expect(performanceSummary({ ...review, match: "context" })).toBeNull();
+    expect(performanceSummary({ ...review, kind: "publisher" })).toBeNull();
+  });
+  it("keeps tied strengths together and avoids highlighting tiny score differences", () => {
+    const review = fixture({
+      kind: "playtest",
+      metrics: [
+        { label: "Comfort", value: 9, scale: 10 },
+        { label: "Traction", value: 9, scale: 10 },
+        { label: "Outsole durability", value: 8, scale: 10 },
+      ],
+    });
+    expect(performanceSummary(review)).toContain(
+      "comfort and grip got the highest marks",
+    );
+    expect(
+      performanceSummary({
+        ...review,
+        metrics: [
+          { label: "Comfort", value: 9, scale: 10 },
+          { label: "Traction", value: 8.9, scale: 10 },
+        ],
+      }),
+    ).toBeNull();
   });
 });
 

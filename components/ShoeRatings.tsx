@@ -1,17 +1,22 @@
 import {
   customerAverage,
+  customerGuidance,
+  customerReviewLabel,
   displayRating,
+  performanceScores,
+  performanceSummary,
   ratingCoverage,
   ratingsFor,
   sampleLabel,
   type ShoeRating,
 } from "@/lib/shoe-ratings";
+import { formatDate } from "@/lib/catalog";
 import s from "./shoe-ratings.module.css";
 
 const kindLabel = {
   customer: "Customer reviews",
-  playtest: "Playtest panel",
-  publisher: "Publisher score",
+  playtest: "On-court test",
+  publisher: "Expert review",
 };
 
 export function ShoeRatingLine({ productSlug }: { productSlug: string }) {
@@ -23,15 +28,15 @@ export function ShoeRatingLine({ productSlug }: { productSlug: string }) {
   if (average)
     return (
       <p className={s.cardLine}>
-        ≈ {average.outOf5.toFixed(1)}/5 customers{" "}
-        <span>· N = {average.reviewCount} reviews</span>
+        {average.outOf5.toFixed(1)} out of 5 · Customer rating
+        <span className={s.cardCount}>{customerReviewLabel(average)}</span>
       </p>
     );
   if (panel)
     return (
       <p className={s.cardLine}>
-        {displayRating(panel.value)}/{panel.scale} playtest{" "}
-        <span>· N = {panel.sampleSize} testers</span>
+        {displayRating(panel.value)} out of {panel.scale} · On-court test
+        <span className={s.cardCount}>{sampleLabel(panel)}</span>
       </p>
     );
   return null;
@@ -44,43 +49,40 @@ function SourceRating({
   rating: ShoeRating;
   expanded: boolean;
 }) {
-  const metrics = rating.metrics.filter((metric) =>
-    [
-      "Comfort",
-      "Support / stability",
-      "Outsole durability",
-      "Traction",
-      "Speed",
-      "Stability",
-      "Cushioning",
-    ].includes(metric.label),
-  );
+  const metrics = performanceScores(rating);
+  const takeaway = performanceSummary(rating);
   return (
     <details className={s.source} open={expanded || undefined}>
       <summary>
         <span className={s.sourceName}>
           {rating.publisher}
-          <span className={s.subtle}>
-            {kindLabel[rating.kind]}
-            {rating.match === "context" ? " · Related variant" : ""}
-          </span>
+          <span className={s.subtle}>{kindLabel[rating.kind]}</span>
         </span>
         <span className={s.sourceScore}>
           {displayRating(rating.value)}
-          <small> / {rating.scale}</small>
+          <small> out of {rating.scale}</small>
           <span className={s.subtle}>{sampleLabel(rating)}</span>
         </span>
-        <span className={s.scope}>{rating.scope}</span>
+        <span className={s.scope}>
+          {rating.match === "context" && (
+            <strong>Different or unconfirmed version. </strong>
+          )}
+          {rating.scope}
+        </span>
       </summary>
       <div className={s.sourceBody}>
+        {takeaway && <p className={s.takeaway}>{takeaway}</p>}
         {metrics.length > 0 && (
           <dl className={s.metrics}>
             {metrics.map((metric) => (
               <div key={metric.label}>
-                <dt>{metric.label}</dt>
+                <dt>
+                  {metric.label}
+                  <span className={s.metricMeaning}>{metric.meaning}</span>
+                </dt>
                 <dd>
                   {displayRating(metric.value)}
-                  <small> / {metric.scale}</small>
+                  <small> out of {metric.scale}</small>
                 </dd>
               </div>
             ))}
@@ -88,8 +90,8 @@ function SourceRating({
         )}
         {rating.panel && (
           <p className={s.note}>
-            Panel: {rating.panel.join(", ")}. N counts the listed playtesters,
-            not customer reviews.
+            Tested on court by {rating.panel.join(", ")}. Their scores are
+            separate from customer stars.
           </p>
         )}
         {rating.notes && <p className={s.note}>{rating.notes}</p>}
@@ -99,7 +101,10 @@ function SourceRating({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Read {rating.publisher} source
+          {rating.kind === "customer"
+            ? "Read customer reviews at"
+            : "Read the full review at"}{" "}
+          {rating.publisher}
           <span className="sr-only">
             {" "}
             for {rating.scope} (opens a new tab)
@@ -119,6 +124,7 @@ export default function ShoeRatings({ productSlug }: { productSlug: string }) {
   if (!coverage) return null;
   const observations = ratingsFor(productSlug);
   const average = customerAverage(observations);
+  const guidance = customerGuidance(observations);
   const matchedExperts = observations.filter(
     (rating) => rating.match === "matched" && rating.kind !== "customer",
   );
@@ -133,36 +139,28 @@ export default function ShoeRatings({ productSlug }: { productSlug: string }) {
       data-shoe-ratings={productSlug}
     >
       <div className={s.heading}>
-        <span className="eyebrow">More than a verdict</span>
-        <h2 id={id}>What the numbers say</h2>
+        <span className="eyebrow">Reviews, made useful</span>
+        <h2 id={id}>How players rate it</h2>
         <p>
-          Buyer stars, on-court playtests and publisher scores, with the sample
-          behind each.
+          See what customers and reviewers thought, how many reviews each score
+          uses, and what to check before buying.
         </p>
       </div>
       <div className={s.overview}>
         {average && (
           <div className={s.average}>
-            <span className={s.label}>
-              {average.sourceCount > 1
-                ? "Pooled customer average"
-                : "Customer average"}
-            </span>
+            <span className={s.label}>Customer rating</span>
             <p className={s.bigScore}>
-              ≈ {average.outOf5.toFixed(1)}
-              <small> / 5</small>
+              {average.outOf5.toFixed(1)}
+              <small> out of 5</small>
             </p>
-            <p className={s.count}>
-              N = {average.reviewCount.toLocaleString("en-US")} listed reviews ·{" "}
-              {average.sourceCount}{" "}
-              {average.sourceCount === 1 ? "source" : "sources"}
-            </p>
-            <p className={s.note}>
-              ≈ {displayRating(average.outOf100)}/100 after scale conversion
-            </p>
-            <p className={s.note}>
-              Review entries; shoppers may overlap across sources.
-            </p>
+            <p className={s.count}>{customerReviewLabel(average)}</p>
+            {guidance && (
+              <div className={s.guidance}>
+                <p className={s.label}>{guidance.title}</p>
+                <p>{guidance.detail}</p>
+              </div>
+            )}
           </div>
         )}
         {matchedExperts.length > 0 && (
@@ -176,7 +174,7 @@ export default function ShoeRatings({ productSlug }: { productSlug: string }) {
                 <dd>
                   <strong>
                     {displayRating(rating.value)}
-                    <small> / {rating.scale}</small>
+                    <small> out of {rating.scale}</small>
                   </strong>
                   <span className={s.subtle}>{sampleLabel(rating)}</span>
                 </dd>
@@ -187,13 +185,8 @@ export default function ShoeRatings({ productSlug }: { productSlug: string }) {
       </div>
       {!average && (
         <p className={s.gap}>
-          No matched customer average yet. {coverage.note}
-        </p>
-      )}
-      {average && average.reviewCount < 10 && (
-        <p className={s.gap}>
-          Small sample: fewer than 10 listed reviews. Use these stars as an
-          early signal, alongside the fit and performance evidence.
+          We don’t have a customer rating for this exact version yet.{" "}
+          {coverage.note}
         </p>
       )}
       <div className={s.sources}>
@@ -206,35 +199,40 @@ export default function ShoeRatings({ productSlug }: { productSlug: string }) {
         ))}
       </div>
       <details className={s.method}>
-        <summary>How to read these ratings</summary>
+        <summary>Where the scores come from</summary>
         <div>
           <p>
-            Customer averages are weighted by each source’s published review
-            count: sum of (score ÷ scale × N), divided by total N. The /100
-            figure is a scale conversion, not a percentage of satisfied players.
-            Source scores are often rounded, so the combined figure is
-            approximate.
+            We combine customer stars from the sites listed here. A site with
+            more reviews has more influence on the result. We convert different
+            rating scales to stars out of five and round the result, so treat it
+            as a guide rather than an exact measurement.
           </p>
           <p>
-            N counts published review entries, not verified unique people.
-            Stores may share or syndicate reviews, include incentives, or pool
-            colours, widths and surfaces. We count one listing per known shared
-            pool, but cross-store overlap is unknown. This is a descriptive
-            snapshot, not a scientific sample or confidence rating.
+            The review count is the total shown by those sites. The same
+            person’s review may appear on more than one site. We avoid counting
+            review collections we know are shared twice, but we can’t spot every
+            repeat. Some reviews may be rewarded, and a store may group
+            different colours, widths or soles together.
           </p>
           <p>
-            Playtest panels and publisher scores are shown separately and never
-            enter customer averages. “N not published” means the source does not
-            expose the count. Panel feature-score counts are not individually
-            published. Related variants stay out of the headline figures. A high
-            score cannot guarantee your fit.
+            On-court tests and expert reviews stay separate from customer stars.
+            We show how many players took part when the reviewer shares that
+            number. A score for another version doesn’t go into this version’s
+            headline rating. A good score still can’t tell you whether the shoe
+            will fit.
           </p>
           <p>{coverage.note}</p>
+          <p>
+            “Only a few reviews” is a reminder when there are fewer than 10
+            reviews. “Ratings vary by site” means the site averages differ by at
+            least half a star. These are reading tips, not proof that a score is
+            reliable or that one shoe is better.
+          </p>
         </div>
       </details>
       <p className={s.checked}>
-        Sources checked {coverage.checkedOn}. Ratings are snapshots and may have
-        changed.
+        Checked {formatDate(coverage.checkedOn)}. Sites may have newer reviews
+        now.
       </p>
     </section>
   );

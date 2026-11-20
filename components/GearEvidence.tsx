@@ -1,8 +1,20 @@
-import { gearBriefs, EDITORIAL_CHECKED } from "@/lib/editorial";
+import {
+  gearBriefs,
+  EDITORIAL_CHECKED,
+  type EvidenceKind,
+} from "@/lib/editorial";
 import { formatDate, SourceLink } from "./ui";
 import s from "./journeys.module.css";
-import { evidenceLabel } from "@/lib/discovery";
 import { getProduct } from "@/lib/catalog";
+
+const reviewLabels: Record<EvidenceKind, string> = {
+  "Manufacturer specification": "Brand specifications",
+  "Player interview": "Player interview",
+  "Brand announcement": "Brand announcement",
+  "Retailer playtest": "On-court review",
+  "Independent lab": "Lab test",
+  "Forum anecdote": "Player discussion",
+};
 
 export default function GearEvidence({ productSlug }: { productSlug: string }) {
   const brief = gearBriefs[productSlug];
@@ -11,9 +23,6 @@ export default function GearEvidence({ productSlug }: { productSlug: string }) {
     <section className={s.brief} aria-labelledby={`evidence-${productSlug}`}>
       <div className="stack">
         <span className="eyebrow">The fit, the feel, the tradeoffs</span>
-        <span className="small muted">
-          Evidence: {evidenceLabel(productSlug)}
-        </span>
         <h2 id={`evidence-${productSlug}`}>{brief.verdict}</h2>
         <p>
           <strong>Worth a try for:</strong> {brief.suits}
@@ -40,25 +49,26 @@ export default function GearEvidence({ productSlug }: { productSlug: string }) {
       <div className={`callout ${s.brief}`}>
         <h3>
           {getProduct(productSlug)?.category === "racquet"
-            ? "Your demo check"
-            : "Your try-on check"}
+            ? "What to try on court"
+            : "What to check when trying it on"}
         </h3>
         <p>{brief.tryThis}</p>
       </div>
       <details className={s.evidence}>
         <summary>
-          Read the evidence ({brief.evidence.length}{" "}
+          Reviews, tests and sources ({brief.evidence.length}{" "}
           {brief.evidence.length === 1 ? "source" : "sources"})
         </summary>
         <p className="small muted">
-          Edited summaries, checked {formatDate(EDITORIAL_CHECKED)}. Retailers
-          sell these products; forum accounts are unverified personal
-          experiences. Suitability is our editorial interpretation.
+          We summarised these reviews and checked the links on{" "}
+          {formatDate(EDITORIAL_CHECKED)}. Stores sell the products they review.
+          Forum posts are personal experiences we haven’t independently checked.
+          Our buying advice is our interpretation of these sources.
         </p>
         <ul className={`${s.evidence} list-plain`}>
           {brief.evidence.map((item) => (
             <li key={item.source.url}>
-              <span className="eyebrow">{item.kind}</span>
+              <span className="eyebrow">{reviewLabels[item.kind]}</span>
               <p>{item.summary}</p>
               <SourceLink source={item.source} standalone />
             </li>

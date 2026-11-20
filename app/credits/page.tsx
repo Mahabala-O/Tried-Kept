@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import BallArt from "@/components/art/BallArt";
 import { PhotoImg } from "@/components/MediaFrame";
@@ -6,10 +7,11 @@ import ResilientImage from "@/components/ResilientImage";
 import { getPro, getProduct } from "@/lib/catalog";
 import { allCredits, homeMedia, proMedia, type CreditEntry, type Gif } from "@/lib/media";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Credits",
   description: "Who made the photos and GIFs on Tried & Kept, and under which license.",
-};
+  path: "/credits",
+});
 
 const rowStyle = { display: "grid", gridTemplateColumns: "88px minmax(0, 1fr)", gap: 14, alignItems: "start" } as const;
 const thumbStyle = { position: "relative", width: 88, aspectRatio: "1 / 1", overflow: "hidden", borderRadius: 12 } as const;

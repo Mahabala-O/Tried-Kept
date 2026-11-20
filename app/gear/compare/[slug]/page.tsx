@@ -24,6 +24,8 @@ import {
 import { productIllustrationSrc, productPhotos } from "@/lib/media";
 import { comparisonModels } from "@/app/compare/_components/CompareCard";
 import s from "@/app/compare/compare.module.css";
+import { comparisonMetadata } from "@/lib/seo";
+import PageSchema from "@/components/StructuredData";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const comparison = getComparison(slug);
   if (!comparison) return { title: "Comparison not found" };
-  return { title: comparison.title, description: comparison.question };
+  return comparisonMetadata(comparison);
 }
 
 /** "a", "a and b", "a, b and c". */
@@ -301,6 +303,7 @@ export default async function ComparisonPage({ params }: Props) {
 
   return (
     <div className="wrap page">
+      <PageSchema kind="comparison" slug={comparison.slug} />
       <div className={s.head}>
         <Link href="/gear/compare#guides" className="small tap-link">
           Catalogue comparisons

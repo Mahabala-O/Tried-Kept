@@ -28,6 +28,8 @@ import {
   type Product,
 } from "@/lib/catalog";
 import s from "../gear.module.css";
+import { productMetadata } from "@/lib/seo";
+import PageSchema from "@/components/StructuredData";
 
 export const dynamic = "force-dynamic";
 
@@ -39,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return { title: "Gear not found" };
-  return { title: productLabel(product), description: product.summary };
+  return productMetadata(product);
 }
 
 function KeyFacts({ product }: { product: Product }) {
@@ -137,6 +139,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <>
+      <PageSchema kind="product" slug={product.slug} />
       <section className={s.top} aria-labelledby="product-title">
         <div className={`wrap ${s.topWrap}`}>
           <Link href="/gear" className="small tap-link">

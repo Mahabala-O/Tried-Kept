@@ -9,12 +9,16 @@ import { ProImage } from "@/components/MediaFrame";
 import { GapNote } from "@/components/ui";
 import { getProduct, productLabel, pros, type Pro } from "@/lib/catalog";
 import s from "./pros.module.css";
+import { prosMetadata, type SearchQuery } from "@/lib/seo";
+import PageSchema from "@/components/StructuredData";
 
-export const metadata: Metadata = {
-  title: "Pros",
-  description:
-    "Reported pro gear and checked brand listings, with dates, evidence and retail alternatives.",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<SearchQuery>;
+}): Promise<Metadata> {
+  return prosMetadata(await searchParams);
+}
 
 const RULES = [
   {
@@ -60,6 +64,7 @@ export default async function ProsPage({
 
   return (
     <>
+      <PageSchema kind="pros" query={query} />
       <section
         className={`band band-hardcourt court-lines ${s.hero}`}
         aria-labelledby="pros-title"

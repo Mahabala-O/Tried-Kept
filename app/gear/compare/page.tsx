@@ -15,12 +15,15 @@ import { ProductImage } from "@/components/MediaFrame";
 import GearEvidence from "@/components/GearEvidence";
 import { SourceList } from "@/components/ui";
 import s from "@/components/journeys.module.css";
+import { comparisonPickerMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Build a comparison",
-  description:
-    "Compare any two shoes or retail racquets in the library, with source-specific advice and a court test.",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ left?: string; right?: string }>;
+}): Promise<Metadata> {
+  return comparisonPickerMetadata(await searchParams);
+}
 export default async function PickComparison({
   searchParams,
 }: {

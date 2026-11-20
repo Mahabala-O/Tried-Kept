@@ -1,4 +1,3 @@
-import { storyHref } from "@/lib/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,19 +7,15 @@ import { formatDate, SourceLink } from "@/components/ui";
 import { getPro, getProduct, productLabel } from "@/lib/catalog";
 import { gearStories, EDITORIAL_CHECKED } from "@/lib/editorial";
 import s from "@/components/journeys.module.css";
+import { storyMetadata } from "@/lib/seo";
+import PageSchema from "@/components/StructuredData";
 type Props = { params: Promise<{ slug: string; story: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug: proSlug, story: storySlug } = await params;
   const story = gearStories.find(
     (s) => s.slug === storySlug && s.proSlug === proSlug,
   );
-  return story
-    ? {
-        title: story.title,
-        description: story.dek,
-        alternates: { canonical: storyHref(story) },
-      }
-    : { title: "Story not found" };
+  return story ? storyMetadata(story) : { title: "Story not found" };
 }
 export default async function StoryPage({ params }: Props) {
   const { slug: proSlug, story: storySlug } = await params;
@@ -31,6 +26,7 @@ export default async function StoryPage({ params }: Props) {
   const pro = getPro(story.proSlug)!;
   return (
     <article className={`wrap page ${s.article}`}>
+      <PageSchema kind="story" slug={story.slug} proSlug={pro.slug} />
       <nav aria-label="Breadcrumb" className="cta-row">
         <Link href="/pros" className="tap-link">
           Pros
@@ -45,7 +41,8 @@ export default async function StoryPage({ params }: Props) {
         <h1 className={s.title}>{story.title}</h1>
         <p className="lede">{story.dek}</p>
         <p className="small muted">
-          Reported {formatDate(story.publishedOn)} · Sources checked{" "}
+          Compiled by Tried &amp; Kept · Reported{" "}
+          {formatDate(story.publishedOn)} · Sources checked{" "}
           {formatDate(EDITORIAL_CHECKED)}
         </p>
       </header>

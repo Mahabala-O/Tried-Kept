@@ -3,6 +3,9 @@ import { ProImage, ProductImage } from "@/components/MediaFrame";
 import KeeperCourt from "@/components/home/KeeperCourt";
 import { getProduct, getPro, productLabel, products } from "@/lib/catalog";
 import s from "./home.module.css";
+import { homeMetadata } from "@/lib/seo";
+
+export const metadata = homeMetadata();
 
 const categories = [
   {

@@ -169,7 +169,7 @@ export const gearBriefs: Record<string, GearBrief> = {
       "Wide at the ball of the foot, but shallow and tapered at the toes",
       "Lab airflow results were poor; retailer testers had mixed heat experiences",
     ],
-    priorities: ["room", "cushioning"],
+    priorities: ["room", "cushioning", "handling"],
     evidence: [
       {
         kind: "Independent lab",

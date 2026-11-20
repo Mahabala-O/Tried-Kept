@@ -51,6 +51,11 @@ describe("pro-to-player shortlist", () => {
             expect(matches).toEqual([]);
         }
   });
+  it("uses the existing men's speed-shoe playtest for light-movement requests", () => {
+    const options = discoveryOptions({ proSlug: "carlos-alcaraz", category: "shoe", goal: "handling", line: "mens", surface: "hard" });
+    expect(options.map(p => p.slug)).toContain("asics-solution-speed-ff-4");
+    expect(options.every(p => p.line === "Men's" && p.surface === "hard")).toBe(true);
+  });
   it("does not hide gaps with an unsupported category or a made-up second option", () => {
     expect(
       discoveryOptions({

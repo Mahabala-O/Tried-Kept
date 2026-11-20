@@ -1,3 +1,4 @@
+import { comparisonHref } from "@/lib/navigation";
 import Link from "next/link";
 import { ProductImageStrip } from "@/components/MediaFrame";
 import {
@@ -53,7 +54,7 @@ export default function CompareCard({
       </ProductImageStrip>
       <span className="eyebrow">{comparison.title}</span>
       <Heading className={s.cmpQuestion}>
-        <Link href={`/compare/${comparison.slug}`} className="stretched-link">
+        <Link href={comparisonHref(comparison.slug)} className="stretched-link">
           {comparison.question}
         </Link>
       </Heading>

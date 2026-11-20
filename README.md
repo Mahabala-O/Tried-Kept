@@ -1,15 +1,15 @@
 # Tried & Kept
 
-A tennis gear guide built from `tennis_gear_buyer_research.pdf`. Players start from a pro, a product, or their own gear, then see what others tried, kept and returned.
+A focused tennis gear guide with two public sections: **Catalogue** and **Pros**. Browsing, reading evidence and comparing products do not require an account.
 
-## Main journeys
+## Public hierarchy
 
-- `/pros` → a dated bag → a product's evidence and tradeoffs.
-- `/stories` → three documented historical pro stories, linked to the player's bag and the switch planner. Stories and wardrobe notes live in `lib/editorial.ts`; they are never inserted as member reviews.
-- `/switch?current=<slug>` → current gear, priority, sizing and court surface → editorial candidates → comparison or locker → trial report. The old and new model are carried through login into `/report/new?product=<slug>&from=<slug>`.
-- `/community` contains actual member reports. `/play` is a secondary collection of tools and games.
+- **Catalogue** `/gear` → a product → its strengths, cautions, sourced facts and retailer links. Comparisons are a tool within the catalogue: `/gear/compare` and `/gear/compare/[slug]`.
+- **Pros** `/pros` → a player's equipment and wardrobe → their documented gear stories at `/pros/[slug]/stories/[story]`.
 
-Seven shoe models have attributed strengths, cautions and try-on checks in `lib/editorial.ts`. Sources distinguish lab testing, retailer playtests, brand statements and individual forum accounts. Preserve those boundaries when adding evidence. Some women's fit and clay-court combinations still have no supported candidate; show the gap rather than repurposing a men's or hard-court review. Existing XP data is retained, while XP prompts, levels and leaderboards are absent from the visible journeys.
+The main navigation contains Catalogue and Pros; the mobile bar adds Home. There is no public login, locker, community, game, report or standalone planner promotion. Existing account data and the account/report backend remain intact for previously saved links. `/discover` and `/switch` return to a relevant pro or product. Older story and comparison URLs redirect to their new canonical locations. The sitemap lists the editorial catalogue and pro pages; account, community and game routes carry noindex metadata.
+
+Twenty-two models have attributed strengths, cautions and try-on or demo checks in the editorial library. Sources distinguish lab testing, retailer playtests, manufacturer statements and individual forum accounts. Preserve those boundaries when adding evidence. Shoe sizing lines, surfaces and racquet measurement bases stay separate. Missing facts remain labeled.
 
 Compact product cards use `ProductImage` with adjacent content as children. Credits and variant notes span the entire row; never put a complete credited figure in a fixed-width thumbnail column. `ProductImageStrip` keeps grouped photo credits full-width. Layout QA should inspect readable column widths and card shapes in addition to document overflow.
 
@@ -48,7 +48,7 @@ npx playwright install chromium webkit
 npm run test:browser
 ```
 
-It starts a local production server with a throwaway database under the system temporary directory. Chromium and WebKit check six widths from 320 to 1280 pixels, full-width captions, enlarged text, navigation targets, preference persistence and trial context through login. `BROWSER_BASE_URL` can target an already running deployment; these browser tests do not create accounts or submit reports.
+It starts a local production server with a throwaway database under the system temporary directory. Chromium and WebKit check six widths from 320 to 1280 pixels, full-width captions, enlarged text, navigation targets, comparison choices, category compatibility, the two-section hierarchy and legacy-link redirects. `BROWSER_BASE_URL` can target an already running deployment; these browser tests do not create accounts or submit reports.
 
 ## Add affiliate links
 
@@ -97,10 +97,10 @@ The app stores data in SQLite, so it needs a Railway volume and runs as a single
 
 Signup is refused in production until the mail variables are set. Each deploy has a few seconds of downtime, because Railway does not let two deploys share a volume.
 
-## Pro curiosity to a useful decision
+## The first useful moment
 
-The first aha hypothesis: “I found my version of a pro-inspired setup, and know what to test next.” `/discover` connects a selected pro, one priority and (for shoes) sizing line and surface to at most two editorial candidates. `/compare/pick` compares any two models in the same category. The result is a source-backed trial plan, not a fit prediction or proof that someone should buy.
+The v1 hypothesis is: “I understand what this model does well, what I would give up, and what to compare it with.” A pro's equipment and story can start that exploration; the catalogue supplies the practical detail. Avoid adding a separate questionnaire or account gate to this journey.
 
-Start usability testing with recreational players choosing their next upgrade. Ask five people to start from a favorite pro on a phone. An initial usability gate is four out of five reaching a comparison within a minute, then explaining one gain, one compromise and a court check without coaching. This is an unvalidated hypothesis, not a retention result. The longer-term payoff to test is returning with an actual kept/returned report that helps the next player.
+Test with five recreational players on a phone: start from a model or pro, reach a useful product comparison, and explain one benefit and one compromise within a minute. This is an unvalidated usability target. Revisit saved collections or community only when repeat visitors demonstrate a need and there is a practical plan to sustain contributions and moderation.
 
-`/pros` and `/gear` have search and pagination. Counts in the pro library describe only the 20 selected profiles, include brand associations and exclude family alternatives; they must never be labeled tour-wide usage or popularity. Mass values retain their strung/unstrung basis, and shoe recommendations keep sizing lines and surfaces separate.
+The library contains 20 selected pro profiles. Reference counts include checked brand associations and exclude family alternatives; they are not tour-wide usage or sales rankings.

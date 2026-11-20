@@ -43,6 +43,8 @@ export default async function PrivacyPage({
         )}
       </div>
 
+      <p className="callout">You can browse the catalogue, comparisons and pros without an account. The account and report information below applies if you have used those features.</p>
+
       <div className={styles.split}>
         <section className={`card ${styles.who} ${styles.public}`} aria-labelledby="public">
           <div className={styles.whoHead}>

@@ -19,7 +19,7 @@ const SECTIONS = [
   { id: "your-data", title: "Your data" },
 ] as const;
 
-const PROMISES = ["Some links may earn a commission", "Missing facts stay missing", "No points for praise"];
+const PROMISES = ["Some links may earn a commission", "Missing facts stay missing", "Advice with sources"];
 
 function Section({ index, children }: { index: number; children: ReactNode }) {
   const { id, title } = SECTIONS[index];
@@ -81,7 +81,7 @@ export default function DisclosurePage() {
               offer you chose, which part of the site you came from, and your account if you are logged in. Then we send you to
               the retailer.
             </p>
-            <p>Gear Match ranks shoes only on the facts we hold. Commissions play no part in its results.</p>
+            <p>Affiliate commissions do not determine our product advice or comparisons.</p>
           </Section>
 
           <Section index={1}>
@@ -101,8 +101,8 @@ export default function DisclosurePage() {
           </Section>
 
           <Section index={2}>
-            <p>The switch planner offers editorial candidates based on the priority, sizing line and surface you select. These are starting points for a trial, not a personalized fit prediction or a claim that one shoe is best.</p>
-            <p>Strengths and cautions distinguish independent lab tests, retailer playtests and individual forum experiences. Retailers sell the products they review. Pro stories describe dated historical reporting, separately from member reports.</p>
+            <p>Product advice explains who a model may suit, its strengths and its compromises. Comparisons help you plan a try-on or demo; they do not predict your personal fit.</p>
+            <p>Strengths and cautions distinguish independent lab tests, retailer playtests and individual forum experiences. Retailers sell the products they review. Pro stories describe dated historical reporting and live within each player’s profile.</p>
             <p>Affiliate commissions never determine which candidates appear.</p>
           </Section>
 

@@ -12,7 +12,10 @@ export default function NotFound() {
         <div className="stack">
           <span className="sticker sticker-returned">Out!</span>
           <h1>That ball landed out</h1>
-          <p className="lede">We could not find that page. The link may be out of date. These pages are a good place to pick up from.</p>
+          <p className="lede">
+            We could not find that page. The link may be out of date. These
+            pages are a good place to pick up from.
+          </p>
         </div>
         <div className="cta-row">
           <Link href="/gear" className="btn btn-primary btn-lg">
@@ -20,9 +23,6 @@ export default function NotFound() {
           </Link>
           <Link href="/pros" className="btn">
             Browse pros
-          </Link>
-          <Link href="/compare" className="btn">
-            See comparisons
           </Link>
         </div>
       </div>

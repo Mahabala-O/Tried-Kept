@@ -86,7 +86,8 @@ function BagEntry({ item }: { item: BagItem }) {
       <ProductImage product={product} ratio="4 / 3" />
       <div className={s.gearStickers}>
         <span className="sticker sticker-ink sticker-sm tilt-left">
-          {item.slot}{item.familyAlternative ? " · family alternative" : ""}
+          {item.slot}
+          {item.familyAlternative ? " · family alternative" : ""}
         </span>
         <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-right">
           {bagDateLabel(item)} {formatDate(item.identifiedOn)}
@@ -107,7 +108,10 @@ function BagEntry({ item }: { item: BagItem }) {
             at {datedPrice(cheaper.other)}.
           </p>
           <div className="cta-row">
-            <Link href={`/compare/${cheaper.comparison.slug}`} className="btn">
+            <Link
+              href={`/gear/compare/${cheaper.comparison.slug}`}
+              className="btn"
+            >
               Compare with the {cheaper.other.name}
             </Link>
           </div>
@@ -185,6 +189,26 @@ export default async function ProPage({ params }: Props) {
       </section>
 
       <div className="wrap page">
+        <div className="callout">
+          <span className="eyebrow">Before you copy a pro</span>
+          <p>{pro.caveat}</p>
+        </div>
+
+        <section className="stack-lg" aria-labelledby="bag">
+          <h2 id="bag">Dated bag</h2>
+          {!pro.bag.some((item) => item.slot === "Shoes") && (
+            <GapNote>
+              A shoe model has not been verified for this profile yet. The
+              racquet reference below does not establish a footwear choice.
+            </GapNote>
+          )}
+          <div className={s.bag}>
+            {pro.bag.map((item) => (
+              <BagEntry key={item.slot} item={item} />
+            ))}
+          </div>
+        </section>
+
         {proWardrobe[pro.slug] && (
           <section className="stack-lg" aria-labelledby="wardrobe-title">
             <h2 id="wardrobe-title">Clothing &amp; court style</h2>
@@ -203,7 +227,7 @@ export default async function ProPage({ params }: Props) {
 
         {storiesForPro(pro.slug).length > 0 && (
           <section className="stack-lg" aria-labelledby="gear-stories">
-            <h2 id="gear-stories">Behind the switch</h2>
+            <h2 id="gear-stories">Gear stories</h2>
             <div className="grid">
               {storiesForPro(pro.slug).map((story) => (
                 <StoryCard key={story.slug} story={story} />
@@ -211,22 +235,6 @@ export default async function ProPage({ params }: Props) {
             </div>
           </section>
         )}
-
-        <div className="callout">
-          <span className="eyebrow">Before you copy a pro</span>
-          <p>{pro.caveat}</p>
-        </div>
-
-        <section className="stack-lg" aria-labelledby="bag">
-          <h2 id="bag">Dated bag</h2>
-          <Link href={`/discover?pro=${pro.slug}`} className="btn btn-optic">Inspired by {pro.name}? Find my version →</Link>
-          {!pro.bag.some(item => item.slot === "Shoes") && <GapNote>A shoe model has not been verified for this profile yet. The racquet reference below does not establish a footwear choice.</GapNote>}
-          <div className={s.bag}>
-            {pro.bag.map((item) => (
-              <BagEntry key={item.slot} item={item} />
-            ))}
-          </div>
-        </section>
 
         {hasGallery && (
           <section className="stack-lg" aria-labelledby="on-court">

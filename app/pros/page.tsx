@@ -1,3 +1,5 @@
+import StoryCard from "@/components/StoryCard";
+import { gearStories } from "@/lib/editorial";
 import { bagDateLabel, trackedReferences } from "@/lib/discovery";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -123,8 +125,8 @@ export default async function ProsPage({
             <Link href="/pros" className="tap-link">
               Clear filters
             </Link>
-            <Link href="/discover" className="btn btn-optic">
-              Find my version →
+            <Link href="/gear" className="btn btn-optic">
+              Explore the catalogue →
             </Link>
           </div>
         </form>
@@ -203,6 +205,21 @@ export default async function ProsPage({
             </div>
           ))}
         </details>
+        {!q && !tour && page === 1 && (
+          <section
+            id="stories"
+            className="stack-lg"
+            aria-labelledby="stories-title"
+          >
+            <span className="eyebrow">From the tour</span>
+            <h2 id="stories-title">The stories behind the gear</h2>
+            <div className="grid">
+              {gearStories.map((story) => (
+                <StoryCard key={story.slug} story={story} />
+              ))}
+            </div>
+          </section>
+        )}
         <section className="stack-lg" aria-labelledby="pro-rules">
           <h2 id="pro-rules">How we show pro gear</h2>
           <ol className={s.rules}>
@@ -253,7 +270,10 @@ function ProCard({ pro }: { pro: Pro }) {
             <li key={item.slot} className={s.miniItem}>
               <ProductImage product={product} ratio="1 / 1">
                 <div className={s.miniText}>
-                  <span className={s.miniSlot}>{item.slot}{item.familyAlternative ? " · family alternative" : ""}</span>
+                  <span className={s.miniSlot}>
+                    {item.slot}
+                    {item.familyAlternative ? " · family alternative" : ""}
+                  </span>
                   <Link href={`/gear/${product.slug}`} className={s.miniName}>
                     {productLabel(product)}
                   </Link>
@@ -273,7 +293,10 @@ function ProCard({ pro }: { pro: Pro }) {
               ?
             </span>
             <div className={s.miniText}>
-              <span className={s.miniSlot}>{item.slot}{item.familyAlternative ? " · family alternative" : ""}</span>
+              <span className={s.miniSlot}>
+                {item.slot}
+                {item.familyAlternative ? " · family alternative" : ""}
+              </span>
               <span className="small">Not identified yet</span>
             </div>
           </li>

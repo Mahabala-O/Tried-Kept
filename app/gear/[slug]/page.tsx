@@ -7,9 +7,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import CompareCard from "@/app/compare/_components/CompareCard";
-import AddToLocker from "@/components/AddToLocker";
 import { ProImage, ProductImage } from "@/components/MediaFrame";
-import ProductReports from "@/components/ProductReports";
 import {
   GapNote,
   OfferButtons,
@@ -32,10 +30,6 @@ export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{
-    reported?: string | string[];
-    from?: string | string[];
-  }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -121,21 +115,10 @@ function KeyFacts({ product }: { product: Product }) {
   );
 }
 
-export default async function ProductPage({ params, searchParams }: Props) {
+export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const { reported, from } = await searchParams;
   const product = getProduct(slug);
   if (!product) notFound();
-
-  const previous = typeof from === "string" ? getProduct(from) : undefined;
-  const starting =
-    previous &&
-    previous.category === product.category &&
-    previous.slug !== product.slug
-      ? previous
-      : null;
-  const trialHref = `/report/new?product=${encodeURIComponent(product.slug)}${starting ? `&from=${encodeURIComponent(starting.slug)}` : ""}`;
-  const returnPath = `/gear/${product.slug}${starting ? `?from=${starting.slug}` : ""}`;
   const related = comparisonsFor(product.slug);
   const proSightings = prosUsing(product.slug).flatMap((pro) =>
     pro.bag
@@ -152,7 +135,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
       <section className={s.top} aria-labelledby="product-title">
         <div className={`wrap ${s.topWrap}`}>
           <Link href="/gear" className="small tap-link">
-            All gear
+            Catalogue
           </Link>
           <div className={s.topGrid}>
             <div className={s.visual}>
@@ -192,82 +175,71 @@ export default async function ProductPage({ params, searchParams }: Props) {
                 )}
               </div>
               <p className={s.summary}>{product.summary}</p>
-              {starting && (
-                <p className="small">
-                  <strong>Your baseline:</strong> {productLabel(starting)}
-                </p>
-              )}
-              <a href="#save-to-locker" className="tap-link">
-                Save to your locker
-              </a>
+              <div className="cta-row">
+                <Link
+                  href={`/gear/compare?left=${product.slug}`}
+                  className="btn btn-primary"
+                >
+                  Compare this model
+                </Link>
+                {product.offers.length > 0 && (
+                  <a href="#where-to-check" className="tap-link">
+                    Check retailer links →
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <div className="wrap page">
-        <div className="split">
-          <div className="stack-lg">
-            <GearEvidence productSlug={product.slug} />
-            <div className="cta-row">
-              <Link
-                href={`/switch?current=${starting?.slug ?? product.slug}`}
-                className="btn btn-primary"
-              >
-                {starting
-                  ? "Back to your switch"
-                  : "Compare alternatives to this"}
-              </Link>
-              <Link href={trialHref} className="btn">
-                Tried it? Tell your story
-              </Link>
-            </div>
-          </div>
-          <aside
-            className="stack-lg"
-            id="save-to-locker"
-            aria-label="Save to your locker"
-          >
-            <AddToLocker productSlug={product.slug} returnPath={returnPath} />
-          </aside>
-        </div>
+        <GearEvidence productSlug={product.slug} />
         <KeyFacts product={product} />
-        <div className={s.shop} id="where-to-check">
-          <h2 className={s.shopTitle}>Where to check</h2>
-          <OfferButtons product={product} from="product" />
-        </div>
+        {product.offers.length > 0 && (
+          <>
+            <div className={s.shop} id="where-to-check">
+              <h2 className={s.shopTitle}>Where to check</h2>
+              <OfferButtons product={product} from="product" />
+            </div>
+          </>
+        )}
 
-        <section className="stack" aria-labelledby="pros-using">
-          <h2 id="pros-using">Pro links &amp; retail references</h2>
-          {proSightings.length === 0 && (
-            <GapNote>
-              No dated pro identification is recorded for this model.
-            </GapNote>
-          )}
-          {proSightings.map(({ pro, item, date }) => (
-            <article key={pro.slug} className={`card ${s.sighting}`}>
-              <ProImage
-                slug={pro.slug}
-                prefer="photo"
-                ratio="16 / 9"
-                note="Player portrait. The gear association is documented separately below."
-              />
-              <div className={s.sightingBody}>
-                <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-left">
-                  {bagDateLabel(item)} {formatDate(date)}
-                </span>
-                <h3>
-                  <Link href={`/pros/${pro.slug}`}>{pro.name}</Link>
-                </h3>
-                <p className="small">{item.evidence}</p>
-                <SourceLink source={item.source} standalone />
-                <GapNote>{pro.caveat}</GapNote>
-              </div>
-            </article>
-          ))}
-        </section>
+        {proSightings.length > 0 && (
+          <>
+            <section className="stack" aria-labelledby="pros-using">
+              <h2 id="pros-using">Pro links &amp; retail references</h2>
+              {proSightings.map(({ pro, item, date }) => (
+                <article key={pro.slug} className={`card ${s.sighting}`}>
+                  <ProImage
+                    slug={pro.slug}
+                    prefer="photo"
+                    ratio="16 / 9"
+                    note="Player portrait. The gear association is documented separately below."
+                  />
+                  <div className={s.sightingBody}>
+                    <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-left">
+                      {bagDateLabel(item)} {formatDate(date)}
+                    </span>
+                    <h3>
+                      <Link href={`/pros/${pro.slug}`}>{pro.name}</Link>
+                    </h3>
+                    <p className="small">{item.evidence}</p>
+                    <SourceLink source={item.source} standalone />
+                    <GapNote>{pro.caveat}</GapNote>
+                  </div>
+                </article>
+              ))}
+            </section>
+          </>
+        )}
 
-        <Link href={`/compare/pick?left=${product.slug}`} className="btn btn-optic">Compare with another model →</Link>
+        <Link
+          href={`/gear/compare?left=${product.slug}`}
+          className="btn btn-optic"
+        >
+          Compare with another model →
+        </Link>
         {related.length > 0 && (
           <section className="stack-lg" aria-labelledby="related-comparisons">
             <h2 id="related-comparisons">Compare it</h2>
@@ -289,11 +261,6 @@ export default async function ProductPage({ params, searchParams }: Props) {
             </div>
           </section>
         )}
-
-        <ProductReports
-          productSlug={product.slug}
-          justPublished={reported === "1"}
-        />
 
         {product.sources.length === 0 ? (
           <GapNote>No outside source is recorded for this model yet.</GapNote>

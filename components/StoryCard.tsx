@@ -1,3 +1,4 @@
+import { storyHref } from "@/lib/navigation";
 import Link from "next/link";
 import { ProImage } from "./MediaFrame";
 import { formatDate } from "./ui";
@@ -18,10 +19,10 @@ export default function StoryCard({ story }: { story: GearStory }) {
         {pro?.name} · Reported {formatDate(story.publishedOn)}
       </span>
       <h3>
-        <Link href={`/stories/${story.slug}`}>{story.title}</Link>
+        <Link href={storyHref(story)}>{story.title}</Link>
       </h3>
       <p>{story.dek}</p>
-      <Link href={`/stories/${story.slug}`} className="btn">
+      <Link href={storyHref(story)} className="btn">
         Read the gear story
       </Link>
     </article>

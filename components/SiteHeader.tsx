@@ -5,27 +5,9 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import BallArt from "@/components/art/BallArt";
 
-type Props = {
-  loggedIn: boolean;
-  /** False while email is off and sign-up is paused. */
-  signupsOpen?: boolean;
-};
+import { PUBLIC_SECTIONS, sectionIsCurrent } from "@/lib/navigation";
 
-const MAIN_LINKS = [
-  { href: "/pros", label: "Pros" },
-  { href: "/stories", label: "Stories" },
-  { href: "/switch", label: "Find gear" },
-  { href: "/gear", label: "Catalog" },
-];
-
-const PLAY_LINKS = [
-  { href: "/compare", label: "Comparisons" },
-  { href: "/community", label: "Player reports" },
-  { href: "/play/finder", label: "Gear Match" },
-  { href: "/play/rally", label: "Spec Rally" },
-  { href: "/play/cost", label: "Cost per hour" },
-  { href: "/report/new", label: "Report your gear" },
-];
+const MAIN_LINKS = PUBLIC_SECTIONS;
 
 const ABOUT_LINKS = [
   { href: "/disclosure", label: "How this works" },
@@ -49,18 +31,7 @@ export function Brand({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function AccountChip({ loggedIn, signupsOpen = true }: Props) {
-  return (
-    <Link
-      href={loggedIn ? "/me" : signupsOpen ? "/signup" : "/login"}
-      className="nav-xp"
-    >
-      {loggedIn ? "My locker" : signupsOpen ? "Join" : "Log in"}
-    </Link>
-  );
-}
-
-export default function SiteHeader({ loggedIn, signupsOpen = true }: Props) {
+export default function SiteHeader() {
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -138,8 +109,13 @@ export default function SiteHeader({ loggedIn, signupsOpen = true }: Props) {
     }
   };
 
-  const current = (href: string) =>
-    isCurrent(pathname, href) ? ("page" as const) : undefined;
+  const current = (href: string) => {
+    const section = MAIN_LINKS.find((link) => link.href === href);
+    const active = section
+      ? sectionIsCurrent(pathname, section.matches)
+      : isCurrent(pathname, href);
+    return active ? ("page" as const) : undefined;
+  };
 
   return (
     <header className="site-header" ref={headerRef}>
@@ -155,9 +131,7 @@ export default function SiteHeader({ loggedIn, signupsOpen = true }: Props) {
               {link.label}
             </Link>
           ))}
-          <AccountChip loggedIn={loggedIn} signupsOpen={signupsOpen} />
         </nav>
-        <AccountChip loggedIn={loggedIn} signupsOpen={signupsOpen} />
         <button
           ref={openerRef}
           type="button"
@@ -233,60 +207,8 @@ export default function SiteHeader({ loggedIn, signupsOpen = true }: Props) {
                   </Link>
                 </li>
               ))}
-              {(loggedIn || signupsOpen) && (
-                <li>
-                  <Link
-                    href={loggedIn ? "/me" : "/signup"}
-                    aria-current={current(loggedIn ? "/me" : "/signup")}
-                    onClick={closeForLink}
-                  >
-                    {loggedIn ? "My locker" : "Start a locker"}
-                  </Link>
-                </li>
-              )}
             </ul>
           </nav>
-          <div className="stack">
-            <span className="eyebrow">Tools and player reports</span>
-            <ul className="menu-small">
-              {PLAY_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    aria-current={current(link.href)}
-                    onClick={closeForLink}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {!loggedIn && (
-            <div className="stack">
-              {signupsOpen ? (
-                <Link
-                  href="/signup"
-                  className="btn btn-optic btn-lg"
-                  onClick={closeForLink}
-                >
-                  Join
-                </Link>
-              ) : (
-                <p className="small muted">
-                  New sign-ups are paused for now. Existing players can still
-                  log in.
-                </p>
-              )}
-              <Link
-                href="/login"
-                className={signupsOpen ? "btn" : "btn btn-optic btn-lg"}
-                onClick={closeForLink}
-              >
-                Log in
-              </Link>
-            </div>
-          )}
           <ul className="menu-small">
             {ABOUT_LINKS.map((link) => (
               <li key={link.href}>

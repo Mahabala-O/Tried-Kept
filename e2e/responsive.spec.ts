@@ -5,13 +5,12 @@ for (const width of [320, 375, 390, 440, 768, 1280]) {
     await page.setViewportSize({ width, height: 844 });
     for (const route of [
       "/",
+      "/gear",
       "/pros",
-      "/compare",
-      "/discover?pro=carlos-alcaraz&category=racquet&goal=spin",
-      "/compare/pick?left=babolat-pure-aero-98-gen9&right=yonex-vcore-98-2026",
       "/pros/naomi-osaka",
-      "/compare/resolution-9-vs-solution-speed-ff-4",
-      "/switch?current=asics-gel-resolution-9",
+      "/gear/babolat-pure-aero-98-gen9",
+      "/gear/compare?left=babolat-pure-aero-98-gen9&right=yonex-vcore-98-2026",
+      "/gear/compare/resolution-9-vs-solution-speed-ff-4",
     ]) {
       const response = await page.goto(route, {
         waitUntil: "domcontentloaded",
@@ -54,7 +53,10 @@ for (const width of [320, 375, 390, 440, 768, 1280]) {
       if (width <= 440) {
         for (const select of await page.locator("main select").all()) {
           const box = await select.boundingBox();
-          expect(box!.height, `${route}: native picker tap target`).toBeGreaterThanOrEqual(44);
+          expect(
+            box!.height,
+            `${route}: native picker tap target`,
+          ).toBeGreaterThanOrEqual(44);
         }
       }
       await expect(page.locator("main")).not.toContainText(
@@ -68,7 +70,12 @@ test("text enlargement reflows controls and compact content", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ["/pros", "/switch?current=asics-gel-resolution-9"]) {
+  for (const route of [
+    "/",
+    "/gear",
+    "/pros",
+    "/gear/compare?left=nike-vapor-12&right=nike-vapor-pro-3",
+  ]) {
     await page.goto(route, { waitUntil: "domcontentloaded" });
     await page.evaluate(
       () => (document.documentElement.style.fontSize = "200%"),
@@ -82,55 +89,26 @@ test("text enlargement reflows controls and compact content", async ({
         )
         .toBeLessThanOrEqual(1);
     }
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth - innerWidth,
+      ),
+      route,
+    ).toBeLessThanOrEqual(1);
     const compact = page.locator(".product-media-row").first();
-    const frame = await compact.boundingBox();
-    const content = await compact
-      .locator(".product-media-content")
-      .boundingBox();
-    expect(content!.width).toBeGreaterThanOrEqual(frame!.width - 1);
+    if (await compact.count()) {
+      const frame = await compact.boundingBox();
+      const content = await compact
+        .locator(".product-media-content")
+        .boundingBox();
+      expect(content!.width).toBeGreaterThanOrEqual(frame!.width - 1);
+    }
     const nav = page.getByRole("navigation", { name: "Quick", exact: true });
-    await expect(nav.getByRole("link")).toHaveCount(5);
+    await expect(nav.getByRole("link")).toHaveCount(3);
     for (const link of await nav.getByRole("link").all()) {
       const box = await link.boundingBox();
       expect(box!.width).toBeGreaterThanOrEqual(44);
       expect(box!.height).toBeGreaterThanOrEqual(44);
     }
   }
-});
-
-test("switch preferences survive reload and trial context survives login redirect", async ({
-  page,
-}) => {
-  await page.goto("/switch?current=asics-gel-resolution-9");
-  await page.getByLabel("More room", { exact: true }).tap();
-  await expect(page).toHaveURL(/priority=room/);
-  await page.reload();
-  await expect(page.getByLabel("More room", { exact: true })).toBeChecked();
-  const trial = page
-    .getByRole("link", { name: "Tried it? Log the switch", exact: true })
-    .first();
-  const href = await trial.getAttribute("href");
-  const evidence = page
-    .getByRole("link", { name: "Evidence & save to locker", exact: true })
-    .first();
-  await evidence.tap();
-  await page.waitForURL("**/gear/**?from=asics-gel-resolution-9", {
-    waitUntil: "domcontentloaded",
-  });
-  const productTrial = page.getByRole("link", {
-    name: "Tried it? Tell your story",
-    exact: true,
-  });
-  expect(await productTrial.getAttribute("href")).toBe(href);
-  await productTrial.tap();
-  await page.waitForURL("**/login?**");
-  expect(new URL(page.url()).searchParams.get("next")).toBe(href);
-  await page.goto("/switch?current=asics-gel-resolution-9");
-  await page
-    .getByLabel("Where will you play?", { exact: true })
-    .selectOption("clay");
-  await expect(page.getByRole("status")).toContainText("0 candidates");
-  await expect(
-    page.getByRole("link", { name: "Tried it? Log the switch", exact: true }),
-  ).toHaveCount(0);
 });

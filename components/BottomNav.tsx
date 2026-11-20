@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { PUBLIC_SECTIONS } from "@/lib/navigation";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
@@ -46,22 +47,6 @@ const PlayIcon = (
   </svg>
 );
 
-const CommunityIcon = (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="8.5" cy="8.5" r="3.2" {...stroke} />
-    <circle cx="16.5" cy="9.5" r="2.6" {...stroke} />
-    <path d="M2.8 19.5 Q3.5 13.8 8.5 13.8 Q13.5 13.8 14.2 19.5 Z" {...stroke} />
-    <path d="M15.2 14 Q20.5 13.6 21.2 19.5 H16.5" {...stroke} />
-  </svg>
-);
-
-const LockerIcon = (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <rect x="5" y="3" width="14" height="18" rx="2.5" {...stroke} />
-    <path d="M9 7 H15 M9 10 H15 M15.5 14 V16" {...stroke} />
-  </svg>
-);
-
 function isActive(pathname: string, match: string[]): boolean {
   return match.some((prefix) =>
     prefix === "/"
@@ -70,14 +55,8 @@ function isActive(pathname: string, match: string[]): boolean {
   );
 }
 
-/** Fixed tab bar under 900px. Locker goes to /me, or to /signup when logged out (/login while sign-up is paused). */
-export default function BottomNav({
-  loggedIn,
-  signupsOpen = true,
-}: {
-  loggedIn: boolean;
-  signupsOpen?: boolean;
-}) {
+/** Catalogue and Pros are the only public sections. */
+export default function BottomNav() {
   const pathname = usePathname() ?? "/";
   const navRef = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -94,25 +73,12 @@ export default function BottomNav({
   }, []);
   const tabs: Tab[] = [
     { href: "/", label: "Home", match: ["/"], icon: HomeIcon },
-    { href: "/pros", label: "Pros", match: ["/pros"], icon: PlayIcon },
-    {
-      href: "/switch",
-      label: "Find gear",
-      match: ["/switch", "/discover", "/gear", "/compare", "/play"],
-      icon: GearIcon,
-    },
-    {
-      href: "/stories",
-      label: "Stories",
-      match: ["/stories", "/community", "/u", "/report"],
-      icon: CommunityIcon,
-    },
-    {
-      href: loggedIn ? "/me" : signupsOpen ? "/signup" : "/login",
-      label: "Locker",
-      match: loggedIn ? ["/me"] : ["/me", "/signup", "/login"],
-      icon: LockerIcon,
-    },
+    ...PUBLIC_SECTIONS.map((section) => ({
+      href: section.href,
+      label: section.label,
+      match: [...section.matches],
+      icon: section.href === "/gear" ? GearIcon : PlayIcon,
+    })),
   ];
 
   return (

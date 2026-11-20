@@ -105,7 +105,7 @@ export function discoveryOptions({
     .slice(0, 2);
 }
 export function compareHref(left: string, right: string) {
-  return `/compare/pick?${new URLSearchParams({ left, right })}`;
+  return `/gear/compare?${new URLSearchParams({ left, right })}`;
 }
 export function comparablePair(
   left?: string,

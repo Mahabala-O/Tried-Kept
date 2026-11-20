@@ -8,9 +8,9 @@ import { products, type Category, type Product } from "@/lib/catalog";
 import s from "./gear.module.css";
 
 export const metadata: Metadata = {
-  title: "Gear",
+  title: "Catalogue",
   description:
-    "Tennis shoes and racquets with sourced specs, labelled gaps and player reports.",
+    "Explore tennis shoes and racquets with sourced advice, specifications and comparisons.",
 };
 
 const GROUPS: { category: Category; heading: string }[] = [
@@ -40,12 +40,21 @@ function gearHref(brand: string, category: string, q = "", page = 1): string {
   return qs ? `/gear?${qs}` : "/gear";
 }
 
-function count(brand: string, category: string): number {
-  return products.filter(
-    (p) =>
-      (brand === "" || p.brand === brand) &&
-      (category === "" || p.category === category),
-  ).length;
+function matchesFilters(
+  product: Product,
+  brand: string,
+  category: string,
+  q: string,
+): boolean {
+  return (
+    (!brand || product.brand === brand) &&
+    (!category || product.category === category) &&
+    `${product.brand} ${product.name}`.toLowerCase().includes(q.toLowerCase())
+  );
+}
+
+function count(brand: string, category: string, q: string): number {
+  return products.filter((p) => matchesFilters(p, brand, category, q)).length;
 }
 
 function Chip({
@@ -96,12 +105,7 @@ export default async function GearPage({
     : "";
   const filtered = brand !== "" || category !== "" || q !== "";
 
-  const matches = products.filter(
-    (p: Product) =>
-      (brand === "" || p.brand === brand) &&
-      (category === "" || p.category === category) &&
-      `${p.brand} ${p.name}`.toLowerCase().includes(q.toLowerCase()),
-  );
+  const matches = products.filter((p) => matchesFilters(p, brand, category, q));
   const pages = Math.max(1, Math.ceil(matches.length / 12));
   const page = Math.min(
     pages,
@@ -131,7 +135,7 @@ export default async function GearPage({
           <div className={s.heroCopy}>
             <span className="eyebrow">The gear wall</span>
             <h1 id="gear-title" className={s.heroTitle}>
-              Gear
+              Catalogue
             </h1>
             <p className="lede">
               Every fact links to its source. A missing price or measurement is
@@ -176,8 +180,8 @@ export default async function GearPage({
             <button type="submit" className="btn btn-primary">
               Search gear
             </button>
-            <Link href="/compare/pick" className="btn">
-              Build a comparison →
+            <Link href="/gear/compare" className="btn">
+              Compare two models →
             </Link>
           </div>
         </form>
@@ -194,7 +198,7 @@ export default async function GearPage({
                 href={gearHref(brand, "", q)}
                 active={category === ""}
                 label="All gear"
-                n={count(brand, "")}
+                n={count(brand, "", q)}
               />
               {GROUPS.map((g) => (
                 <Chip
@@ -202,7 +206,7 @@ export default async function GearPage({
                   href={gearHref(brand, g.category, q)}
                   active={category === g.category}
                   label={g.heading}
-                  n={count(brand, g.category)}
+                  n={count(brand, g.category, q)}
                 />
               ))}
             </ul>
@@ -219,7 +223,7 @@ export default async function GearPage({
                 href={gearHref("", category, q)}
                 active={brand === ""}
                 label="All brands"
-                n={count("", category)}
+                n={count("", category, q)}
               />
               {BRANDS.map((b) => (
                 <Chip
@@ -227,7 +231,7 @@ export default async function GearPage({
                   href={gearHref(b, category, q)}
                   active={brand === b}
                   label={b}
-                  n={count(b, category)}
+                  n={count(b, category, q)}
                 />
               ))}
             </ul>

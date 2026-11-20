@@ -104,6 +104,7 @@ export const productPhotos: Record<string, ProductPhoto> = {
       "height": 2408,
       "alt": "ASICS solution speed ff 4 product photograph — SOLUTION SPEED FF 4 · 1041A532",
       "picturedVariant": "SOLUTION SPEED FF 4 · 1041A532",
+      "caption": "Pictured: manufacturer launch colorway. Recorded U.S. price and SKU refer to White/Black 1041A532-100.",
       "checkedOn": "2026-11-19",
       "credit": {
           "kind": "manufacturer",

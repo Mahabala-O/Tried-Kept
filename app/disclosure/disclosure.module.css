@@ -16,7 +16,7 @@
 .jump { list-style: none; margin-block: 0; }
 
 .sections { display: grid; gap: 22px; max-width: 72ch; }
-.section:global(.card) { gap: 14px; padding: 20px 18px; scroll-margin-top: calc(var(--header-h) + 16px); }
+.section:global(.card) { gap: 14px; padding: 20px 18px; scroll-margin-top: 16px; }
 .sectionHead { display: flex; align-items: center; gap: 12px; }
 .num {
   flex: none; display: grid; place-items: center; width: 44px; height: 44px;

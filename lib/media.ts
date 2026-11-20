@@ -41,6 +41,8 @@ export type Photo = {
   alt: string;
   /** Visible qualification when the photo shows another colorway or a model within a line. */
   caption?: string;
+  /** Preserve the subject when a portrait is displayed in a wider card. */
+  objectPosition?: string;
   credit: Credit;
 };
 
@@ -291,6 +293,7 @@ export const proMedia: Record<string, ProMedia> = {
   "iga-swiatek": {
     portrait: {
       src: "/media/photos/iga-swiatek-1280.webp",
+      objectPosition: "50% 10%",
       originalSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg/1280px-Iga_%C5%9Awi%C4%85tek_%282023_US_Open%29_39_%28cropped%29.jpg",
       width: 1280,
       height: 1646,

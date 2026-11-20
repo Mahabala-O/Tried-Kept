@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import BadgeSheet from "@/app/me/_components/BadgeSheet";
 import { LockerFacts } from "@/app/me/_components/LockerFacts";
 import PlayerCard from "@/app/me/_components/PlayerCard";
 import { getPublicLocker, getPublicProfile } from "@/app/me/_data";
@@ -12,8 +11,6 @@ import ShareProfile from "@/components/ShareProfile";
 import UserReports from "@/components/UserReports";
 import { currentUser } from "@/lib/auth";
 import { getProduct, productLabel } from "@/lib/catalog";
-import { getDb } from "@/lib/db";
-import { badgesFor, levelFor, totalXp } from "@/lib/gamification";
 import { countReports } from "@/lib/reports";
 
 export const dynamic = "force-dynamic";
@@ -42,10 +39,6 @@ export default async function PublicProfilePage({ params }: Props) {
   const profile = loadProfile(username);
   if (!profile) notFound();
 
-  const db = getDb();
-  const xp = totalXp(db, profile.id);
-  const level = levelFor(xp);
-  const earned = badgesFor(db, profile.id).filter((badge) => badge.earned);
   // Only public columns: no price paid, no notes.
   const locker = getPublicLocker(profile.id);
   const reportCount = countReports({ userId: profile.id });
@@ -64,13 +57,10 @@ export default async function PublicProfilePage({ params }: Props) {
             layout="portrait"
             displayName={profile.display_name}
             username={profile.username}
-            level={level}
-            xp={xp}
             surface={profile.home_surface}
             stats={[
               { label: locker.length === 1 ? "Item" : "Items", value: locker.length },
               { label: reportCount === 1 ? "Report" : "Reports", value: reportCount },
-              { label: earned.length === 1 ? "Badge" : "Badges", value: earned.length },
             ]}
           >
             <p className={`${styles.bio} ${profile.bio ? "" : "muted"}`}>{profile.bio || "No bio yet."}</p>
@@ -136,15 +126,6 @@ export default async function PublicProfilePage({ params }: Props) {
                   </div>
                 );
               })
-            )}
-          </section>
-
-          <section className="stack" aria-labelledby="badges-heading">
-            <h2 id="badges-heading">Badges</h2>
-            {earned.length === 0 ? (
-              <p className={`small ${styles.emptyGroup}`}>No badges earned yet.</p>
-            ) : (
-              <BadgeSheet badges={earned} label={`Badges ${profile.display_name} has earned`} />
             )}
           </section>
 

@@ -2,7 +2,7 @@
    Mobile first at 375px. Every animation sits inside prefers-reduced-motion: no-preference. */
 
 .game {
-  scroll-margin-top: calc(var(--header-h) + 12px);
+  scroll-margin-top: 12px;
   width: 100%;
   max-width: 760px;
   display: grid;
@@ -312,7 +312,7 @@
 .scoreHot .scoreLabel, .scoreHot .scoreValue, .scoreHot .scoreValue small { color: var(--ink); }
 
 /* Clears the sticky header plus the sticky score strip (about 76px on a phone). */
-.prompt { font-size: clamp(1.5rem, 3vw + 1rem, 2.25rem); line-height: 1.08; scroll-margin-top: calc(var(--header-h) + 100px); }
+.prompt { font-size: clamp(1.5rem, 3vw + 1rem, 2.25rem); line-height: 1.08; scroll-margin-top: 100px; }
 @media (max-width: 599.98px) {
   .scoreboard { padding: 6px; gap: 4px; }
   .scoreCell { padding: 6px 2px; gap: 2px; }

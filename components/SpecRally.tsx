@@ -191,18 +191,8 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
         <BallRally states={rallyStates(game, questions.length)} />
         <div className="row">
           <span className="sticker sticker-paper sticker-plain tilt-left">Best streak {game.best}</span>
-          {loggedIn && (
-            <span className="sticker sticker-xp sticker-plain tilt-right pop-in">+{game.xpEarned} XP this rally</span>
-          )}
         </div>
-        {loggedIn && game.xpEarned === 0 && (
-          <p className="small muted">XP pays once per question, so a replay only adds XP for questions you have not got right yet.</p>
-        )}
-        {!loggedIn && (
-          <p className="small muted">
-            <Link href={`/signup?next=${encodeURIComponent("/play/rally")}`}>Join</Link> to earn XP for each question you get right.
-          </p>
-        )}
+        <p className="small muted">Use what you learned to investigate your next pair.</p>
         <div className="cta-row">
           <button type="submit" name="intent" value="replay" className="btn btn-optic btn-lg" disabled={pending}>
             Play again
@@ -297,15 +287,8 @@ export default function SpecRally({ questions, loggedIn }: { questions: RallyQue
                 </span>
                 <p className={s.verdictText}>
                   {feedback.correct ? "Correct." : "Not this time."}
-                  {feedback.xpAwarded > 0 && <span className="sr-only"> +{feedback.xpAwarded} XP.</span>}
                 </p>
-                {feedback.xpAwarded > 0 && (
-                  <span className="sticker sticker-xp sticker-sm tilt-right pop-in" aria-hidden="true">
-                    +{feedback.xpAwarded} XP
-                  </span>
-                )}
               </div>
-              {feedback.alreadyCounted && <p className="small muted">XP for this question is already counted.</p>}
               <p className={s.explain}>{feedback.explanation}</p>
               {feedback.source && (
                 <p className="small muted">

@@ -3,15 +3,12 @@
 import {
   startTransition,
   useActionState,
-  useEffect,
-  useRef,
   useState,
   type FormEvent,
   type ReactNode,
 } from "react";
 import { createReport } from "@/lib/actions/reports";
 import type { Category } from "@/lib/catalog";
-import { reportXp, type ReportDetails } from "@/lib/gamification";
 import type { ReportActionState } from "@/lib/reports";
 import styles from "./ReportForm.module.css";
 
@@ -33,8 +30,7 @@ type Props = {
   surfaces: readonly Option[];
   limits: Limits;
   initialProduct: string;
-  /** Models this player has already earned report XP for. */
-  rewardedSlugs: string[];
+  initialSwitchedFrom?: string;
   /** Server-rendered thumbnails by product slug: the exact model's photo or labeled art. */
   previews?: Record<string, ReactNode>;
 };
@@ -57,64 +53,29 @@ const OUTCOME_NOTES: Record<string, string> = {
  * Sample values that earn every detail, used only to ask reportXp how much each field
  * can be worth. The real estimate always comes from what the player typed.
  */
-const FULL_DETAIL: Required<Omit<ReportDetails, "category">> = {
-  size: "10",
-  width: "wide",
-  surface: "hard",
-  hours: 0,
-  felt_different: "a full sentence about the feel",
-  reason: "a full sentence about the reason",
-  wear_location: "toe box",
-  string_setup: "poly 17 at 52 lbs",
-  switched_from_slug: "x",
-};
-type DetailKey = keyof typeof FULL_DETAIL;
-
-/** Ticks a shown number toward its target. Jumps straight there under reduced motion. */
-function useTicker(target: number): number {
-  const [shown, setShown] = useState(target);
-  const shownRef = useRef(target);
-
-  useEffect(() => {
-    const from = shownRef.current;
-    if (from === target) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      shownRef.current = target;
-      setShown(target);
-      return;
-    }
-    let frame = 0;
-    const start = performance.now();
-    const duration = 450;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const value = Math.round(from + (target - from) * eased);
-      shownRef.current = value;
-      setShown(value);
-      if (t < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [target]);
-
-  return shown;
-}
-
-function XpTag({ points, earned, hidden }: { points: number; earned: boolean; hidden: boolean }) {
-  if (hidden || points <= 0) return null;
-  return (
-    <span className={`${styles.xpTag} ${earned ? styles.xpTagOn : ""}`} aria-hidden="true">
-      {earned ? "✓ " : ""}+{points} XP
-    </span>
-  );
-}
-
 function ComfortBall() {
   return (
-    <svg viewBox="0 0 24 24" className={styles.comfortBall} aria-hidden="true" focusable="false">
-      <circle cx="12" cy="12" r="10" fill="#E6FF3D" stroke="#0E2A2A" strokeWidth="2" />
-      <path d="M5 5.5c3.2 3.6 3.2 9.4 0 13M19 5.5c-3.2 3.6-3.2 9.4 0 13" fill="none" stroke="#0E2A2A" strokeWidth="2" strokeLinecap="round" />
+    <svg
+      viewBox="0 0 24 24"
+      className={styles.comfortBall}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        fill="#E6FF3D"
+        stroke="#0E2A2A"
+        strokeWidth="2"
+      />
+      <path
+        d="M5 5.5c3.2 3.6 3.2 9.4 0 13M19 5.5c-3.2 3.6-3.2 9.4 0 13"
+        fill="none"
+        stroke="#0E2A2A"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -125,13 +86,13 @@ export default function ReportForm({
   surfaces,
   limits,
   initialProduct,
-  rewardedSlugs,
+  initialSwitchedFrom = "",
   previews = {},
 }: Props) {
   const [state, formAction, pending] = useActionState(createReport, INITIAL);
 
   const [product, setProduct] = useState(initialProduct);
-  const [switchedFrom, setSwitchedFrom] = useState("");
+  const [switchedFrom, setSwitchedFrom] = useState(initialSwitchedFrom);
   const [outcome, setOutcome] = useState("");
   const [comfort, setComfort] = useState("");
   const [size, setSize] = useState("");
@@ -147,14 +108,21 @@ export default function ReportForm({
   const isShoe = selected?.category === "shoe";
   const isRacquet = selected?.category === "racquet";
   const switchOptions = selected
-    ? products.filter((p) => p.category === selected.category && p.slug !== selected.slug)
+    ? products.filter(
+        (p) => p.category === selected.category && p.slug !== selected.slug,
+      )
     : [];
 
   function chooseProduct(slug: string) {
     setProduct(slug);
     const next = products.find((p) => p.slug === slug);
     const previous = products.find((p) => p.slug === switchedFrom);
-    if (!next || !previous || previous.slug === next.slug || previous.category !== next.category) {
+    if (
+      !next ||
+      !previous ||
+      previous.slug === next.slug ||
+      previous.category !== next.category
+    ) {
       setSwitchedFrom("");
     }
   }
@@ -166,51 +134,22 @@ export default function ReportForm({
     startTransition(() => formAction(data));
   }
 
-  const hoursValue = hours.trim() === "" || Number.isNaN(Number(hours)) ? null : Number(hours);
-  const details: Required<Omit<ReportDetails, "category">> = {
-    size: size.trim(),
-    width: width.trim(),
-    surface,
-    hours: hoursValue,
-    felt_different: feltDifferent.trim(),
-    reason: reason.trim(),
-    wear_location: isShoe ? wear.trim() : "",
-    string_setup: isRacquet ? stringSetup.trim() : "",
-    switched_from_slug: switchedFrom || null,
-  };
-  const category = selected?.category;
-  const estimate = reportXp({ category, ...details });
-  const base = reportXp({ category });
-  const maxXp = reportXp({ category, ...FULL_DETAIL });
-  const alreadyRewarded = rewardedSlugs.includes(product);
-
-  /** What one field is worth and whether the player's answer already earns it, both asked of reportXp. */
-  const worth = (key: DetailKey) => ({
-    points: reportXp({ category, [key]: FULL_DETAIL[key] }) - base,
-    earned: reportXp({ category, [key]: details[key] }) > base,
-  });
-  const xp = {
-    size: worth("size"),
-    width: worth("width"),
-    surface: worth("surface"),
-    hours: worth("hours"),
-    felt: worth("felt_different"),
-    reason: worth("reason"),
-    wear: worth("wear_location"),
-    strings: worth("string_setup"),
-    switched: worth("switched_from_slug"),
-  };
   const detailsGiven =
     comfort !== "" ||
-    [xp.felt, xp.size, xp.width, xp.surface, xp.hours, xp.wear, xp.strings].some((v) => v.earned);
-
-  const shownTarget = alreadyRewarded ? 0 : estimate;
-  const shown = useTicker(shownTarget);
-  const fill = maxXp > 0 ? Math.max(0, Math.min(1, shownTarget / maxXp)) : 0;
+    [size, width, surface, feltDifferent, wear, stringSetup].some(
+      (value) => value.trim() !== "",
+    ) ||
+    (hours.trim() !== "" &&
+      Number.isFinite(Number(hours)) &&
+      Number(hours) > 0);
 
   const steps = [
     { id: "step-gear", label: "Gear", done: Boolean(selected) },
-    { id: "step-verdict", label: "Verdict", done: Boolean(outcome) && reason.trim() !== "" },
+    {
+      id: "step-verdict",
+      label: "Verdict",
+      done: Boolean(outcome) && reason.trim() !== "",
+    },
     { id: "step-details", label: "Details", done: detailsGiven },
   ];
 
@@ -219,7 +158,10 @@ export default function ReportForm({
       <nav className={styles.steps} aria-label="Report sections">
         <ol className="chip-scroll">
           {steps.map((step, i) => (
-            <li key={step.id} className={step.done ? styles.stepDone : undefined}>
+            <li
+              key={step.id}
+              className={step.done ? styles.stepDone : undefined}
+            >
               <a href={`#${step.id}`} className="chip">
                 <span className={styles.stepNum} aria-hidden="true">
                   {step.done ? "✓" : i + 1}
@@ -233,7 +175,11 @@ export default function ReportForm({
       </nav>
 
       {/* 1. The gear */}
-      <section className={styles.section} id="step-gear" aria-labelledby="step-gear-title">
+      <section
+        className={styles.section}
+        id="step-gear"
+        aria-labelledby="step-gear-title"
+      >
         <div className={styles.sectionHead}>
           <span className={styles.sectionNum} aria-hidden="true">
             1
@@ -252,7 +198,13 @@ export default function ReportForm({
               Model <span className={styles.required}>Required</span>
             </label>
           </div>
-          <select id="product" name="product" required value={product} onChange={(e) => chooseProduct(e.target.value)}>
+          <select
+            id="product"
+            name="product"
+            required
+            value={product}
+            onChange={(e) => chooseProduct(e.target.value)}
+          >
             <option value="">Choose a model</option>
             {GROUPS.map((group) => (
               <optgroup key={group.category} label={group.label}>
@@ -270,8 +222,9 @@ export default function ReportForm({
 
         {selected && (
           <div className={styles.preview}>
-            {previews[selected.slug] ?? null}
-            <p className={styles.previewName}>{selected.label}</p>
+            {previews[selected.slug] ?? (
+              <p className={styles.previewName}>{selected.label}</p>
+            )}
           </div>
         )}
 
@@ -280,7 +233,6 @@ export default function ReportForm({
             <label htmlFor="switched_from">
               Switched from <span className={styles.optional}>(optional)</span>
             </label>
-            <XpTag {...xp.switched} hidden={alreadyRewarded} />
           </div>
           <select
             id="switched_from"
@@ -289,7 +241,9 @@ export default function ReportForm({
             onChange={(e) => setSwitchedFrom(e.target.value)}
             disabled={!selected}
           >
-            <option value="">{selected ? "None, or not listed" : "Choose a model first"}</option>
+            <option value="">
+              {selected ? "None, or not listed" : "Choose a model first"}
+            </option>
             {switchOptions.map((p) => (
               <option key={p.slug} value={p.slug}>
                 {p.label}
@@ -300,16 +254,26 @@ export default function ReportForm({
       </section>
 
       {/* 2. The verdict */}
-      <section className={styles.section} id="step-verdict" aria-labelledby="step-verdict-title">
+      <section
+        className={styles.section}
+        id="step-verdict"
+        aria-labelledby="step-verdict-title"
+      >
         <div className={styles.sectionHead}>
-          <span className={`${styles.sectionNum} ${styles.num_2}`} aria-hidden="true">
+          <span
+            className={`${styles.sectionNum} ${styles.num_2}`}
+            aria-hidden="true"
+          >
             2
           </span>
           <div>
             <h2 className={styles.sectionTitle} id="step-verdict-title">
               The verdict
             </h2>
-            <p className={styles.sectionSub}>Returned and rejected gear helps the next player as much as kept gear.</p>
+            <p className={styles.sectionSub}>
+              Returned and rejected gear helps the next player as much as kept
+              gear.
+            </p>
           </div>
         </div>
 
@@ -319,7 +283,10 @@ export default function ReportForm({
           </legend>
           <div className={styles.tiles}>
             {outcomes.map((o) => (
-              <label key={o.value} className={`${styles.pick} ${styles.tile} ${styles[`tile_${o.value}`] ?? ""}`}>
+              <label
+                key={o.value}
+                className={`${styles.pick} ${styles.tile} ${styles[`tile_${o.value}`] ?? ""}`}
+              >
                 <input
                   type="radio"
                   name="outcome"
@@ -329,7 +296,11 @@ export default function ReportForm({
                   onChange={() => setOutcome(o.value)}
                 />
                 <span className={styles.tileWord}>{o.label}</span>
-                {OUTCOME_NOTES[o.value] && <span className={styles.tileNote}>{OUTCOME_NOTES[o.value]}</span>}
+                {OUTCOME_NOTES[o.value] && (
+                  <span className={styles.tileNote}>
+                    {OUTCOME_NOTES[o.value]}
+                  </span>
+                )}
               </label>
             ))}
           </div>
@@ -338,9 +309,9 @@ export default function ReportForm({
         <div className="field">
           <div className={styles.labelRow}>
             <label htmlFor="reason">
-              Reason for this outcome <span className={styles.required}>Required</span>
+              Reason for this outcome{" "}
+              <span className={styles.required}>Required</span>
             </label>
-            <XpTag {...xp.reason} hidden={alreadyRewarded} />
           </div>
           <textarea
             id="reason"
@@ -352,7 +323,7 @@ export default function ReportForm({
             aria-describedby="reason-hint"
           />
           <span className="hint" id="reason-hint">
-            The one thing that decided it for you. A full sentence earns detail XP.
+            The one thing that decided it for you. Explain it in your own words.
           </span>
           <span className={styles.counter} aria-hidden="true">
             {reason.length}/{limits.reason}
@@ -361,25 +332,35 @@ export default function ReportForm({
       </section>
 
       {/* 3. The details */}
-      <section className={styles.section} id="step-details" aria-labelledby="step-details-title">
+      <section
+        className={styles.section}
+        id="step-details"
+        aria-labelledby="step-details-title"
+      >
         <div className={styles.sectionHead}>
-          <span className={`${styles.sectionNum} ${styles.num_3}`} aria-hidden="true">
+          <span
+            className={`${styles.sectionNum} ${styles.num_3}`}
+            aria-hidden="true"
+          >
             3
           </span>
           <div>
             <h2 className={styles.sectionTitle} id="step-details-title">
               The details
             </h2>
-            <p className={styles.sectionSub}>All optional. Each specific detail adds XP, shown on its tag.</p>
+            <p className={styles.sectionSub}>
+              All optional. Fit, court and hours help another player judge
+              whether your experience applies to them.
+            </p>
           </div>
         </div>
 
         <div className="field">
           <div className={styles.labelRow}>
             <label htmlFor="felt_different">
-              What felt different <span className={styles.optional}>(optional)</span>
+              What felt different{" "}
+              <span className={styles.optional}>(optional)</span>
             </label>
-            <XpTag {...xp.felt} hidden={alreadyRewarded} />
           </div>
           <textarea
             id="felt_different"
@@ -396,20 +377,38 @@ export default function ReportForm({
           </legend>
           <div className={styles.chipSet}>
             <label className={`${styles.pick} ${styles.chipPick}`}>
-              <input type="radio" name="comfort" value="" checked={comfort === ""} onChange={() => setComfort("")} />
+              <input
+                type="radio"
+                name="comfort"
+                value=""
+                checked={comfort === ""}
+                onChange={() => setComfort("")}
+              />
               Not rated
             </label>
             {["1", "2", "3", "4", "5"].map((n) => (
               <label key={n} className={`${styles.pick} ${styles.chipPick}`}>
-                <input type="radio" name="comfort" value={n} checked={comfort === n} onChange={() => setComfort(n)} />
-                {comfort !== "" && Number(n) <= Number(comfort) && <ComfortBall />}
+                <input
+                  type="radio"
+                  name="comfort"
+                  value={n}
+                  checked={comfort === n}
+                  onChange={() => setComfort(n)}
+                />
+                {comfort !== "" && Number(n) <= Number(comfort) && (
+                  <ComfortBall />
+                )}
                 {n}
                 {n === "1" && <span className="sr-only">, uncomfortable</span>}
-                {n === "5" && <span className="sr-only">, very comfortable</span>}
+                {n === "5" && (
+                  <span className="sr-only">, very comfortable</span>
+                )}
               </label>
             ))}
           </div>
-          <span className="hint">1 is uncomfortable, 5 is very comfortable.</span>
+          <span className="hint">
+            1 is uncomfortable, 5 is very comfortable.
+          </span>
         </fieldset>
 
         <div className={styles.pair}>
@@ -418,7 +417,6 @@ export default function ReportForm({
               <label htmlFor="size">
                 Size <span className={styles.optional}>(optional)</span>
               </label>
-              <XpTag {...xp.size} hidden={alreadyRewarded} />
             </div>
             <input
               id="size"
@@ -430,7 +428,9 @@ export default function ReportForm({
               aria-describedby="size-hint"
             />
             <span className="hint" id="size-hint">
-              {isRacquet ? "Your grip size, such as 4 3/8." : "The size you tried, such as US 10."}
+              {isRacquet
+                ? "Your grip size, such as 4 3/8."
+                : "The size you tried, such as US 10."}
             </span>
           </div>
 
@@ -440,7 +440,6 @@ export default function ReportForm({
                 <label htmlFor="width">
                   Width <span className={styles.optional}>(optional)</span>
                 </label>
-                <XpTag {...xp.width} hidden={alreadyRewarded} />
               </div>
               <input
                 id="width"
@@ -463,15 +462,23 @@ export default function ReportForm({
             <span>
               Surface <span className={styles.optional}>(optional)</span>
             </span>
-            <XpTag {...xp.surface} hidden={alreadyRewarded} />
           </legend>
           <div className={styles.chipSet}>
             <label className={`${styles.pick} ${styles.chipPick}`}>
-              <input type="radio" name="surface" value="" checked={surface === ""} onChange={() => setSurface("")} />
+              <input
+                type="radio"
+                name="surface"
+                value=""
+                checked={surface === ""}
+                onChange={() => setSurface("")}
+              />
               Not given
             </label>
             {surfaces.map((s) => (
-              <label key={s.value} className={`${styles.pick} ${styles.chipPick}`}>
+              <label
+                key={s.value}
+                className={`${styles.pick} ${styles.chipPick}`}
+              >
                 <input
                   type="radio"
                   name="surface"
@@ -491,7 +498,6 @@ export default function ReportForm({
               <label htmlFor="hours">
                 Hours played <span className={styles.optional}>(optional)</span>
               </label>
-              <XpTag {...xp.hours} hidden={alreadyRewarded} />
             </div>
             <input
               id="hours"
@@ -514,9 +520,9 @@ export default function ReportForm({
             <div className="field">
               <div className={styles.labelRow}>
                 <label htmlFor="wear_location">
-                  Where it wore first <span className={styles.optional}>(optional)</span>
+                  Where it wore first{" "}
+                  <span className={styles.optional}>(optional)</span>
                 </label>
-                <XpTag {...xp.wear} hidden={alreadyRewarded} />
               </div>
               <input
                 id="wear_location"
@@ -533,9 +539,9 @@ export default function ReportForm({
             <div className="field">
               <div className={styles.labelRow}>
                 <label htmlFor="string_setup">
-                  String, gauge and tension <span className={styles.optional}>(optional)</span>
+                  String, gauge and tension{" "}
+                  <span className={styles.optional}>(optional)</span>
                 </label>
-                <XpTag {...xp.strings} hidden={alreadyRewarded} />
               </div>
               <input
                 id="string_setup"
@@ -551,12 +557,10 @@ export default function ReportForm({
       </section>
 
       <p className={styles.fine}>
-        {alreadyRewarded
-          ? "You already earned XP for reporting on this model. A new report still helps the next player."
-          : "XP depends on how much specific detail you give. It never depends on whether your verdict is positive."}
+        Specific details help other players decide. A return is as useful to
+        hear about as a keeper.
       </p>
 
-      {/* 4. Publish: a sticky dock with the live XP meter */}
       <div className={styles.dock}>
         {state.error && (
           <p className={styles.dockError} role="alert">
@@ -564,26 +568,12 @@ export default function ReportForm({
           </p>
         )}
         <div className={styles.dockRow}>
-          <span key={shownTarget} className={`${styles.xpNow} ${styles.xpBump}`} aria-hidden="true">
-            <span className={styles.xpNumber}>+{shown}</span>
-            <span className={styles.xpUnit}>XP</span>
-          </span>
-          <div className={styles.meterCol}>
-            <div className={styles.meter} aria-hidden="true">
-              <div className={styles.meterFill} style={{ transform: `scaleX(${fill})` }} />
-            </div>
-            <span className={styles.meterText}>
-              {alreadyRewarded ? (
-                "Already earned"
-              ) : (
-                <>
-                  <span className={styles.meterShort}>of {maxXp} XP</span>
-                  <span className={styles.meterLong}>of {maxXp} XP for a fully detailed report</span>
-                </>
-              )}
-            </span>
-          </div>
-          <button type="submit" className={`btn ${styles.publish}`} disabled={pending}>
+          <p className={styles.publishNote}>Ready to share what changed?</p>
+          <button
+            type="submit"
+            className={`btn ${styles.publish}`}
+            disabled={pending}
+          >
             {pending ? (
               "Publishing"
             ) : (
@@ -593,9 +583,6 @@ export default function ReportForm({
             )}
           </button>
         </div>
-        <p className="sr-only" role="status">
-          {alreadyRewarded ? "+0 XP. You already earned XP for reporting on this model." : `+${estimate} XP`}
-        </p>
       </div>
     </form>
   );

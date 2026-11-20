@@ -6,16 +6,13 @@ import { BallArt } from "@/components/art";
 import ReportCard from "@/components/ReportCard";
 import { currentUser } from "@/lib/auth";
 import { getProduct, productLabel } from "@/lib/catalog";
-import { levelFor } from "@/lib/gamification";
 import {
   countReports,
   isOutcome,
   isSurface,
-  leaderboard,
   listReports,
   OUTCOMES,
   SURFACES,
-  type LeaderboardEntry,
   type Outcome,
   type ReportFilters,
   type Surface,
@@ -56,32 +53,6 @@ function hrefFor(current: Current, changes: Partial<Record<keyof Current, string
   return search ? `/community?${search}` : "/community";
 }
 
-function Podium({ entries }: { entries: LeaderboardEntry[] }) {
-  return (
-    <ol className={styles.podium} aria-label="Top three">
-      {entries.map((entry, i) => (
-        <li key={entry.id}>
-          <Link href={`/u/${encodeURIComponent(entry.username)}`} className={styles.podiumWho}>
-            <span className={styles.ball} aria-hidden="true">
-              {Array.from(entry.display_name.trim())[0]?.toLocaleUpperCase("en-US") ?? "?"}
-            </span>
-            <span className={styles.podiumName}>{entry.display_name}</span>
-            <span className={styles.podiumHandle}>@{entry.username}</span>
-          </Link>
-          <div className={styles.step}>
-            <span className={styles.place}>
-              <span className="sr-only">Place </span>
-              {i + 1}
-            </span>
-            <span className={styles.stepXp}>{entry.xp} XP</span>
-            <span className={styles.stepLevel}>{levelFor(entry.xp).name}</span>
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
 export default async function CommunityPage({ searchParams }: { searchParams: Promise<Query> }) {
   const query = await searchParams;
   const viewer = await currentUser();
@@ -110,7 +81,6 @@ export default async function CommunityPage({ searchParams }: { searchParams: Pr
   const total = countReports(filters);
   const allReports = hasFilters ? countReports({}) : total;
   const reports = listReports({ ...filters, limit: PAGE_SIZE, offset: parsedOffset, viewerId });
-  const board = leaderboard(10);
 
   const current: Current = {
     outcome: filters.outcome,
@@ -150,15 +120,11 @@ export default async function CommunityPage({ searchParams }: { searchParams: Pr
           <Link href="/report/new" className="btn btn-primary btn-lg">
             Report your gear
           </Link>
-          {board.length > 0 && (
-            <a href="#leaderboard-heading" className="btn">
-              See the leaderboard
-            </a>
-          )}
+
         </div>
       </header>
 
-      <div className="split">
+      <div className="stack-lg">
         <div className="stack-lg">
           <section className={styles.filters} aria-label="Filter reports">
             <div className={styles.filterGroup}>
@@ -362,40 +328,7 @@ export default async function CommunityPage({ searchParams }: { searchParams: Pr
           )}
         </div>
 
-        <aside className={styles.board} aria-labelledby="leaderboard-heading">
-          <div className={styles.boardCard}>
-            <div className="stack">
-              <span className="eyebrow">Top players</span>
-              <h2 id="leaderboard-heading">Leaderboard</h2>
-              <p className="small">XP rewards detail. It never depends on a positive verdict or a retailer click.</p>
-            </div>
-            {board.length === 0 ? (
-              <div className={styles.boardEmpty}>
-                <p>No one has earned XP yet.</p>
-                <Link href="/report/new" className="btn btn-optic">
-                  Claim the top spot
-                </Link>
-              </div>
-            ) : (
-              <Podium entries={board.slice(0, 3)} />
-            )}
-          </div>
-          {board.length > 3 && (
-            <ol className={styles.rest} start={4} aria-label="Places 4 to 10">
-              {board.slice(3).map((entry) => (
-                <li key={entry.id}>
-                  <Link href={`/u/${encodeURIComponent(entry.username)}`} className={styles.restWho}>
-                    <span>{entry.display_name}</span>
-                    <span>
-                      @{entry.username} · {levelFor(entry.xp).name}
-                    </span>
-                  </Link>
-                  <span className={styles.restXp}>{entry.xp} XP</span>
-                </li>
-              ))}
-            </ol>
-          )}
-        </aside>
+
       </div>
     </div>
   );

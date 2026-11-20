@@ -1,3 +1,5 @@
+import { reviewSources } from "./editorial";
+
 /**
  * Seed catalog. Product facts come from tennis_gear_buyer_research.pdf
  * (U.S. market, checked November 18, 2026). Pro gear added on November 19,
@@ -174,8 +176,17 @@ export const products: Product[] = [
     name: "GEL-Resolution 9",
     brand: "ASICS",
     category: "shoe",
-    summary: "r/10s threads in the research ask what should replace it.",
-    sources: [S.res9Thread, S.res10Thread],
+    line: "Men's",
+    surface: "hard",
+    forefootWidthMm: 93.8,
+    weightG: 393,
+    specs: [
+      { label: "Interior width at ball of foot (lab test shoe)", value: "93.8 mm", source: reviewSources.res9 },
+      { label: "Width near big toe (lab test shoe)", value: "66.6 mm", source: reviewSources.res9 },
+      { label: "Weight (lab test shoe)", value: "393 g", source: reviewSources.res9 },
+    ],
+    summary: "A secure, durable shoe in the men’s lab test, with a tapered toe area and some break-in. Players also discuss alternatives in the linked forum thread.",
+    sources: [S.res9Thread, S.res10Thread, reviewSources.res9],
   },
   {
     ...blank,
@@ -216,8 +227,22 @@ export const products: Product[] = [
     name: "Solution Speed FF 4",
     brand: "ASICS",
     category: "shoe",
-    summary: "An owner of several Resolution 8s and 9s liked the switch. Another commenter described a quicker-feeling push-off.",
-    sources: [S.res9Thread],
+    line: "Men's",
+    surface: "hard",
+    sku: "1041A532-100",
+    priceUsd: 160,
+    priceCheckedOn: "2026-11-19",
+    forefootWidthMm: 97.5,
+    weightG: 337,
+    specs: [
+      { label: "U.S. price (checked Nov 19, 2026)", value: "$160", source: reviewSources.speedShop },
+      { label: "Interior width at ball of foot (lab test shoe)", value: "97.5 mm", source: reviewSources.speed4 },
+      { label: "Toe height (lab test shoe)", value: "20.6 mm", source: reviewSources.speed4 },
+      { label: "Weight (lab test shoe)", value: "337 g", source: reviewSources.speed4 },
+    ],
+    offers: [{ id: "asics-speed-ff-4-asics", retailerId: "asics", url: reviewSources.speedShop.url, checkedOn: "2026-11-19" }],
+    summary: "A lighter shoe in the men’s lab test with a softer midsole. Its broad forefoot measurement comes with a shallow toe box, so try-on fit matters.",
+    sources: [S.res9Thread, reviewSources.speed4, reviewSources.speedStore, reviewSources.speedShop],
   },
   {
     ...blank,
@@ -225,7 +250,8 @@ export const products: Product[] = [
     name: "Eclipsion 5",
     brand: "Yonex",
     category: "shoe",
-    summary: "One r/10s player reported a successful switch from the GEL-Resolution 9, with little detail on fit. Yonex makes men's and women's versions.",
+    specs: [{ label: "Retailer playtest version", value: "Men's hard-court shoe; a separate women's version also exists", source: reviewSources.eclipsion }],
+    summary: "Retailer testers liked the men’s version for support and durability, with bulk as a tradeoff. Yonex also makes a separate women’s version.",
     sources: [S.res9Thread, S.yonexAO26],
   },
   {
@@ -243,7 +269,10 @@ export const products: Product[] = [
     name: "Hypercourt Express 3",
     brand: "K-Swiss",
     category: "shoe",
-    summary: "The newer Hypercourt Express. One pickleball player's note on K-Swiss's page covers toe room and firmness against the Express 2.",
+    line: "Men's",
+    surface: "hard",
+    specs: [{ label: "Playtest version", value: "Men's, tested on hard courts", source: reviewSources.hyper3 }],
+    summary: "The newer Hypercourt Express. Men’s retailer testers liked its cushioning and forefoot space; sizing, bulk and breathability were tradeoffs.",
     sources: [S.kswissOwner],
   },
   {
@@ -289,7 +318,13 @@ export const products: Product[] = [
     name: "Coco CG2",
     brand: "New Balance",
     category: "shoe",
-    summary: "The second version of a New Balance signature shoe. No price, fit or weight has been recorded yet.",
+    line: "Women's",
+    surface: "hard",
+    specs: [
+      { label: "Retailer playtest version", value: "Women's; B and D widths were tested", source: reviewSources.coco },
+      { label: "Interior width (women's US 9.5 B test shoe)", value: "90.9 mm; not directly comparable across sizes", source: reviewSources.cocoLab },
+    ],
+    summary: "A supportive mid-cut signature shoe. Women’s retailer testers liked the cushioning and durability, but some found the grip too sticky and the feel bulky.",
     sources: [S.rgShoes26],
   },
   {
@@ -650,6 +685,23 @@ export type Comparison = {
 };
 
 export const comparisons: Comparison[] = [
+  {
+    slug: "resolution-9-vs-solution-speed-ff-4",
+    title: "Resolution 9 vs Solution Speed FF 4",
+    question: "Keep the support, change the feel?",
+    productSlugs: ["asics-gel-resolution-9", "asics-solution-speed-ff-4"],
+    takeaway: "The FF 4 is lighter in the lab's test shoes and wider at the ball of the foot, but its low toe height can still feel restrictive. Treat this as a try-on comparison, not evidence that it fits every Resolution wearer.",
+    rows: [
+      { label: "Weight, lab test shoe", values: ["393 g", "337 g"], valueSources: [reviewSources.res9, reviewSources.speed4] },
+      { label: "Interior width at ball of foot, lab test shoe", values: ["93.8 mm", "97.5 mm"], valueSources: [reviewSources.res9, reviewSources.speed4] },
+      { label: "Width near big toe, lab test shoe", values: ["66.6 mm", "69.1 mm"], valueSources: [reviewSources.res9, reviewSources.speed4] },
+      { label: "Toe height, lab test shoe", values: ["23.8 mm", "20.6 mm"], valueSources: [reviewSources.res9, reviewSources.speed4] },
+      { label: "Main fit check", values: ["Toe taper and break-in", "Toe height and heel hold"], valueSources: [reviewSources.res9, reviewSources.speed4] },
+    ],
+    firsthand: [{ productSlug: "asics-solution-speed-ff-4", learned: "One owner found their usual size too small and later reported comfort half a size up. Other owners still found that increase small. These individual accounts do not establish a sizing rule.", source: reviewSources.speedForum }],
+    gap: "Measurements describe the lab's test pairs, not every size, width or outsole. We do not have a matched, same-player trial of both models. The Resolution 9's current price is not recorded.",
+    sources: [reviewSources.res9, reviewSources.speed4, reviewSources.speedStore, reviewSources.speedForum],
+  },
   {
     slug: "vapor-12-vs-vapor-pro-3",
     title: "Vapor 12 vs Vapor Pro 3",

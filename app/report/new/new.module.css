@@ -12,6 +12,7 @@
   transform: rotate(-3deg);
 }
 .stickers { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+.previewName { font-family: var(--display); font-weight: 800; font-size: 1.125rem; line-height: 1.15; letter-spacing: -0.015em; }
 
 @keyframes pop { 0% { transform: scale(0.6) rotate(var(--tilt, 0deg)); opacity: 0; } 70% { transform: scale(1.08) rotate(var(--tilt, 0deg)); opacity: 1; } 100% { transform: scale(1) rotate(var(--tilt, 0deg)); } }
 

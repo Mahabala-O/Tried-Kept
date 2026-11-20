@@ -8,8 +8,22 @@ import ProductPhoto from "@/components/ProductPhoto";
 import { ProductImage } from "@/components/MediaFrame";
 import ProductReports from "@/components/ProductReports";
 import ScoutMark from "@/components/ScoutMark";
-import { GapNote, OfferButtons, PriceSticker, SourceLink, SourceList, formatDate } from "@/components/ui";
-import { demoProgram, getComparison, getProduct, productLabel, type Comparison, type Product } from "@/lib/catalog";
+import {
+  GapNote,
+  OfferButtons,
+  PriceSticker,
+  SourceLink,
+  SourceList,
+  formatDate,
+} from "@/components/ui";
+import {
+  demoProgram,
+  getComparison,
+  getProduct,
+  productLabel,
+  type Comparison,
+  type Product,
+} from "@/lib/catalog";
 import { breakEvenHours, costPerHour } from "@/lib/finder";
 import { productIllustrationSrc, productPhotos } from "@/lib/media";
 import { comparisonModels } from "../_components/CompareCard";
@@ -35,33 +49,54 @@ function listNames(names: string[]): string {
   return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
 }
 
-const money = (n: number) => (Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`);
+const money = (n: number) =>
+  Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`;
 
 /** Every model side by side with its picture and dated price. */
 function VsHero({ models }: { models: Product[] }) {
   const priced = models.filter((p) => p.priceUsd !== null);
   const [a, b] = models;
   const gap =
-    models.length === 2 && priced.length === 2 && a.priceCheckedOn && a.priceCheckedOn === b.priceCheckedOn
-      ? { amount: Math.abs(a.priceUsd! - b.priceUsd!), pricier: a.priceUsd! > b.priceUsd! ? a : b, checkedOn: a.priceCheckedOn }
+    models.length === 2 &&
+    priced.length === 2 &&
+    a.priceCheckedOn &&
+    a.priceCheckedOn === b.priceCheckedOn
+      ? {
+          amount: Math.abs(a.priceUsd! - b.priceUsd!),
+          pricier: a.priceUsd! > b.priceUsd! ? a : b,
+          checkedOn: a.priceCheckedOn,
+        }
       : null;
 
   return (
     <div className="stack-lg">
-      <div className={`${s.vsHero} ${models.length > 2 ? s.vsHero3 : ""}`} style={{ "--n": models.length } as CSSProperties}>
+      <div
+        className={`${s.vsHero} ${models.length > 2 ? s.vsHero3 : ""}`}
+        style={{ "--n": models.length } as CSSProperties}
+      >
         {models.map((product, i) => (
-          <div key={product.slug} className={s.vsSide}>
-            <ProductImage product={product} ratio="1 / 1" eager />
+          <ProductImage
+            key={product.slug}
+            product={product}
+            ratio="1 / 1"
+            eager
+            className={s.vsSide}
+          >
             <p className={s.vsName}>
               <Link href={`/gear/${product.slug}`}>
-                <span className={s.vsBrand}>{product.brand}</span> {product.name}
+                <span className={s.vsBrand}>{product.brand}</span>{" "}
+                {product.name}
                 {product.line ? ` (${product.line})` : ""}
               </Link>
             </p>
             <div className={s.vsPrice}>
-              <PriceSticker product={product} tilt={i % 2 === 0 ? "tilt-left" : "tilt-right"} short={models.length > 2} />
+              <PriceSticker
+                product={product}
+                tilt={i % 2 === 0 ? "tilt-left" : "tilt-right"}
+                short={models.length > 2}
+              />
             </div>
-          </div>
+          </ProductImage>
         ))}
         {models.length === 2 && (
           <span className={s.vsBadge} aria-hidden="true">
@@ -71,9 +106,12 @@ function VsHero({ models }: { models: Product[] }) {
       </div>
       {gap && gap.amount > 0 && (
         <p className={s.gapLine}>
-          <span className={`sticker sticker-returned ${s.gapSticker}`}>${gap.amount}</span>
+          <span className={`sticker sticker-returned ${s.gapSticker}`}>
+            ${gap.amount}
+          </span>
           <span>
-            more for the {gap.pricier.name}, at the prices checked {formatDate(gap.checkedOn)}.
+            more for the {gap.pricier.name}, at the prices checked{" "}
+            {formatDate(gap.checkedOn)}.
           </span>
         </p>
       )}
@@ -86,15 +124,37 @@ function MiniThumb({ product }: { product: Product }) {
   const photo = productPhotos[product.slug];
   return (
     <span className={s.miniThumb} aria-hidden="true">
-      {photo ? <ProductPhoto product={product} photo={photo} /> : <ResilientImage src={productIllustrationSrc(product.slug)}
-        fallbackSrc={productIllustrationSrc(product.slug)} alt="" width={40} height={40}
-        style={{ width: "100%", height: "100%", objectFit: "contain", background: "white" }} />}
+      {photo ? (
+        <ProductPhoto product={product} photo={photo} />
+      ) : (
+        <ResilientImage
+          src={productIllustrationSrc(product.slug)}
+          fallbackSrc={productIllustrationSrc(product.slug)}
+          alt=""
+          width={40}
+          height={40}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            background: "white",
+          }}
+        />
+      )}
     </span>
   );
 }
 
-function SideBySide({ comparison, models }: { comparison: Comparison; models: Product[] }) {
-  const sourced = comparison.rows.filter((row) => row.source || row.valueSources?.length);
+function SideBySide({
+  comparison,
+  models,
+}: {
+  comparison: Comparison;
+  models: Product[];
+}) {
+  const sourced = comparison.rows.filter(
+    (row) => row.source || row.valueSources?.length,
+  );
   return (
     <section className="stack" aria-labelledby="side-by-side">
       <h2 id="side-by-side">Side by side</h2>
@@ -125,7 +185,11 @@ function SideBySide({ comparison, models }: { comparison: Comparison; models: Pr
                     <dd key={models[i]?.slug ?? i} className="vs-value">
                       <span className="sr-only">{models[i]?.name}: </span>
                       {main}
-                      {rest.length > 0 && <span className={`small ${s.valueSub}`}>{rest.join(" · ")}</span>}
+                      {rest.length > 0 && (
+                        <span className={`small ${s.valueSub}`}>
+                          {rest.join(" · ")}
+                        </span>
+                      )}
                     </dd>
                   );
                 })}
@@ -142,7 +206,9 @@ function SideBySide({ comparison, models }: { comparison: Comparison; models: Pr
                     {row.valueSources?.map((source) => (
                       <SourceLink key={source.url} source={source} standalone />
                     ))}
-                    {row.source && <SourceLink source={row.source} standalone />}
+                    {row.source && (
+                      <SourceLink source={row.source} standalone />
+                    )}
                   </li>
                 ))}
               </ul>
@@ -150,7 +216,9 @@ function SideBySide({ comparison, models }: { comparison: Comparison; models: Pr
           )}
         </>
       ) : (
-        <GapNote>No side-by-side measurements are recorded for this comparison yet.</GapNote>
+        <GapNote>
+          No side-by-side measurements are recorded for this comparison yet.
+        </GapNote>
       )}
       {comparison.gap && <GapNote>{comparison.gap}</GapNote>}
     </section>
@@ -161,10 +229,16 @@ function Takeaway({ takeaway }: { takeaway: string | null }) {
   if (!takeaway) {
     return (
       <section className={`card ${s.open}`} aria-labelledby="takeaway">
-        <h2 id="takeaway" className="sticker sticker-paper sticker-plain tilt-left">
+        <h2
+          id="takeaway"
+          className="sticker sticker-paper sticker-plain tilt-left"
+        >
           Still open
         </h2>
-        <p>No takeaway yet. The evidence recorded so far is too thin to call this one.</p>
+        <p>
+          No takeaway yet. The evidence recorded so far is too thin to call this
+          one.
+        </p>
       </section>
     );
   }
@@ -178,10 +252,20 @@ function Takeaway({ takeaway }: { takeaway: string | null }) {
   );
 }
 
-function WorkedExample({ pricier, cheaper }: { pricier: Product; cheaper: Product }) {
+function WorkedExample({
+  pricier,
+  cheaper,
+}: {
+  pricier: Product;
+  cheaper: Product;
+}) {
   if (pricier.priceUsd === null || cheaper.priceUsd === null) return null;
   const perHour = costPerHour(cheaper.priceUsd, EXAMPLE_HOURS);
-  const hoursNeeded = breakEvenHours(cheaper.priceUsd, EXAMPLE_HOURS, pricier.priceUsd);
+  const hoursNeeded = breakEvenHours(
+    cheaper.priceUsd,
+    EXAMPLE_HOURS,
+    pricier.priceUsd,
+  );
   if (perHour === null || hoursNeeded <= 0) return null;
   const needed = Math.round(hoursNeeded);
   const scale = Math.max(needed, EXAMPLE_HOURS);
@@ -189,10 +273,14 @@ function WorkedExample({ pricier, cheaper }: { pricier: Product; cheaper: Produc
 
   return (
     <section className="stack" aria-labelledby="worked-example">
-      <h2 id="worked-example">What the extra ${pricier.priceUsd - cheaper.priceUsd} has to buy</h2>
+      <h2 id="worked-example">
+        What the extra ${pricier.priceUsd - cheaper.priceUsd} has to buy
+      </h2>
       <div className={`card ${s.example}`}>
         <div className="row between">
-          <span className="sticker sticker-xp sticker-plain tilt-left">Worked example</span>
+          <span className="sticker sticker-xp sticker-plain tilt-left">
+            Worked example
+          </span>
           <BallArt bounce className={s.exampleBall} />
         </div>
         <p className={s.equation} aria-hidden="true">
@@ -219,7 +307,15 @@ function WorkedExample({ pricier, cheaper }: { pricier: Product; cheaper: Produc
               <span className={s.barHours}>{EXAMPLE_HOURS} h</span>
             </span>
             <span className={s.barTrack}>
-              <span className={s.barFill} style={{ "--w": width(EXAMPLE_HOURS), display: "block" } as CSSProperties} />
+              <span
+                className={s.barFill}
+                style={
+                  {
+                    "--w": width(EXAMPLE_HOURS),
+                    display: "block",
+                  } as CSSProperties
+                }
+              />
             </span>
           </li>
           <li className={s.bar}>
@@ -230,16 +326,25 @@ function WorkedExample({ pricier, cheaper }: { pricier: Product; cheaper: Produc
               <span className={s.barHours}>{needed} h to match</span>
             </span>
             <span className={s.barTrack}>
-              <span className={`${s.barFill} ${s.barFillPricier}`} style={{ "--w": width(needed), display: "block" } as CSSProperties} />
+              <span
+                className={`${s.barFill} ${s.barFillPricier}`}
+                style={
+                  { "--w": width(needed), display: "block" } as CSSProperties
+                }
+              />
             </span>
           </li>
         </ul>
         <p>
-          ${cheaper.priceUsd} over {EXAMPLE_HOURS} hours is ${perHour.toFixed(2)} per hour, so the ${pricier.priceUsd} pair needs{" "}
+          ${cheaper.priceUsd} over {EXAMPLE_HOURS} hours is $
+          {perHour.toFixed(2)} per hour, so the ${pricier.priceUsd} pair needs{" "}
           {needed} hours to match it.
         </p>
       </div>
-      <GapNote>{EXAMPLE_HOURS} hours is an example, not a measured lifespan. Durability for these shoes is not recorded.</GapNote>
+      <GapNote>
+        {EXAMPLE_HOURS} hours is an example, not a measured lifespan. Durability
+        for these shoes is not recorded.
+      </GapNote>
       <div className="cta-row">
         <Link href="/play/cost" className="btn btn-optic">
           Try your own numbers
@@ -259,15 +364,30 @@ function Firsthand({ comparison }: { comparison: Comparison }) {
             const product = getProduct(reply.productSlug);
             return (
               <article key={reply.productSlug} className={`card ${s.reply}`}>
-                <div className={s.replyHead}>
-                  {product && <ProductImage product={product} ratio="1 / 1" />}
-                  <div className="stack">
-                    <span className="sticker sticker-cream sticker-sm sticker-plain tilt-left">Forum reply</span>
-                    <h3 className={s.replyName}>
-                      {product ? <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link> : reply.productSlug}
-                    </h3>
-                  </div>
-                </div>
+                {product ? (
+                  <ProductImage
+                    product={product}
+                    ratio="1 / 1"
+                    className={s.replyHead}
+                  >
+                    <div className="stack">
+                      <span className="sticker sticker-cream sticker-sm sticker-plain tilt-left">
+                        Forum reply
+                      </span>
+                      <h3 className={s.replyName}>
+                        {product ? (
+                          <Link href={`/gear/${product.slug}`}>
+                            {productLabel(product)}
+                          </Link>
+                        ) : (
+                          reply.productSlug
+                        )}
+                      </h3>
+                    </div>
+                  </ProductImage>
+                ) : (
+                  <h3 className={s.replyName}>{reply.productSlug}</h3>
+                )}
                 <p className={s.bubble}>{reply.learned}</p>
                 <SourceLink source={reply.source} standalone />
               </article>
@@ -275,7 +395,9 @@ function Firsthand({ comparison }: { comparison: Comparison }) {
           })}
         </div>
       ) : (
-        <GapNote>No firsthand replies are recorded for this comparison yet.</GapNote>
+        <GapNote>
+          No firsthand replies are recorded for this comparison yet.
+        </GapNote>
       )}
     </section>
   );
@@ -307,13 +429,15 @@ export default async function ComparisonPage({ params }: Props) {
 
       <Takeaway takeaway={comparison.takeaway} />
 
-      {comparison.slug === "vapor-12-vs-vapor-pro-3" && vapor12 && vaporPro3 && (
-        <WorkedExample pricier={vapor12} cheaper={vaporPro3} />
-      )}
+      {comparison.slug === "vapor-12-vs-vapor-pro-3" &&
+        vapor12 &&
+        vaporPro3 && <WorkedExample pricier={vapor12} cheaper={vaporPro3} />}
 
       {comparison.slug === "ezone-98-2022-vs-2025" && (
         <section className={`card ${s.demo}`} aria-labelledby="demo-first">
-          <span className="sticker sticker-blue sticker-sm sticker-plain tilt-left">Tip</span>
+          <span className="sticker sticker-blue sticker-sm sticker-plain tilt-left">
+            Tip
+          </span>
           <h2 id="demo-first">Demo before you buy</h2>
           <p>{demoProgram.summary}</p>
           <SourceLink source={demoProgram.source} standalone />
@@ -323,27 +447,35 @@ export default async function ComparisonPage({ params }: Props) {
       <section className="stack" aria-labelledby="where-to-check">
         <h2 id="where-to-check">Where to check</h2>
         {models.some((p) => p.offers.length > 0) && (
-        <div className={s.shopGrid}>
-          {models.filter((p) => p.offers.length > 0).map((product) => (
-            <article key={product.slug} className={`card ${s.shopCard}`}>
-              <span className="eyebrow">{product.brand}</span>
-              <h3>
-                <Link href={`/gear/${product.slug}`}>
-                  {product.name}
-                  {product.line ? ` (${product.line})` : ""}
-                </Link>
-              </h3>
-              <div className={s.shopPrice}>
-                <PriceSticker product={product} />
-              </div>
-              <OfferButtons product={product} from="compare" />
-            </article>
-          ))}
-        </div>
+          <div className={s.shopGrid}>
+            {models
+              .filter((p) => p.offers.length > 0)
+              .map((product) => (
+                <article key={product.slug} className={`card ${s.shopCard}`}>
+                  <span className="eyebrow">{product.brand}</span>
+                  <h3>
+                    <Link href={`/gear/${product.slug}`}>
+                      {product.name}
+                      {product.line ? ` (${product.line})` : ""}
+                    </Link>
+                  </h3>
+                  <div className={s.shopPrice}>
+                    <PriceSticker product={product} />
+                  </div>
+                  <OfferButtons product={product} from="compare" />
+                </article>
+              ))}
+          </div>
         )}
         {unlinked.length > 0 && (
           <GapNote>
-            No checked retailer link yet for {listNames(unlinked.map((p) => `the ${p.name}${p.line ? ` (${p.line})` : ""}`))}.
+            No checked retailer link yet for{" "}
+            {listNames(
+              unlinked.map(
+                (p) => `the ${p.name}${p.line ? ` (${p.line})` : ""}`,
+              ),
+            )}
+            .
           </GapNote>
         )}
       </section>

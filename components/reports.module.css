@@ -10,24 +10,17 @@
 }
 
 .top {
+  --media-thumb-size: 84px;
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
+  grid-template-columns: min(84px, 25%) minmax(0, 1fr);
   gap: 14px;
   align-items: start;
 }
-.thumb { width: 84px; }
-.thumb :global(.media-box) { border-radius: 14px; }
-/* The "Illustration" label stays, shrunk to fit a thumbnail. */
-.thumb :global(.art-label) { top: 4px; left: 4px; padding: 0 5px; font-size: 0.5625rem; letter-spacing: 0.02em; border-width: 1.5px; }
-/* A thumbnail is too small for the full word, so it says Art. */
-.thumb :global(.art-label-long) { display: none; }
-.thumb :global(.art-label-short) { display: inline; }
-.thumb :global(.art-frame > svg) { width: 78%; height: 78%; margin-top: 8%; }
-.thumb :global(.media-credit) { font-size: 0.6875rem; }
+.top :global(.media-box) { border-radius: 14px; }
 .thumbGone {
   display: grid;
   place-items: center;
-  width: 84px;
+  width: 100%;
   aspect-ratio: 1 / 1;
   background: var(--cream-deep);
   border: var(--border);
@@ -168,8 +161,7 @@
 
 @media (min-width: 600px) {
   .card { padding: 20px; }
-  .top { grid-template-columns: 112px minmax(0, 1fr); gap: 18px; }
-  .thumb, .thumbGone { width: 112px; }
+  .top { --media-thumb-size: 112px; grid-template-columns: min(112px, 25%) minmax(0, 1fr); gap: 18px; }
   .title { font-size: 1.5rem; }
 }
 

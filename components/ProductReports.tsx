@@ -111,15 +111,7 @@ export default async function ProductReports({
 
       {receipt && (
         <div className={styles.receipt} role="status">
-          {receipt.xp > 0 && (
-            <span className="sticker sticker-xp pop-in tilt-left" aria-hidden="true">
-              +{receipt.xp} XP
-            </span>
-          )}
-          <p>
-            Your report is published.{" "}
-            {receipt.xp > 0 ? `You earned ${receipt.xp} XP.` : "You already earned the XP for reporting on this model."}
-          </p>
+          <p>Your report is published. Thanks for sharing what worked and what didn’t.</p>
         </div>
       )}
 

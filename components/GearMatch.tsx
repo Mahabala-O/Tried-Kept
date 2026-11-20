@@ -359,12 +359,7 @@ function Results({
         {count > 0 && (
           <p className="muted">Ranked only on facts we hold. Missing data earns no points and is labelled on each shoe.</p>
         )}
-        {state.xpAwarded > 0 && (
-          <p className="sticker sticker-xp sticker-plain sticker-wrap pop-in tilt-left">+{state.xpAwarded} XP for finishing Gear Match.</p>
-        )}
-        {state.loggedIn && state.xpAwarded === 0 && (
-          <p className="small muted">Your Gear Match XP is already counted. Play as often as you like.</p>
-        )}
+
       </div>
 
       {state.notes.map((note) => (
@@ -401,7 +396,7 @@ function Results({
 
       {!state.loggedIn && (
         <div className="callout">
-          <p>Join or log in to earn {state.xpAvailable} XP for finishing and to log what you try.</p>
+          <p>Join or log in to save your gear and record what you try.</p>
           <span className="small">We keep these answers on this device for a day, so you will not have to redo them.</span>
           <div className="cta-row">
             <Link href={`/signup?next=${RESUME_PATH}`} className="btn btn-primary">

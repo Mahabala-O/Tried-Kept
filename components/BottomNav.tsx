@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 type Tab = {
   href: string;
@@ -11,17 +12,29 @@ type Tab = {
   icon: React.ReactNode;
 };
 
-const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 2.2, strokeLinecap: "round", strokeLinejoin: "round" } as const;
+const stroke = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2.2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+} as const;
 
 const HomeIcon = (
   <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3.5 11 L12 4 L20.5 11 V20 H14.5 V14.5 H9.5 V20 H3.5 Z" {...stroke} />
+    <path
+      d="M3.5 11 L12 4 L20.5 11 V20 H14.5 V14.5 H9.5 V20 H3.5 Z"
+      {...stroke}
+    />
   </svg>
 );
 
 const GearIcon = (
   <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M2.5 17.5 V13 Q2.5 10.5 5 10.5 H8.5 L12 14 Q14 15.5 17 15.5 H19 Q21.5 15.5 21.5 18 V19.5 H2.5 Z" {...stroke} />
+    <path
+      d="M2.5 17.5 V13 Q2.5 10.5 5 10.5 H8.5 L12 14 Q14 15.5 17 15.5 H19 Q21.5 15.5 21.5 18 V19.5 H2.5 Z"
+      {...stroke}
+    />
     <path d="M9.5 12 L11 10.5 M11.5 13.5 L13 12" {...stroke} />
   </svg>
 );
@@ -50,17 +63,50 @@ const LockerIcon = (
 );
 
 function isActive(pathname: string, match: string[]): boolean {
-  return match.some((prefix) => (prefix === "/" ? pathname === "/" : pathname === prefix || pathname.startsWith(`${prefix}/`)));
+  return match.some((prefix) =>
+    prefix === "/"
+      ? pathname === "/"
+      : pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
 }
 
 /** Fixed tab bar under 900px. Locker goes to /me, or to /signup when logged out (/login while sign-up is paused). */
-export default function BottomNav({ loggedIn, signupsOpen = true }: { loggedIn: boolean; signupsOpen?: boolean }) {
+export default function BottomNav({
+  loggedIn,
+  signupsOpen = true,
+}: {
+  loggedIn: boolean;
+  signupsOpen?: boolean;
+}) {
   const pathname = usePathname() ?? "/";
+  const navRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        "--bottom-nav-h",
+        `${Math.ceil(nav.getBoundingClientRect().height)}px`,
+      );
+    });
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, []);
   const tabs: Tab[] = [
     { href: "/", label: "Home", match: ["/"], icon: HomeIcon },
-    { href: "/gear", label: "Gear", match: ["/gear", "/compare", "/pros"], icon: GearIcon },
-    { href: "/play", label: "Play", match: ["/play"], icon: PlayIcon },
-    { href: "/community", label: "Community", match: ["/community", "/u", "/report"], icon: CommunityIcon },
+    { href: "/pros", label: "Pros", match: ["/pros"], icon: PlayIcon },
+    {
+      href: "/switch",
+      label: "Find gear",
+      match: ["/switch", "/gear", "/compare", "/play"],
+      icon: GearIcon,
+    },
+    {
+      href: "/stories",
+      label: "Stories",
+      match: ["/stories", "/community", "/u", "/report"],
+      icon: CommunityIcon,
+    },
     {
       href: loggedIn ? "/me" : signupsOpen ? "/signup" : "/login",
       label: "Locker",
@@ -70,11 +116,14 @@ export default function BottomNav({ loggedIn, signupsOpen = true }: { loggedIn: 
   ];
 
   return (
-    <nav className="bottom-nav" aria-label="Quick">
+    <nav className="bottom-nav" aria-label="Quick" ref={navRef}>
       <ul>
         {tabs.map((tab) => (
           <li key={tab.label}>
-            <Link href={tab.href} aria-current={isActive(pathname, tab.match) ? "page" : undefined}>
+            <Link
+              href={tab.href}
+              aria-current={isActive(pathname, tab.match) ? "page" : undefined}
+            >
               {tab.icon}
               <span>{tab.label}</span>
             </Link>

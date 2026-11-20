@@ -3,7 +3,7 @@
 
 .form { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; max-width: 680px; }
 /* Fields scrolled to by keyboard or the section chips clear the header and the dock. */
-.form :is(input, select, textarea) { scroll-margin-block: calc(var(--header-h) + 16px) calc(var(--bottom-nav-h) + 96px); }
+.form :is(input, select, textarea) { scroll-margin-block: 16px 96px; }
 
 /* Section jump chips */
 .steps { margin-bottom: -6px; }
@@ -59,7 +59,7 @@
 
 /* Selected product preview */
 .preview {
-  display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 14px; align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1fr);
   padding: 10px; background: var(--cream); border: 2px solid var(--ink); border-radius: 14px;
 }
 .preview :global(.media-box) { border-radius: 12px; }
@@ -135,7 +135,8 @@
 @media (min-width: 900px) {
   .dock { bottom: 16px; padding: 14px 14px 14px 18px; }
 }
-.dockRow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; }
+.publishNote { font-size: .875rem; padding-inline: 8px; }
+.dockRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
 .xpNow {
   display: inline-flex; align-items: baseline; gap: 4px;
   padding: 6px 12px; border: 2px solid var(--cream); border-radius: 999px;

@@ -1,3 +1,5 @@
+import StoryCard from "@/components/StoryCard";
+import { storiesForPro, proWardrobe } from "@/lib/editorial";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
@@ -52,12 +54,20 @@ function BagEntry({ item }: { item: BagItem }) {
     return (
       <article className={`card ${s.unknownCard}`}>
         <div className={s.unknownTop}>
-          <div className={s.unknownArt} role="img" aria-label={`Generic ${item.slot.toLowerCase()} illustration; model not identified`}>
+          <div
+            className={s.unknownArt}
+            role="img"
+            aria-label={`Generic ${item.slot.toLowerCase()} illustration; model not identified`}
+          >
             {item.slot === "Shoes" ? <ShoeArt /> : <RacquetArt />}
           </div>
           <div className={s.gearStickers}>
-            <span className="sticker sticker-ink sticker-sm tilt-left">{item.slot}</span>
-            <span className="sticker sticker-paper sticker-sm sticker-plain tilt-right">Not identified yet</span>
+            <span className="sticker sticker-ink sticker-sm tilt-left">
+              {item.slot}
+            </span>
+            <span className="sticker sticker-paper sticker-sm sticker-plain tilt-right">
+              Not identified yet
+            </span>
           </div>
         </div>
         <GapNote>{item.evidence}</GapNote>
@@ -74,8 +84,12 @@ function BagEntry({ item }: { item: BagItem }) {
     <article className={`card ${s.gearCard}`}>
       <ProductImage product={product} ratio="4 / 3" />
       <div className={s.gearStickers}>
-        <span className="sticker sticker-ink sticker-sm tilt-left">{item.slot}</span>
-        <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-right">Identified {formatDate(item.identifiedOn)}</span>
+        <span className="sticker sticker-ink sticker-sm tilt-left">
+          {item.slot}
+        </span>
+        <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-right">
+          Identified {formatDate(item.identifiedOn)}
+        </span>
       </div>
       <h3 className={s.gearName}>
         <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link>
@@ -114,12 +128,18 @@ export default async function ProPage({ params }: Props) {
   const galleryPhoto = heroGif ? (media?.portrait ?? null) : null;
   const hasGallery = galleryGifs.length > 0 || galleryPhoto !== null;
 
-  const dates = pro.bag.flatMap((item) => (item.productSlug && item.identifiedOn ? [item.identifiedOn] : []));
-  const latest = dates.length > 0 ? dates.reduce((a, b) => (a > b ? a : b)) : null;
+  const dates = pro.bag.flatMap((item) =>
+    item.productSlug && item.identifiedOn ? [item.identifiedOn] : [],
+  );
+  const latest =
+    dates.length > 0 ? dates.reduce((a, b) => (a > b ? a : b)) : null;
 
   return (
     <>
-      <section className={`band band-hardcourt court-lines ${s.hero}`} aria-labelledby="pro-title">
+      <section
+        className={`band band-hardcourt court-lines ${s.hero}`}
+        aria-labelledby="pro-title"
+      >
         <div className={`wrap ${s.heroGrid} ${s.heroGridMediaFirst}`}>
           <div className={s.heroCopy}>
             <Link href="/pros" className={`small tap-link ${s.back}`}>
@@ -130,20 +150,33 @@ export default async function ProPage({ params }: Props) {
               {pro.name}
             </h1>
             <p className="lede">
-              What was identified, when, and who says so. This may not be what {pro.name} is using today.
+              What was identified, when, and who says so. This may not be what{" "}
+              {pro.name} is using today.
             </p>
             <div className={s.heroStats}>
               <span className="sticker sticker-xp sticker-plain tilt-left">
                 {dates.length} dated {dates.length === 1 ? "item" : "items"}
               </span>
               {latest && (
-                <span className="sticker sticker-paper sticker-plain sticker-wrap tilt-right">Latest: {formatDate(latest)}</span>
+                <span className="sticker sticker-paper sticker-plain sticker-wrap tilt-right">
+                  Latest: {formatDate(latest)}
+                </span>
               )}
             </div>
           </div>
           <div className={s.heroMedia}>
-            <ProImage slug={pro.slug} prefer="gif" ratio="1 / 1" eager artBg="#E6FF3D" note="Shows the player, not the gear in the bag below." />
-            <span className={`sticker sticker-ink ${s.heroSticker}`} style={{ "--tilt": "-6deg" } as CSSProperties}>
+            <ProImage
+              slug={pro.slug}
+              prefer="gif"
+              ratio="1 / 1"
+              eager
+              artBg="#E6FF3D"
+              note="Shows the player, not the gear in the bag below."
+            />
+            <span
+              className={`sticker sticker-ink ${s.heroSticker}`}
+              style={{ "--tilt": "-6deg" } as CSSProperties}
+            >
               Dated bag
             </span>
           </div>
@@ -151,6 +184,33 @@ export default async function ProPage({ params }: Props) {
       </section>
 
       <div className="wrap page">
+        {proWardrobe[pro.slug] && (
+          <section className="stack-lg" aria-labelledby="wardrobe-title">
+            <h2 id="wardrobe-title">Clothing &amp; court style</h2>
+            {proWardrobe[pro.slug].map((look) => (
+              <article className="card" key={look.title}>
+                <span className="eyebrow">
+                  Announced {formatDate(look.datedOn)}
+                </span>
+                <h3>{look.title}</h3>
+                <p>{look.text}</p>
+                <SourceLink source={look.source} standalone />
+              </article>
+            ))}
+          </section>
+        )}
+
+        {storiesForPro(pro.slug).length > 0 && (
+          <section className="stack-lg" aria-labelledby="gear-stories">
+            <h2 id="gear-stories">Behind the switch</h2>
+            <div className="grid">
+              {storiesForPro(pro.slug).map((story) => (
+                <StoryCard key={story.slug} story={story} />
+              ))}
+            </div>
+          </section>
+        )}
+
         <div className="callout">
           <span className="eyebrow">Before you copy a pro</span>
           <p>{pro.caveat}</p>
@@ -170,10 +230,15 @@ export default async function ProPage({ params }: Props) {
             <div className="stack">
               <h2 id="on-court">On court</h2>
               <p className="muted">
-                Clips and photos of {pro.name}. They show the player, not the gear in the bag above.
+                Clips and photos of {pro.name}. They show the player, not the
+                gear in the bag above.
               </p>
             </div>
-            <ul className={s.gallery} aria-label={`Clips and photos of ${pro.name}`} tabIndex={0}>
+            <ul
+              className={s.gallery}
+              aria-label={`Clips and photos of ${pro.name}`}
+              tabIndex={0}
+            >
               {galleryGifs.map((gif) => (
                 <li key={gif.id}>
                   <MediaFrame gif={gif} fallback={null} ratio="4 / 3" />
@@ -181,7 +246,11 @@ export default async function ProPage({ params }: Props) {
               ))}
               {galleryPhoto && (
                 <li>
-                  <MediaFrame photo={galleryPhoto} fallback={null} ratio="4 / 3" />
+                  <MediaFrame
+                    photo={galleryPhoto}
+                    fallback={null}
+                    ratio="4 / 3"
+                  />
                 </li>
               )}
             </ul>

@@ -17,13 +17,17 @@ describe("rankShoes", () => {
   });
 
   it("splits the two Vapors by measured room at the ball of the foot", () => {
-    expect(slugs({ ...base, fit: "roomy" })).toEqual(["nike-vapor-pro-3"]);
+    expect(slugs({ ...base, fit: "roomy" })).toContain("nike-vapor-pro-3");
+    expect(slugs({ ...base, fit: "roomy" })).not.toContain("nike-vapor-12");
     expect(slugs({ ...base, fit: "snug" })).toEqual(["nike-vapor-12"]);
   });
 
   it("treats a budget equal to the price as within budget", () => {
-    expect(slugs({ ...base, surface: "hard", budget: 135 })).toEqual(["nike-vapor-pro-3"]);
-    expect(slugs({ ...base, surface: "hard", budget: 134 })).toEqual([]);
+    const priced = (budget: number) => rankShoes({ ...base, surface: "hard", budget }).filter(m => m.product.priceUsd !== null).map(m => m.product.slug);
+    expect(priced(135)).toEqual(["nike-vapor-pro-3"]);
+    expect(priced(134)).toEqual([]);
+    const unpriced = rankShoes({ ...base, surface: "hard", budget: 100 });
+    expect(unpriced.every(m => m.unknowns.includes("Current price"))).toBe(true);
   });
 
   it("returns only the men's wide variant for wide and men's", () => {

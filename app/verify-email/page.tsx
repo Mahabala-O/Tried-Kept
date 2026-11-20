@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AuthShell from "@/app/signup/_auth/AuthShell";
 import { getDb } from "@/lib/db";
-import { XP } from "@/lib/gamification";
 import { tokenIsLive } from "@/lib/tokens";
 import ConfirmEmailForm from "./ConfirmEmailForm";
 
@@ -23,7 +22,6 @@ export default async function VerifyEmailPage({
       eyebrow="Join"
       title="Confirm your email"
       court="hardcourt"
-      stickers={live ? <span className="sticker sticker-xp tilt-left">+{XP.signup} XP waiting</span> : undefined}
     >
       {live ? (
         <ConfirmEmailForm token={token} />

@@ -50,7 +50,7 @@ export default async function PrivacyPage({
             <h2 id="public">What anyone can see</h2>
           </div>
           <p>
-            Your username, display name, bio, home surface, play level, level, XP and badges. The models in your locker
+            Your username, display name, bio, home surface and play level. The models in your locker
             with their status, size, width and hours. Your reports, including every detail you add to them.
           </p>
         </section>

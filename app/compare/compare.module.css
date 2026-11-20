@@ -24,7 +24,7 @@
 
 .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
 .cmpCard:global(.card) { gap: 12px; }
-.cmpThumbs { position: relative; display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 10px; }
+.cmpThumbs { gap: 10px; }
 .cmpThumbs :global(.media-box) { border-radius: 12px; }
 .cmpThumbs3 :global(.art-label) { display: none; }
 .cmpVs {
@@ -43,28 +43,25 @@
 .head { display: grid; gap: 12px; }
 .title { font-size: clamp(2.25rem, 9vw, 4.25rem); line-height: 0.95; letter-spacing: -0.045em; }
 
-/* The VS hero: every model side by side, even on a 375px phone. */
+/* Phone rows leave room for names, prices and full-width variant notes. */
 .vsHero {
   position: relative; container-type: inline-size;
-  display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 14px;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px;
 }
-.vsSide { display: grid; gap: 8px; align-content: start; min-width: 0; }
-@supports (grid-template-rows: subgrid) {
-  .vsSide { grid-row: span 3; grid-template-rows: subgrid; }
-}
+.vsSide { min-width: 0; }
 .vsSide :global(.media-box) { border-radius: 20px; box-shadow: var(--shadow); }
 .vsSide :global(.media-frame) { align-content: start; }
 .vsHero3 { gap: 10px; }
 .vsHero3 :global(.art-label) { display: none; }
-.vsHero3 .vsName { font-size: 1rem; }
 .vsName { font-family: var(--display); font-size: clamp(1.125rem, 2.5vw + 0.6rem, 1.6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; overflow-wrap: anywhere; }
 .vsName a { color: var(--ink); text-decoration: none; }
 .vsName a:hover { color: var(--ink); text-decoration: underline; }
 .vsBrand { display: block; font-family: var(--sans); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
 .vsPrice { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
 .vsBadge {
+  display: none;
   position: absolute; z-index: 3; left: 50%; top: 25%; top: calc((100cqw - 14px) / 4);
-  display: grid; place-items: center; width: 58px; height: 58px;
+  place-items: center; width: 58px; height: 58px;
   border: 3px solid var(--cream); border-radius: 50%; box-shadow: 0 0 0 2.5px var(--ink);
   background: var(--ink); color: var(--optic);
   font-family: var(--display); font-size: 1.25rem; font-weight: 800;
@@ -74,15 +71,11 @@
 .gapLine { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 1.0625rem; font-weight: 600; }
 .gapSticker { --tilt: -5deg; padding: 4px 18px; font-size: clamp(2.5rem, 11vw, 4rem); line-height: 1; }
 
-/* Three models on a phone: a swipe rail with a peek of the next card, so names and prices are not crushed. */
-@media (max-width: 599.98px) {
-  .vsHero3 {
-    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 46%;
-    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
-    margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 12px; scroll-padding-inline: var(--gutter);
-    scrollbar-width: thin;
-  }
-  .vsHero3 .vsSide { scroll-snap-align: start; }
+@media (min-width: 600px) {
+  .vsHero { grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); }
+  .vsSide:global(.product-media-row) { grid-template-columns: minmax(0, 1fr); }
+  .vsSide > :global(.product-media-content) { grid-column: 1; grid-row: 2; }
+  .vsBadge { display: grid; }
 }
 
 /* On wide screens the art is capped, so the prices and the gap sit in the first screen. */
@@ -180,9 +173,8 @@
 
 .replies { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
 .reply:global(.card) { gap: 12px; }
-.replyHead { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; align-items: center; }
+.replyHead { --media-thumb-size: 76px; }
 .replyHead :global(.media-box) { border-radius: 12px; }
-.replyHead :global(.art-label) { display: none; }
 .replyName { font-size: 1.1875rem; }
 .bubble {
   position: relative; margin: 0; padding: 14px 16px;

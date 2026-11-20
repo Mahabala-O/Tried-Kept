@@ -4,7 +4,15 @@ import PlayerArt from "@/components/art/PlayerArt";
 import ResilientImage from "@/components/ResilientImage";
 import ProductPhoto from "@/components/ProductPhoto";
 import { getPro, type Product } from "@/lib/catalog";
-import { gifEmbedUrl, photoSrcSet, productIllustrationSrc, productPhotos, proMedia, type Gif, type Photo } from "@/lib/media";
+import {
+  gifEmbedUrl,
+  photoSrcSet,
+  productIllustrationSrc,
+  productPhotos,
+  proMedia,
+  type Gif,
+  type Photo,
+} from "@/lib/media";
 
 type FrameProps = {
   photo?: Photo | null;
@@ -33,25 +41,46 @@ const COMMONS_WIDTHS = [330, 500, 960, 1280];
 
 /** A srcset for a Commons 1280px thumbnail URL, or undefined for any other host. */
 export function commonsSrcSet(photo: Photo): string | undefined {
-  if (!photo.src.startsWith("https://upload.wikimedia.org/") || !photo.src.includes("/1280px-")) return undefined;
+  if (
+    !photo.src.startsWith("https://upload.wikimedia.org/") ||
+    !photo.src.includes("/1280px-")
+  )
+    return undefined;
   return COMMONS_WIDTHS.filter((w) => w <= photo.width)
     .map((w) => `${photo.src.replace("/1280px-", `/${w}px-`)} ${w}w`)
     .join(", ");
 }
 
-export function PhotoCredit({ photo, note }: { photo: Photo; note?: string }) {
+export function PhotoCredit({
+  photo,
+  note,
+  as: Tag = "figcaption",
+}: {
+  photo: Photo;
+  note?: string;
+  as?: "figcaption" | "span";
+}) {
   const { credit } = photo;
   if (credit.kind === "manufacturer") {
-    return <figcaption className="media-credit">
-      Product photo: <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer">{credit.author}</a>
-      {photo.caption && <span className="media-note">{photo.caption}</span>}
-      {note && <span className="media-note">{note}</span>}
-    </figcaption>;
+    return (
+      <Tag className="media-credit">
+        Product photo:{" "}
+        <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer">
+          {credit.author}
+        </a>
+        {photo.caption && <span className="media-note">{photo.caption}</span>}
+        {note && <span className="media-note">{note}</span>}
+      </Tag>
+    );
   }
   return (
-    <figcaption className="media-credit">
+    <Tag className="media-credit">
       Photo: {credit.author} ·{" "}
-      <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer license">
+      <a
+        href={credit.licenseUrl}
+        target="_blank"
+        rel="noopener noreferrer license"
+      >
         {credit.license}
       </a>{" "}
       ·{" "}
@@ -59,7 +88,7 @@ export function PhotoCredit({ photo, note }: { photo: Photo; note?: string }) {
         Source
       </a>
       {note && <span className="media-note">{note}</span>}
-    </figcaption>
+    </Tag>
   );
 }
 
@@ -75,7 +104,17 @@ export function GifCredit({ gif, note }: { gif: Gif; note?: string }) {
 }
 
 /** A resilient image for a credited photo, with smaller responsive files for phones. */
-export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50vw, 100vw", fallbackSrc }: { photo: Photo; eager?: boolean; sizes?: string; fallbackSrc?: string }) {
+export function PhotoImg({
+  photo,
+  eager = false,
+  sizes = "(min-width: 900px) 50vw, 100vw",
+  fallbackSrc,
+}: {
+  photo: Photo;
+  eager?: boolean;
+  sizes?: string;
+  fallbackSrc?: string;
+}) {
   const srcSet = photoSrcSet(photo) ?? commonsSrcSet(photo);
   return (
     <ResilientImage
@@ -86,6 +125,11 @@ export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50v
       sizes={srcSet ? sizes : undefined}
       width={photo.width}
       height={photo.height}
+      style={
+        photo.objectPosition
+          ? { objectPosition: photo.objectPosition }
+          : undefined
+      }
       alt={photo.alt}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
@@ -99,21 +143,50 @@ export function PhotoImg({ photo, eager = false, sizes = "(min-width: 900px) 50v
  * One box for any picture: a credited photo, a credited GIF, or original art.
  * The box keeps its aspect ratio before anything loads, so nothing shifts.
  */
-export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover", eager = false, plain = false, sizes, note, photoFallbackSrc, photoContent, className }: FrameProps) {
-  const classes = ["media-frame", plain ? "media-plain" : "", className ?? ""].filter(Boolean).join(" ");
+export default function MediaFrame({
+  photo,
+  gif,
+  fallback,
+  ratio,
+  fit = "cover",
+  eager = false,
+  plain = false,
+  sizes,
+  note,
+  photoFallbackSrc,
+  photoContent,
+  className,
+}: FrameProps) {
+  const classes = ["media-frame", plain ? "media-plain" : "", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
   const media = gif ?? photo ?? null;
   const shape = ratio ?? (media ? `${media.width} / ${media.height}` : "4 / 3");
-  const style = { "--ratio": shape, "--fit": fit,
-    ...(photo?.credit.kind === "manufacturer" ? { backgroundColor: "#fff" } : {}),
+  const style = {
+    "--ratio": shape,
+    "--fit": fit,
+    ...(photo?.credit.kind === "manufacturer"
+      ? { backgroundColor: "#fff" }
+      : {}),
   } as CSSProperties;
 
   if (gif) {
-    const poster = photo ?? Object.entries(proMedia)
-      .find(([slug]) => getPro(slug)?.name === gif.playerName)?.[1].portrait;
+    const poster =
+      photo ??
+      Object.entries(proMedia).find(
+        ([slug]) => getPro(slug)?.name === gif.playerName,
+      )?.[1].portrait;
     return (
       <figure className={classes}>
         <div className="media-box" style={style}>
-          <GiphyClip embedUrl={gifEmbedUrl(gif)} alt={gif.alt} playerName={gif.playerName} channel={gif.channel} posterSrc={poster?.src} posterAlt={poster?.alt} />
+          <GiphyClip
+            embedUrl={gifEmbedUrl(gif)}
+            alt={gif.alt}
+            playerName={gif.playerName}
+            channel={gif.channel}
+            posterSrc={poster?.src}
+            posterAlt={poster?.alt}
+          />
         </div>
         <GifCredit gif={gif} note={note} />
         {poster && <PhotoCredit photo={poster} />}
@@ -125,7 +198,14 @@ export default function MediaFrame({ photo, gif, fallback, ratio, fit = "cover",
     return (
       <figure className={classes}>
         <div className="media-box" style={style}>
-          {photoContent ?? <PhotoImg photo={photo} eager={eager} sizes={sizes} fallbackSrc={photoFallbackSrc} />}
+          {photoContent ?? (
+            <PhotoImg
+              photo={photo}
+              eager={eager}
+              sizes={sizes}
+              fallbackSrc={photoFallbackSrc}
+            />
+          )}
         </div>
         <PhotoCredit photo={photo} note={note} />
       </figure>
@@ -148,40 +228,127 @@ export function ProductImage({
   eager,
   plain,
   className,
+  children,
 }: {
   product: Product;
   ratio?: string;
   eager?: boolean;
   plain?: boolean;
   className?: string;
+  /** Compact row content. The credit and variant note stay below both columns. */
+  children?: ReactNode;
 }) {
   const photo = productPhotos[product.slug];
   return (
-    <MediaFrame
-      photo={photo ?? null}
-      photoContent={photo ? <ProductPhoto product={product} photo={photo} eager={eager} /> : undefined}
-      photoFallbackSrc={productIllustrationSrc(product.slug)}
-      fallback={
-        <div className="art-frame" style={{ "--art-bg": "var(--cream)" } as CSSProperties}>
-          <ResilientImage src={productIllustrationSrc(product.slug)} width={640} height={480}
+    <figure
+      className={[
+        "media-frame",
+        children ? "product-media-row" : "",
+        plain ? "media-plain" : "",
+        className ?? "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <ProductVisual product={product} ratio={ratio} eager={eager} />
+      {children && <div className="product-media-content">{children}</div>}
+      {photo && <PhotoCredit photo={photo} />}
+    </figure>
+  );
+}
+
+/** Image-only building block; its callers provide the credit at a readable width. */
+function ProductVisual({
+  product,
+  ratio,
+  eager,
+}: {
+  product: Product;
+  ratio: string;
+  eager?: boolean;
+}) {
+  const photo = productPhotos[product.slug];
+  return (
+    <div
+      className="media-box"
+      style={{ "--ratio": ratio, "--fit": "contain" } as CSSProperties}
+    >
+      {photo ? (
+        <ProductPhoto product={product} photo={photo} eager={eager} />
+      ) : (
+        <div
+          className="art-frame"
+          style={{ "--art-bg": "var(--cream)" } as CSSProperties}
+        >
+          <ResilientImage
+            src={productIllustrationSrc(product.slug)}
+            width={640}
+            height={480}
             alt={`Illustration of ${product.brand} ${product.name}; not a product photo`}
-            loading={eager ? "eager" : "lazy"} decoding="async" />
-          <span className="art-label" aria-hidden="true"><span className="art-label-long">Illustration</span><span className="art-label-short">Art</span></span>
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <span className="art-label" aria-hidden="true">
+            <span className="art-label-long">Illustration</span>
+            <span className="art-label-short">Art</span>
+          </span>
         </div>
-      }
-      ratio={ratio}
-      fit="contain"
-      eager={eager}
-      plain={plain}
-      className={className}
-    />
+      )}
+    </div>
+  );
+}
+
+/** Side-by-side pictures with credits spanning the group, never a tiny image column. */
+export function ProductImageStrip({
+  products,
+  className,
+  children,
+}: {
+  products: Product[];
+  className?: string;
+  children?: ReactNode;
+}) {
+  return (
+    <figure className={`media-frame product-media-strip ${className ?? ""}`}>
+      <div
+        className="product-media-visuals"
+        style={{ "--n": Math.max(products.length, 1) } as CSSProperties}
+      >
+        {products.map((product) => (
+          <ProductVisual key={product.slug} product={product} ratio="1 / 1" />
+        ))}
+        {children}
+      </div>
+      <figcaption className="product-media-credits">
+        {products.map((product) => {
+          const photo = productPhotos[product.slug];
+          return photo ? (
+            <div key={product.slug} className="media-credit">
+              <strong>{product.name}:</strong>{" "}
+              <PhotoCredit photo={photo} as="span" />
+            </div>
+          ) : null;
+        })}
+      </figcaption>
+    </figure>
   );
 }
 
 /** Labeled original art of a generic player, never a likeness of a real one. */
-export function PlayerIllustration({ name, artBg = "#2457E6" }: { name: string; artBg?: string }) {
+export function PlayerIllustration({
+  name,
+  artBg = "#2457E6",
+}: {
+  name: string;
+  artBg?: string;
+}) {
   return (
-    <div className="art-frame" style={{ "--art-bg": artBg } as CSSProperties} role="img" aria-label={`Illustration of a tennis player, not a photo of ${name}`}>
+    <div
+      className="art-frame"
+      style={{ "--art-bg": artBg } as CSSProperties}
+      role="img"
+      aria-label={`Illustration of a tennis player, not a photo of ${name}`}
+    >
       <span className="art-label" aria-hidden="true">
         <span className="art-label-long">Illustration</span>
         <span className="art-label-short">Art</span>
@@ -220,7 +387,8 @@ export function ProImage({
   const gif = media?.gifs[0] ?? null;
   const photo = media?.portrait ?? null;
   const name = getPro(slug)?.name ?? "this player";
-  const chosen = prefer === "gif" ? { gif, photo } : { gif: photo ? null : gif, photo };
+  const chosen =
+    prefer === "gif" ? { gif, photo } : { gif: photo ? null : gif, photo };
 
   return (
     <MediaFrame

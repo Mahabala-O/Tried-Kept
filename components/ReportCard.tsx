@@ -4,7 +4,12 @@ import HelpfulButton, { DeleteReportButton } from "@/components/HelpfulButton";
 import { ProductImage } from "@/components/MediaFrame";
 import { formatDate } from "@/components/ui";
 import { getProduct, productLabel } from "@/lib/catalog";
-import { outcomeLabel, surfaceLabel, type Outcome, type ReportView } from "@/lib/reports";
+import {
+  outcomeLabel,
+  surfaceLabel,
+  type Outcome,
+  type ReportView,
+} from "@/lib/reports";
 import styles from "./reports.module.css";
 
 /** The short word on the sticker. The full label stays for screen readers. */
@@ -27,11 +32,20 @@ function initialOf(name: string): string {
 }
 
 /** A pill linking to the author's profile, with their initial on a colored ball. */
-export function AuthorChip({ username, displayName }: { username: string; displayName: string }) {
+export function AuthorChip({
+  username,
+  displayName,
+}: {
+  username: string;
+  displayName: string;
+}) {
   const tone = hashSeed(username) % 5;
   return (
     <Link href={`/u/${encodeURIComponent(username)}`} className={styles.author}>
-      <span className={`${styles.avatar} ${styles[`avatar_${tone}`]}`} aria-hidden="true">
+      <span
+        className={`${styles.avatar} ${styles[`avatar_${tone}`]}`}
+        aria-hidden="true"
+      >
         {initialOf(displayName)}
       </span>
       <span className={styles.authorText}>
@@ -42,50 +56,89 @@ export function AuthorChip({ username, displayName }: { username: string; displa
   );
 }
 
-export default function ReportCard({ report, viewerId }: { report: ReportView; viewerId: number | null }) {
+export default function ReportCard({
+  report,
+  viewerId,
+}: {
+  report: ReportView;
+  viewerId: number | null;
+}) {
   const isAuthor = viewerId === report.user_id;
   const product = getProduct(report.product_slug);
   const isRacquet = product?.category === "racquet";
 
   const facts: { text: string; kind?: "surface" | "comfort" }[] = [];
   const missing: string[] = [];
-  const note = (label: string, given: boolean, text: string, kind?: "surface" | "comfort") => {
+  const note = (
+    label: string,
+    given: boolean,
+    text: string,
+    kind?: "surface" | "comfort",
+  ) => {
     if (given) facts.push({ text, kind });
     else missing.push(label);
   };
   note("size", report.size !== "", `Size ${report.size}`);
-  if (!isRacquet || report.width !== "") note("width", report.width !== "", `Width ${report.width}`);
-  note("surface", report.surface !== "", surfaceLabel(report.surface), "surface");
-  note("hours", report.hours !== null, `${report.hours} ${report.hours === 1 ? "hour" : "hours"}`);
-  note("comfort", report.comfort !== null, `Comfort ${report.comfort} of 5`, "comfort");
+  if (!isRacquet || report.width !== "")
+    note("width", report.width !== "", `Width ${report.width}`);
+  note(
+    "surface",
+    report.surface !== "",
+    surfaceLabel(report.surface),
+    "surface",
+  );
+  note(
+    "hours",
+    report.hours !== null,
+    `${report.hours} ${report.hours === 1 ? "hour" : "hours"}`,
+  );
+  note(
+    "comfort",
+    report.comfort !== null,
+    `Comfort ${report.comfort} of 5`,
+    "comfort",
+  );
 
   const tilt = report.id % 2 === 0 ? "tilt-right" : "tilt-left";
 
+  const headline = (
+    <div className={styles.headline}>
+      <span
+        className={`sticker wiggle ${tilt} ${styles.outcome} ${styles[`outcome_${report.outcome}`]}`}
+      >
+        <span aria-hidden="true">
+          {STICKER_WORD[report.outcome] ?? outcomeLabel(report.outcome)}
+        </span>
+        <span className="sr-only">Outcome: {outcomeLabel(report.outcome)}</span>
+      </span>
+      <h3 className={styles.title}>
+        <ModelName slug={report.product_slug} />
+      </h3>
+      <span className={styles.date}>{formatDate(report.created_at)}</span>
+    </div>
+  );
+
   return (
     <article className={`card ${styles.card}`} id={`report-${report.id}`}>
-      <div className={styles.top}>
-        {product ? (
-          <ProductImage product={product} ratio="1 / 1" className={styles.thumb} />
-        ) : (
+      {product ? (
+        <ProductImage product={product} ratio="1 / 1" className={styles.top}>
+          {headline}
+        </ProductImage>
+      ) : (
+        <div className={styles.top}>
           <div className={styles.thumbGone}>
             <BallArt />
           </div>
-        )}
-        <div className={styles.headline}>
-          <span className={`sticker wiggle ${tilt} ${styles.outcome} ${styles[`outcome_${report.outcome}`]}`}>
-            <span aria-hidden="true">{STICKER_WORD[report.outcome] ?? outcomeLabel(report.outcome)}</span>
-            <span className="sr-only">Outcome: {outcomeLabel(report.outcome)}</span>
-          </span>
-          <h3 className={styles.title}>
-            <ModelName slug={report.product_slug} />
-          </h3>
-          <span className={styles.date}>{formatDate(report.created_at)}</span>
+          {headline}
         </div>
-      </div>
+      )}
 
       <div className={styles.byline}>
         <span className="sr-only">Reported by</span>
-        <AuthorChip username={report.username} displayName={report.display_name} />
+        <AuthorChip
+          username={report.username}
+          displayName={report.display_name}
+        />
         {report.switched_from_slug && (
           <span className={styles.switched}>
             <span className={styles.switchedArrow} aria-hidden="true">
@@ -101,7 +154,10 @@ export default function ReportCard({ report, viewerId }: { report: ReportView; v
       {facts.length > 0 && (
         <ul className={styles.facts} aria-label="Details">
           {facts.map((fact) => (
-            <li key={fact.text} className={`${styles.fact} ${fact.kind ? styles[`fact_${fact.kind}`] : ""}`}>
+            <li
+              key={fact.text}
+              className={`${styles.fact} ${fact.kind ? styles[`fact_${fact.kind}`] : ""}`}
+            >
               {fact.text}
             </li>
           ))}
@@ -111,7 +167,9 @@ export default function ReportCard({ report, viewerId }: { report: ReportView; v
       <div className={styles.notes}>
         <div className={styles.note}>
           <p className={styles.noteLabel}>Reason</p>
-          <p className={`${styles.noteText} ${styles.reason}`}>{report.reason}</p>
+          <p className={`${styles.noteText} ${styles.reason}`}>
+            {report.reason}
+          </p>
         </div>
 
         {report.felt_different && (
@@ -136,7 +194,9 @@ export default function ReportCard({ report, viewerId }: { report: ReportView; v
         )}
       </div>
 
-      {missing.length > 0 && <p className={styles.missing}>Not reported: {missing.join(", ")}.</p>}
+      {missing.length > 0 && (
+        <p className={styles.missing}>Not reported: {missing.join(", ")}.</p>
+      )}
 
       <div className={styles.actions}>
         <HelpfulButton

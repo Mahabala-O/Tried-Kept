@@ -31,11 +31,11 @@
 
 .miniBag { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .miniItem {
-  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start;
   padding: 10px; border: 2px solid var(--ink); border-radius: 14px; background: var(--cream);
 }
 .miniItem :global(.media-box) { border-radius: 10px; border-width: 2px; }
-.miniItem :global(.art-label) { display: none; }
+.miniItem :global(.product-media-row) { --media-thumb-size: 72px; }
 .miniText { display: grid; gap: 4px; min-width: 0; }
 .miniSlot { font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
 .miniName { font-family: var(--display); font-size: 1.125rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.015em; }

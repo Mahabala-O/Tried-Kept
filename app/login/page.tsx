@@ -25,8 +25,8 @@ export default async function LoginPage({
       eyebrow="Welcome back"
       title="Log in"
       court="grass"
-      lede="Your locker, badges and reports are right where you left them."
-      perks={["Pick up your XP where you left it", "Update the hours on your gear", "Report what you kept or returned"]}
+      lede="Your gear, shortlist and reports are right where you left them."
+      perks={["Revisit the gear you want to try", "Update the hours on your gear", "Report what you kept or returned"]}
       below={
         <>
           <p>

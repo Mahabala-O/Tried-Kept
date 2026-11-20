@@ -2,6 +2,17 @@
 
 A tennis gear guide built from `tennis_gear_buyer_research.pdf`. Players start from a pro, a product, or their own gear, then see what others tried, kept and returned.
 
+## Main journeys
+
+- `/pros` → a dated bag → a product's evidence and tradeoffs.
+- `/stories` → three documented historical pro stories, linked to the player's bag and the switch planner. Stories and wardrobe notes live in `lib/editorial.ts`; they are never inserted as member reviews.
+- `/switch?current=<slug>` → current gear, priority, sizing and court surface → editorial candidates → comparison or locker → trial report. The old and new model are carried through login into `/report/new?product=<slug>&from=<slug>`.
+- `/community` contains actual member reports. `/play` is a secondary collection of tools and games.
+
+Seven shoe models have attributed strengths, cautions and try-on checks in `lib/editorial.ts`. Sources distinguish lab testing, retailer playtests, brand statements and individual forum accounts. Preserve those boundaries when adding evidence. Some women's fit and clay-court combinations still have no supported candidate; show the gap rather than repurposing a men's or hard-court review. Existing XP data is retained, while XP prompts, levels and leaderboards are absent from the visible journeys.
+
+Compact product cards use `ProductImage` with adjacent content as children. Credits and variant notes span the entire row; never put a complete credited figure in a fixed-width thumbnail column. `ProductImageStrip` keeps grouped photo credits full-width. Layout QA should inspect readable column widths and card shapes in addition to document overflow.
+
 ## Run it
 
 Requires Node 22.13 or newer.
@@ -29,6 +40,15 @@ npm test
 ```bash
 npm run build
 ```
+
+Run the browser regression suite after a production build:
+
+```bash
+npx playwright install chromium webkit
+npm run test:browser
+```
+
+It starts a local production server with a throwaway database under the system temporary directory. Chromium and WebKit check six widths from 320 to 1280 pixels, full-width captions, enlarged text, navigation targets, preference persistence and trial context through login. `BROWSER_BASE_URL` can target an already running deployment; these browser tests do not create accounts or submit reports.
 
 ## Add affiliate links
 

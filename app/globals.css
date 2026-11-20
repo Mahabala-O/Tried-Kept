@@ -57,17 +57,20 @@
   /* Layout */
   --gutter: 16px;
   --header-h: 60px;
+  --header-min-h: 60px;
   --bottom-nav-h: 68px;
 }
 
 @media (min-width: 900px) {
-  :root { --gutter: 24px; --header-h: 72px; }
+  :root { --gutter: 24px; --header-h: 72px; --header-min-h: 72px; }
 }
 
 /* Base ------------------------------------------------------------------- */
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--cream); overflow-x: clip; }
+html { scroll-padding-block: calc(var(--header-h) + 16px) calc(var(--bottom-nav-h) + 16px); }
+input, select, textarea, button { scroll-margin-block: 16px; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -102,7 +105,7 @@ strong { font-weight: 700; }
 a { color: var(--link); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 a:hover { color: var(--link-hover, var(--clay-deep)); text-decoration-thickness: 3px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
-[id], h1, h2, h3, [tabindex="-1"] { scroll-margin-top: calc(var(--header-h) + 16px); }
+[id], h1, h2, h3, [tabindex="-1"] { scroll-margin-top: 16px; }
 ::selection { background: var(--optic); color: var(--ink); }
 
 /* Utilities -------------------------------------------------------------- */
@@ -169,7 +172,7 @@ p.small, li.small, div.small p { font-size: 1rem; }
   background: var(--cream);
   border-bottom: var(--border);
 }
-.site-header .wrap { display: flex; align-items: center; gap: 8px; min-height: var(--header-h); }
+.site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: var(--header-min-h); padding-block: 6px; }
 .brand {
   display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-right: auto;
   font-family: var(--display); font-weight: 800; font-size: 1.25rem; letter-spacing: -0.035em; line-height: 1;
@@ -269,6 +272,7 @@ p.small, li.small, div.small p { font-size: 1rem; }
 /* Bottom tab bar (phones and small tablets) ------------------------------ */
 
 .bottom-nav {
+  container: quick-nav / inline-size;
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 35;
   background: var(--paper); border-top: var(--border);
   padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
@@ -281,11 +285,16 @@ p.small, li.small, div.small p { font-size: 1rem; }
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   min-height: 54px; padding: 4px 2px; border: 2px solid transparent; border-radius: 14px;
   color: var(--ink); font-size: 0.71875rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; text-decoration: none;
-  white-space: nowrap;
+  white-space: normal; text-align: center;
 }
 .bottom-nav svg { width: 24px; height: 24px; flex: none; }
 .bottom-nav a:hover { background: var(--cream); color: var(--ink); }
 .bottom-nav a[aria-current="page"] { background: var(--optic); border-color: var(--ink); box-shadow: var(--shadow-sm); }
+/* At large text sizes, give each label room instead of squeezing five columns. */
+@container quick-nav (max-width: 19em) {
+  .bottom-nav ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.menu-sheet-head { flex-wrap: wrap; }
 
 @media (max-width: 899.98px) {
   body { padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); }
@@ -605,6 +614,23 @@ select { padding-right: 36px; }
 /* Media ------------------------------------------------------------------ */
 
 .media-frame { display: grid; gap: 6px; margin: 0; min-width: 0; }
+/* Metadata belongs to the card, not to the narrow thumbnail column. */
+.product-media-row {
+  container: product-row / inline-size;
+  grid-template-columns: min(var(--media-thumb-size, 84px), 25%) minmax(0, 1fr);
+  gap: 12px; align-items: start; align-content: start;
+}
+.product-media-row > .media-box { grid-column: 1; grid-row: 1; }
+.product-media-content { grid-column: 2; grid-row: 1; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.product-media-row > .media-credit { grid-column: 1 / -1; }
+@container product-row (max-width: 14em) {
+  .product-media-content { grid-column: 1 / -1; grid-row: 2; }
+}
+.product-media-row .art-label { top: 4px; left: 4px; padding: 0 5px; font-size: 0.5625rem; border-width: 1.5px; }
+.product-media-row .art-label-long { display: none; }
+.product-media-row .art-label-short { display: inline; }
+.product-media-visuals { position: relative; display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 10px; }
+.product-media-credits { display: grid; gap: 8px; }
 .media-box {
   position: relative; overflow: hidden; aspect-ratio: var(--ratio, 4 / 3);
   background: var(--cream-deep);

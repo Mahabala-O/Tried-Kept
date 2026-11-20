@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   { id: "affiliate", title: "Affiliate links" },
   { id: "evidence", title: "Evidence and dates" },
-  { id: "points", title: "Points and badges" },
+  { id: "points", title: "Editorial recommendations" },
   { id: "lab-data", title: "Lab data" },
   { id: "your-data", title: "Your data" },
 ] as const;
@@ -86,7 +86,7 @@ export default function DisclosurePage() {
 
           <Section index={1}>
             <p>
-              Catalog facts cover the U.S. market and were checked on {formatDate(RESEARCH_DATE)}. Prices can change after that
+              The original research covers the U.S. market and was checked on {formatDate(RESEARCH_DATE)}. Later facts and prices carry their own check dates. Prices can change after that
               date, and we do not confirm stock or size availability.
             </p>
             <p>When we do not have a fact, we label it as missing. We do not estimate it or fill it in from a similar model.</p>
@@ -101,11 +101,9 @@ export default function DisclosurePage() {
           </Section>
 
           <Section index={2}>
-            <p>
-              Points reward useful detail. A report on a pair you returned earns the same points as an equally detailed report
-              on a pair you kept.
-            </p>
-            <p>You earn no points for a positive review, for clicking a retailer link or for buying anything.</p>
+            <p>The switch planner offers editorial candidates based on the priority, sizing line and surface you select. These are starting points for a trial, not a personalized fit prediction or a claim that one shoe is best.</p>
+            <p>Strengths and cautions distinguish independent lab tests, retailer playtests and individual forum experiences. Retailers sell the products they review. Pro stories describe dated historical reporting, separately from member reports.</p>
+            <p>Affiliate commissions never determine which candidates appear.</p>
           </Section>
 
           <Section index={3}>

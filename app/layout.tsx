@@ -5,8 +5,6 @@ import "@fontsource-variable/dm-sans";
 import BottomNav from "@/components/BottomNav";
 import SiteHeader from "@/components/SiteHeader";
 import { currentUser } from "@/lib/auth";
-import { getDb } from "@/lib/db";
-import { levelFor, totalXp } from "@/lib/gamification";
 import { mailReady } from "@/lib/mail";
 import "./globals.css";
 
@@ -42,7 +40,6 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
-  const level = user ? levelFor(totalXp(getDb(), user.id)) : null;
   // When email cannot be sent, sign-up is paused, so logged-out links point to log in instead.
   const signupsOpen = mailReady();
 
@@ -53,7 +50,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <SiteHeader level={level ? { name: level.name, xp: level.xp } : null} signupsOpen={signupsOpen} />
+        <SiteHeader loggedIn={Boolean(user)} signupsOpen={signupsOpen} />
         <main id="main" tabIndex={-1}>
           {children}
         </main>
@@ -63,7 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               Tried &amp; Kept
             </p>
             <p>
-              Retailer links may earn us a commission at no cost to you. Points are never tied to a positive review.{" "}
+              Retailer links may earn us a commission at no cost to you. Reports reflect individual experiences.{" "}
               <Link href="/disclosure">How this works</Link> · <Link href="/privacy">Privacy</Link>
             </p>
             <ul className="footer-links" aria-label="More">
@@ -74,7 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href="/compare">Compare</Link>
               </li>
               <li>
-                <Link href="/play">Play</Link>
+                <Link href="/play">Tools &amp; games</Link>
               </li>
               <li>
                 <Link href="/community">Community</Link>

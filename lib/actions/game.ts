@@ -1,5 +1,7 @@
 "use server";
 
+import { gearBriefs } from "@/lib/editorial";
+
 import { revalidatePath } from "next/cache";
 import { currentUser, requireUser } from "@/lib/auth";
 import { comparisonsFor, datedPrice, getComparison, products, retailers, sources, type Source } from "@/lib/catalog";
@@ -83,7 +85,7 @@ function toItem(match: FinderMatch, answers: FinderAnswers): GearMatchItem {
     priceUsd: product.priceUsd,
     priceCheckedOn: product.priceCheckedOn,
     reasons: match.reasons,
-    tradeoffs: tradeoffsFor(match, answers),
+    tradeoffs: [...tradeoffsFor(match, answers), ...(gearBriefs[product.slug]?.cautions ?? [])],
     unknowns: match.unknowns,
     offers: product.offers.map((offer) => ({
       id: offer.id,

@@ -83,12 +83,22 @@ test("each full gear tile is one keyboard focus target", async ({ page, browserN
     exact: true,
   });
   await shoes.focus();
-  // Safari's default keyboard setting uses Option+Tab to include hyperlinks.
-  await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
+  await page.keyboard.press("Tab");
+  let optionTab = false;
+  // Safari's macOS preference can exclude hyperlinks from plain Tab navigation.
+  // Linux WebKit normally includes them, so use Option+Tab only when needed.
+  if (
+    browserName === "webkit" &&
+    !(await racquets.evaluate((element) => element === document.activeElement))
+  ) {
+    optionTab = true;
+    await shoes.focus();
+    await page.keyboard.press("Alt+Tab");
+  }
   await expect(racquets).toBeFocused();
   await expect(racquets.locator("img")).toHaveCount(1);
   await expect(racquets).toHaveCSS("outline-style", "solid");
-  await page.keyboard.press(browserName === "webkit" ? "Shift+Alt+Tab" : "Shift+Tab");
+  await page.keyboard.press(optionTab ? "Shift+Alt+Tab" : "Shift+Tab");
   await expect(shoes).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/gear\?category=shoe$/);

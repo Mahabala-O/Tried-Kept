@@ -1,0 +1,240 @@
+/* Night court. Follow the device setting without a flash or a client-side toggle.
+   Photography keeps its neutral studio plate; only interface surfaces change. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cream: #101c1e;
+    --cream-deep: #1d3032;
+    --paper: #18282b;
+    --ink: #edf5f1;
+    --ink-soft: #b0c5c0;
+    --line: #405955;
+    --clay-soft: #422c28;
+    --clay-deep: #ffab8e;
+    --hardcourt-soft: #21374e;
+    --grass-soft: #193b31;
+    --grass-deep: #75dca2;
+    --link-default: #a9c6ff;
+    --night: #0b1618;
+    --on-night: #edf5f1;
+    --shadow: 4px 4px 0 #080f11;
+    --shadow-sm: 2px 2px 0 #080f11;
+    --shadow-lg: 6px 6px 0 #080f11;
+  }
+
+  /* Keep saturated fills distinct from the cool, quiet reading surfaces. */
+  ::selection {
+    background: var(--optic);
+    color: var(--accent-ink);
+  }
+  .brand .amp,
+  .skip-link,
+  .highlight,
+  .hero h1 em,
+  .nav-xp,
+  .nav-xp:hover,
+  .btn-optic,
+  .btn-optic:hover,
+  .btn-shop,
+  .btn-shop:hover,
+  .tag-kept,
+  .tag-returned,
+  .tag-rejected,
+  .sticker,
+  .chip[aria-current],
+  .chip[aria-pressed="true"],
+  .chip-active,
+  .bottom-nav a[aria-current="page"],
+  .bottom-nav a[aria-current="page"]:hover,
+  .choice:has(input:checked),
+  .vs-win,
+  .badge-earned {
+    color: var(--accent-ink);
+  }
+  .sticker {
+    box-shadow: var(--shadow-sm);
+    border-color: var(--line);
+  }
+  .sticker-paper,
+  .sticker-cream {
+    color: var(--ink);
+  }
+  .sticker-blue {
+    color: #fff;
+  }
+  .sticker-ink {
+    background: var(--night);
+    color: var(--optic);
+  }
+  .brand .amp {
+    border-color: var(--accent-ink);
+  }
+  .bottom-nav a[aria-current="page"] {
+    border-color: var(--optic);
+  }
+  .chip,
+  .chip:hover {
+    box-shadow: var(--shadow-sm);
+  }
+  .chip[aria-current] .muted {
+    color: var(--accent-ink);
+  }
+
+  .btn-primary {
+    background: var(--optic);
+    color: var(--accent-ink);
+  }
+  .btn-primary:hover {
+    background: #f0ff7a;
+    color: var(--accent-ink);
+  }
+  .card-link:hover {
+    background: #203538;
+  }
+  .choice:hover {
+    background: var(--cream-deep);
+  }
+  .callout,
+  .band-optic,
+  .badge-earned {
+    --fg: var(--accent-ink);
+    --fg-soft: var(--accent-ink);
+    --link: var(--accent-ink);
+    --link-hover: var(--accent-ink);
+    --focus: var(--accent-ink);
+    color: var(--accent-ink);
+  }
+  .gap-note::before {
+    color: var(--accent-ink);
+    border-color: var(--accent-ink);
+  }
+
+  /* Large heroes become night courts; the bright colors stay in small accents. */
+  .band-hardcourt {
+    background: #162d50;
+    --fg-soft: #bdcee7;
+  }
+  .band-clay,
+  .band-grass {
+    --fg: var(--ink);
+    --fg-soft: var(--ink-soft);
+    --link: var(--link-default);
+    --link-hover: var(--clay-deep);
+    --focus: var(--optic);
+  }
+  .band-clay {
+    background: #182d31;
+  }
+  .band-grass {
+    background: #193b31;
+  }
+
+  /* The navigation, footer and inverse bands stay dark in either scheme. */
+  .site-header,
+  .bottom-nav {
+    background: var(--cream);
+  }
+  .menu-sheet,
+  .site-footer,
+  .band-ink {
+    background: var(--night);
+    color: var(--on-night);
+    --fg: var(--on-night);
+    --fg-soft: var(--ink-soft);
+    --link-hover: var(--on-night);
+  }
+  .menu-sheet-head .brand,
+  .menu-big a,
+  .menu-small a,
+  .site-footer a:hover {
+    color: var(--on-night);
+  }
+  .menu-sheet-head .brand .amp,
+  .menu-sheet .menu-btn,
+  .menu-big a[aria-current="page"]::after {
+    color: var(--accent-ink);
+  }
+  .menu-big a:hover,
+  .menu-big a[aria-current="page"] {
+    color: var(--optic);
+  }
+  .nav a[aria-current="page"] {
+    background: var(--optic);
+    color: var(--accent-ink);
+  }
+  .menu-sheet .menu-btn {
+    border-color: var(--optic);
+  }
+  .menu-sheet-head,
+  .menu-big a,
+  .menu-small a {
+    border-color: var(--line);
+  }
+
+  /* Distinguishable form boundaries, including the native select's arrow. */
+  input,
+  select,
+  textarea {
+    border-color: #718b85;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--ink-soft);
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline-color: var(--link-default);
+    box-shadow: none;
+  }
+  input[aria-invalid="true"],
+  select[aria-invalid="true"],
+  textarea[aria-invalid="true"] {
+    background: var(--clay-soft);
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m5 7.5 5 5 5-5' fill='none' stroke='%23edf5f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  thead th {
+    background: var(--night);
+    color: var(--on-night);
+  }
+  tbody tr:nth-child(even) {
+    background: var(--cream-deep);
+  }
+  th,
+  td,
+  .vs-row {
+    border-color: var(--line);
+  }
+  .vs-value + .vs-value,
+  .vs-value {
+    border-left-color: var(--line);
+  }
+  .vs-win .small {
+    color: #304a46;
+  }
+
+  /* Blend studio backdrops only against this light plate, never the dark card.
+     Isolation prevents multiply from picking up a surrounding dark surface. */
+  .product-photo {
+    isolation: isolate;
+    background: #f3f0e7;
+    color-scheme: only light;
+  }
+  .product-photo img {
+    color-scheme: only light;
+  }
+  .media-box:has(.product-photo) {
+    border-color: var(--line);
+  }
+  .btn:hover,
+  .chip:hover,
+  .card-link:hover {
+    box-shadow: var(--shadow);
+  }
+  .btn:active,
+  .chip:active,
+  .card-link:active {
+    box-shadow: none;
+  }
+}

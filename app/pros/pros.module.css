@@ -1,5 +1,6 @@
 /* Pros list and pro pages. Mobile first at 375px. */
 
+
 /* Hero band (hardcourt with court lines) ------------------------------------------ */
 
 .hero { padding-block: 28px 40px; }
@@ -98,3 +99,8 @@
   }
 }
 .unknownArt > svg { width: 90%; height: 90%; }
+
+@media (prefers-color-scheme: dark) {
+  .ruleNum { color: var(--accent-ink); }
+  .miniItem, .qTile, .cheaper, .unknownTop { border-color: var(--line); }
+}

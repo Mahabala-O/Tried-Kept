@@ -141,3 +141,12 @@
 }
 
 .sectionHead { display: grid; gap: 8px; }
+
+@media (prefers-color-scheme: dark) {
+  .fact:nth-child(4n + 1), .fact:nth-child(4n + 1) .factLabel {
+    color: var(--accent-ink);
+  }
+  .factSources li, .knownList li + li, .missing, .missingList li {
+    border-color: var(--line);
+  }
+}

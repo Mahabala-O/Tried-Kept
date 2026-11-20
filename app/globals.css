@@ -5,7 +5,7 @@
    ========================================================================== */
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
   /* Palette */
   --cream: #fff7e6;
@@ -24,14 +24,18 @@
   --grass-deep: #0f7a43; /* Green that passes AA as text on cream and white. */
   --grass-soft: #d5f2e1;
   --line: #0e2a2a;
+  --link-default: var(--hardcourt-deep);
+  --accent-ink: #0e2a2a;
+  --night: #0e2a2a;
+  --on-night: #fff7e6;
 
   /* Contextual colors. Bands and cards reset these, so text always passes. */
   --fg: var(--ink);
   --fg-soft: var(--ink-soft);
-  --link: var(--hardcourt-deep);
+  --link: var(--link-default);
   /* Hover color for links. Every surface that changes --link also sets this, so hover text always passes AA. */
   --link-hover: var(--clay-deep);
-  --focus: var(--hardcourt-deep);
+  --focus: var(--link-default);
 
   /* Older names still used by a few pages. */
   --chalk: var(--cream);
@@ -319,7 +323,7 @@ p.small, li.small, div.small p { font-size: 1rem; }
 /* Cards ------------------------------------------------------------------ */
 
 .card {
-  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--hardcourt-deep); --link-hover: var(--clay-deep); --focus: var(--hardcourt-deep);
+  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--link-default); --link-hover: var(--clay-deep); --focus: var(--link-default);
   position: relative; min-width: 0;
   display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 12px;
   padding: 18px;
@@ -346,7 +350,7 @@ p.small, li.small, div.small p { font-size: 1rem; }
 }
 .callout > p:not(.small) { font-family: var(--display); font-size: 1.1875rem; font-weight: 650; line-height: 1.3; letter-spacing: -0.01em; }
 .gap-note {
-  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--hardcourt-deep); --link-hover: var(--clay-deep);
+  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--link-default); --link-hover: var(--clay-deep);
   position: relative; padding: 12px 14px 12px 46px;
   background: var(--paper); color: var(--ink);
   border: var(--stroke) dashed var(--clay-deep); border-radius: var(--radius-sm);
@@ -445,7 +449,7 @@ p.small, li.small, div.small p { font-size: 1rem; }
 /* Tables (scroll inside their box, never hide a column) ------------------ */
 
 .table-scroll {
-  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--hardcourt-deep); --link-hover: var(--clay-deep);
+  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--link-default); --link-hover: var(--clay-deep);
   max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
   background: var(--paper); color: var(--ink);
   border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
@@ -459,7 +463,7 @@ tbody tr:nth-child(even) { background: #fffbf2; }
 
 /* Versus grid: label above two side-by-side values on phones, a row from 700px. */
 .vs-grid {
-  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--hardcourt-deep); --link-hover: var(--clay-deep);
+  --fg: var(--ink); --fg-soft: var(--ink-soft); --link: var(--link-default); --link-hover: var(--clay-deep);
   display: grid; margin: 0; overflow: hidden;
   background: var(--paper); color: var(--ink);
   border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow);

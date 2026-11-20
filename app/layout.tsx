@@ -6,6 +6,7 @@ import BottomNav from "@/components/BottomNav";
 import SiteHeader from "@/components/SiteHeader";
 import { siteOrigin } from "@/lib/site";
 import "./globals.css";
+import "./dark.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin()),
@@ -42,8 +43,11 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#FFF7E6",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFF7E6" },
+    { media: "(prefers-color-scheme: dark)", color: "#101c1e" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({

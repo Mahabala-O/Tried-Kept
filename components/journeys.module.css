@@ -15,7 +15,7 @@
 }
 .pop {
   background: var(--optic);
-  color: var(--ink);
+  color: var(--accent-ink);
   padding-inline: 0.12em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -163,6 +163,7 @@
 }
 .priority:has(:checked) {
   background: var(--optic);
+  color: var(--accent-ink);
 }
 .shortlist {
   display: grid;

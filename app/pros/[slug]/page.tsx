@@ -1,3 +1,4 @@
+import { bagDateLabel } from "@/lib/discovery";
 import StoryCard from "@/components/StoryCard";
 import { storiesForPro, proWardrobe } from "@/lib/editorial";
 import type { Metadata } from "next";
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!pro) return { title: "Pro not found" };
   return {
     title: `${pro.name} gear`,
-    description: `${pro.name}'s gear, with the date and source of each identification.`,
+    description: `${pro.name}'s reported gear and retail references, with dates and sources.`,
   };
 }
 
@@ -85,10 +86,10 @@ function BagEntry({ item }: { item: BagItem }) {
       <ProductImage product={product} ratio="4 / 3" />
       <div className={s.gearStickers}>
         <span className="sticker sticker-ink sticker-sm tilt-left">
-          {item.slot}
+          {item.slot}{item.familyAlternative ? " · family alternative" : ""}
         </span>
         <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-right">
-          Identified {formatDate(item.identifiedOn)}
+          {bagDateLabel(item)} {formatDate(item.identifiedOn)}
         </span>
       </div>
       <h3 className={s.gearName}>
@@ -218,6 +219,8 @@ export default async function ProPage({ params }: Props) {
 
         <section className="stack-lg" aria-labelledby="bag">
           <h2 id="bag">Dated bag</h2>
+          <Link href={`/discover?pro=${pro.slug}`} className="btn btn-optic">Inspired by {pro.name}? Find my version →</Link>
+          {!pro.bag.some(item => item.slot === "Shoes") && <GapNote>A shoe model has not been verified for this profile yet. The racquet reference below does not establish a footwear choice.</GapNote>}
           <div className={s.bag}>
             {pro.bag.map((item) => (
               <BagEntry key={item.slot} item={item} />

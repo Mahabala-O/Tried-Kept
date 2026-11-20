@@ -1,4 +1,5 @@
 import type { Source } from "./catalog";
+import { expandedBriefs } from "./catalog-expansion";
 
 export const EDITORIAL_CHECKED = "2026-11-19";
 export type EvidenceKind =
@@ -8,7 +9,7 @@ export type EvidenceKind =
   | "Independent lab"
   | "Forum anecdote";
 export type Evidence = { kind: EvidenceKind; summary: string; source: Source };
-export type GearPriority = "room" | "support" | "cushioning" | "durability";
+export type GearPriority = "room" | "support" | "cushioning" | "durability" | "power" | "spin" | "control" | "handling";
 export type GearBrief = {
   verdict: string;
   suits: string;
@@ -76,6 +77,7 @@ export const reviewSources = {
 
 /** Edited summaries, not scraped reviews or a claim of community consensus. */
 export const gearBriefs: Record<string, GearBrief> = {
+  ...expandedBriefs,
   "nike-vapor-12": {
     verdict: "A secure, planted ride if you prefer a close fit.",
     suits:

@@ -17,6 +17,29 @@ export function switchSuggestions(
   if (!current) return [];
   const related = comparisonsFor(currentSlug);
   if (current.category === "racquet") {
+    if (["power", "spin", "control", "handling"].includes(priority)) {
+      return products
+        .filter(
+          (p) =>
+            p.category === "racquet" &&
+            p.slug !== currentSlug &&
+            gearBriefs[p.slug]?.priorities.includes(priority),
+        )
+        .map((product) => ({
+          product,
+          reason: gearBriefs[product.slug].suits,
+          comparisonSlug: related.find((c) =>
+            c.productSlugs.includes(product.slug),
+          )?.slug,
+        }))
+        .sort(
+          (a, b) =>
+            Number(Boolean(b.comparisonSlug)) -
+              Number(Boolean(a.comparisonSlug)) ||
+            a.product.slug.localeCompare(b.product.slug),
+        )
+        .slice(0, 3);
+    }
     return related
       .flatMap((c) =>
         c.productSlugs

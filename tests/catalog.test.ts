@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  RESEARCH_DATE,
+  CATALOG_CHECKED,
   comparisons,
   comparisonsFor,
   getComparison,
@@ -90,7 +90,7 @@ describe("pro gear evidence", () => {
       if (item.productSlug === null) continue;
       expect(item.identifiedOn, `${pro}: ${item.productSlug}`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(Number.isNaN(Date.parse(item.identifiedOn!))).toBe(false);
-      expect(item.identifiedOn! <= RESEARCH_DATE).toBe(true);
+      expect(item.identifiedOn! <= CATALOG_CHECKED).toBe(true);
     }
   });
 

@@ -62,15 +62,15 @@ Without a template, the button goes to the plain retailer page and earns nothing
 
 ## Add gear and pros
 
-All catalog data lives in `lib/catalog.ts`. Leave a value `null` when you have no source for it, and the app labels it as a gap. Pro gear needs a date and a source.
+The seed catalog lives in `lib/catalog.ts`; the November 19 expansion is in `lib/catalog-expansion.ts`, with focused comparisons in `lib/comparison-library.ts`. Leave a value `null` when you have no source for it, and the app labels it as a gap. Pro gear needs a date, source and evidence label. A checked brand listing is not a match observation. `familyAlternative` marks retail alternatives that must be excluded from model-reference counts.
 
 ## Images and GIFs
 
-`lib/media.ts` records portraits, GIFs, image credits, and original photo URLs. All 8 catalog pros have a portrait and an official-channel GIF. The 14 licensed photos are served from `public/media/photos` as WebP images at 320, 640, and 1280 pixels; credits remain next to each image and on `/credits`.
+`lib/media.ts` records portraits, GIFs, image credits, and original photo URLs. All 20 catalog pros have a credited photograph; the original eight also retain official-channel GIFs. New profiles do not receive unrelated clips just to fill a slot. The 26 licensed photos are served from `public/media/photos` as WebP images at 320, 640, and 1280 pixels; credits remain next to each image and on `/credits`.
 
-Manufacturer-hosted photos for 19 products are recorded in `lib/product-photos.ts`, with source links, checked dates, and pictured variants. These retain manufacturer copyright and are not presented as open-license photos. Different colorways and representative models within a racquet line are explicitly captioned.
+Manufacturer-hosted photos for 31 products are recorded in `lib/product-photos.ts`, with source links, checked dates, and pictured variants. These retain manufacturer copyright and are not presented as open-license photos. Different colorways and representative models within a racquet line are explicitly captioned.
 
-All 23 products also have a labelled original illustration in `public/media/products`, used when there is no verified photo or a remote image fails. Regenerate these from the editable drawing components after adding products:
+All 37 products also have a labelled original illustration in `public/media/products`, used when there is no verified photo or a remote image fails. Regenerate these from the editable drawing components after adding products:
 
 ```bash
 node scripts/export-product-art.mjs
@@ -96,3 +96,11 @@ The app stores data in SQLite, so it needs a Railway volume and runs as a single
 5. Deploy, then open `/api/health` on the new domain.
 
 Signup is refused in production until the mail variables are set. Each deploy has a few seconds of downtime, because Railway does not let two deploys share a volume.
+
+## Pro curiosity to a useful decision
+
+The first aha hypothesis: “I found my version of a pro-inspired setup, and know what to test next.” `/discover` connects a selected pro, one priority and (for shoes) sizing line and surface to at most two editorial candidates. `/compare/pick` compares any two models in the same category. The result is a source-backed trial plan, not a fit prediction or proof that someone should buy.
+
+Start usability testing with recreational players choosing their next upgrade. Ask five people to start from a favorite pro on a phone. An initial usability gate is four out of five reaching a comparison within a minute, then explaining one gain, one compromise and a court check without coaching. This is an unvalidated hypothesis, not a retention result. The longer-term payoff to test is returning with an actual kept/returned report that helps the next player.
+
+`/pros` and `/gear` have search and pagination. Counts in the pro library describe only the 20 selected profiles, include brand associations and exclude family alternatives; they must never be labeled tour-wide usage or popularity. Mass values retain their strung/unstrung basis, and shoe recommendations keep sizing lines and surfaces separate.

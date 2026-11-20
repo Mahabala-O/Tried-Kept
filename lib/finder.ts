@@ -29,8 +29,8 @@ export function rankShoes(answers: FinderAnswers, catalog: Product[] = products)
     .filter((p) => p.category === "shoe")
     .filter((p) => !(wantedLine && p.line && p.line !== wantedLine))
     .filter((p) => !(answers.budget !== null && p.priceUsd !== null && p.priceUsd > answers.budget))
-    .filter((p) => !(answers.surface === "clay" && p.surface === "hard"))
-    .filter((p) => !(answers.fit === "wide" && p.forefootWidthMm !== null && !p.wideVariant))
+    .filter((p) => answers.surface === "any" || p.surface === null || p.surface === answers.surface)
+    .filter((p) => answers.fit !== "wide" || p.wideVariant)
     .map((product) => score(product, answers));
 
   return matches
@@ -61,7 +61,10 @@ function score(product: Product, answers: FinderAnswers): FinderMatch {
       unknowns.push("Court surface");
     }
   } else if (answers.surface === "clay") {
-    unknowns.push("Clay version");
+    if (product.surface === "clay") {
+      points += 2;
+      reasons.push("Listed as a clay-court version; clay performance is not independently reviewed here");
+    } else unknowns.push("Clay version");
   }
 
   if (answers.fit === "wide") {

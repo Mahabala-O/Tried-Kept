@@ -1,4 +1,6 @@
 import { reviewSources } from "./editorial";
+import { expandedProducts, expandedPros, brandBag, librarySources, LIBRARY_CHECKED } from "./catalog-expansion";
+import { expandedComparisons } from "./comparison-library";
 
 /**
  * Seed catalog. Product facts come from tennis_gear_buyer_research.pdf
@@ -8,6 +10,7 @@ import { reviewSources } from "./editorial";
  */
 
 export const RESEARCH_DATE = "2026-11-18";
+export const CATALOG_CHECKED = LIBRARY_CHECKED;
 
 export type Source = { label: string; url: string };
 export type Category = "shoe" | "racquet";
@@ -28,7 +31,7 @@ export type Product = {
   category: Category;
   /** Retail line, e.g. "Men's". Null when the research does not say. */
   line: string | null;
-  surface: "hard" | null;
+  surface: "hard" | "clay" | null;
   wideVariant: boolean;
   priceUsd: number | null;
   /** The day the price was read from the retailer. A price is never shown without it. */
@@ -113,6 +116,7 @@ const blank: Pick<
 };
 
 export const products: Product[] = [
+  ...expandedProducts,
   {
     ...blank,
     slug: "nike-vapor-12",
@@ -449,6 +453,10 @@ export type BagItem = {
   productSlug: string | null;
   /** Date of the identification. Pro gear is only ever shown with a date. */
   identifiedOn: string | null;
+  /** A checked listing date is not an observation of match use. */
+  evidenceType?: "brand-listed" | "retail-reference";
+  /** A retail alternative in the endorsed family, not a model identification. */
+  familyAlternative?: boolean;
   evidence: string;
   source: Source;
 };
@@ -483,13 +491,8 @@ export const pros: Pro[] = [
           "Kit Tennis dates this identification of the model to March 13, 2026. The version linked here is the men's retail one, which may not be the exact pair he wore.",
         source: S.kitAlcaraz,
       },
-      {
-        slot: "Racquet",
-        productSlug: null,
-        identifiedOn: null,
-        evidence: "No dated racquet identification has been recorded yet.",
-        source: S.babolatAlcaraz,
-      },
+      brandBag("Racquet", "babolat-pure-aero-98-gen9", librarySources.alcaraz,
+        "Babolat lists Pure Aero 98 Gen9 on its Alcaraz equipment page. Checked November 19, 2026; this is the endorsed retail reference, not proof of his exact match build."),
     ],
   },
   {
@@ -653,6 +656,7 @@ export const pros: Pro[] = [
       },
     ],
   },
+  ...expandedPros,
 ];
 
 export function getPro(slug: string): Pro | undefined {
@@ -685,6 +689,7 @@ export type Comparison = {
 };
 
 export const comparisons: Comparison[] = [
+  ...expandedComparisons,
   {
     slug: "resolution-9-vs-solution-speed-ff-4",
     title: "Resolution 9 vs Solution Speed FF 4",

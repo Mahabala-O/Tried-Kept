@@ -227,6 +227,13 @@ export const SHOE_MODELS: Record<string, ShoeModel> = {
     colors: { upper: "#1A1A1D", upper2: "#6C6E73", graphic: "#FFFFFF", midsole: "#FFFFFF", midsole2: "#F0287D", outsole: "#FFFFFF", lace: "#1A1A1D", bg: "#FCE3EE" },
   },
 };
+// Separate retail listings share the original illustration's silhouette; these
+// drawings are labeled as illustrations and are not measurements of the shoe.
+SHOE_MODELS["asics-solution-speed-ff-4-womens"] = SHOE_MODELS["asics-solution-speed-ff-4"];
+SHOE_MODELS["asics-solution-speed-ff-4-clay-womens"] = { ...SHOE_MODELS["asics-solution-speed-ff-4"], tread: "clay" };
+SHOE_MODELS["asics-gel-resolution-x-womens"] = SHOE_MODELS["asics-gel-resolution-x-wide-womens"];
+SHOE_MODELS["asics-court-ff-3"] = { ...base, collar: "sock", heel: "cage", side: "ribs", toeGuard: true, soleHeel: 18, soleToe: 12, colors: { upper: "#F8FAFA", upper2: "#D9E1E8", graphic: "#1C4460", midsole: "#FFFFFF", midsole2: "#B6D342", outsole: "#293E48", lace: "#FFFFFF", bg: "#E7F0E6" } };
+
 
 const SIDES: ShoeSide[] = ["dash", "ribs", "saddle", "mesh", "wedge", "bar"];
 const HEELS: ShoeHeel[] = ["none", "panel", "cage", "block", "window"];

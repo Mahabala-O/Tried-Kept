@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { comparisons } from "@/lib/catalog";
 import CompareCard from "./_components/CompareCard";
@@ -35,6 +36,7 @@ export default function ComparePage() {
       </section>
 
       <div className="wrap page">
+        <Link href="/compare/pick" className="btn btn-optic">Build my own comparison →</Link>
         <div className={s.cards}>
           {comparisons.map((comparison) => (
             <CompareCard key={comparison.slug} comparison={comparison} headingLevel={2} />

@@ -1,6 +1,8 @@
 import { gearBriefs, EDITORIAL_CHECKED } from "@/lib/editorial";
 import { formatDate, SourceLink } from "./ui";
 import s from "./journeys.module.css";
+import { evidenceLabel } from "@/lib/discovery";
+import { getProduct } from "@/lib/catalog";
 
 export default function GearEvidence({ productSlug }: { productSlug: string }) {
   const brief = gearBriefs[productSlug];
@@ -9,6 +11,9 @@ export default function GearEvidence({ productSlug }: { productSlug: string }) {
     <section className={s.brief} aria-labelledby={`evidence-${productSlug}`}>
       <div className="stack">
         <span className="eyebrow">The fit, the feel, the tradeoffs</span>
+        <span className="small muted">
+          Evidence: {evidenceLabel(productSlug)}
+        </span>
         <h2 id={`evidence-${productSlug}`}>{brief.verdict}</h2>
         <p>
           <strong>Worth a try for:</strong> {brief.suits}
@@ -33,7 +38,11 @@ export default function GearEvidence({ productSlug }: { productSlug: string }) {
         </div>
       </div>
       <div className={`callout ${s.brief}`}>
-        <h3>Your try-on check</h3>
+        <h3>
+          {getProduct(productSlug)?.category === "racquet"
+            ? "Your demo check"
+            : "Your try-on check"}
+        </h3>
         <p>{brief.tryThis}</p>
       </div>
       <details className={s.evidence}>

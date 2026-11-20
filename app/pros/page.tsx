@@ -1,3 +1,4 @@
+import { bagDateLabel, trackedReferences } from "@/lib/discovery";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProImage, ProductImage } from "@/components/MediaFrame";
@@ -15,17 +16,17 @@ import s from "./pros.module.css";
 export const metadata: Metadata = {
   title: "Pros",
   description:
-    "Pro tennis gear with the date it was identified, the evidence and the source.",
+    "Reported pro gear and checked brand listings, with dates, evidence and retail alternatives.",
 };
 
 const RULES = [
   {
     title: "Always dated",
-    text: "Every item shows the day it was identified and who identified it.",
+    text: "Reported gear and checked brand listings carry separate labels and dates.",
   },
   {
     title: "Always sourced",
-    text: "Each date links to the page that says so, so you can check it.",
+    text: "Each reference links to the page behind it, so you can check the claim.",
   },
   {
     title: "Not a promise",
@@ -33,7 +34,28 @@ const RULES = [
   },
 ];
 
-export default function ProsPage() {
+export default async function ProsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; tour?: string; page?: string }>;
+}) {
+  const query = await searchParams;
+  const q = typeof query.q === "string" ? query.q.trim().slice(0, 80) : "";
+  const tour = query.tour === "ATP" || query.tour === "WTA" ? query.tour : "";
+  const matches = pros.filter(
+    (p) =>
+      (!tour || p.tour === tour) &&
+      p.name.toLowerCase().includes(q.toLowerCase()),
+  );
+  const pages = Math.max(1, Math.ceil(matches.length / 8));
+  const page = Math.min(
+    pages,
+    Math.max(1, Math.floor(Number(query.page)) || 1),
+  );
+  const visible = matches.slice((page - 1) * 8, page * 8);
+  const href = (n: number) =>
+    `/pros?${new URLSearchParams({ ...(q ? { q } : {}), ...(tour ? { tour } : {}), page: String(n) })}#players`;
+
   const datedCount = pros.reduce(
     (n, pro) =>
       n +
@@ -55,16 +77,15 @@ export default function ProsPage() {
             Pros
           </h1>
           <p className="lede">
-            Pros change gear, so every entry shows when it was identified and
-            who identified it.
+            Explore reported gear and brand-listed retail references. See the
+            evidence, then find a version for your own game.
           </p>
           <div className={s.heroStats}>
             <span className="sticker sticker-xp sticker-plain tilt-left">
               {pros.length} {pros.length === 1 ? "pro" : "pros"}
             </span>
             <span className="sticker sticker-paper sticker-plain tilt-right">
-              {datedCount} dated{" "}
-              {datedCount === 1 ? "identification" : "identifications"}
+              {datedCount} dated references
             </span>
           </div>
         </div>
@@ -75,8 +96,49 @@ export default function ProsPage() {
           <GapNote>No pro gear has been recorded yet.</GapNote>
         )}
 
+        <form action="/pros#players" className="stack">
+          <div className="field">
+            <label htmlFor="pro-search">Find a player</label>
+            <input
+              id="pro-search"
+              type="search"
+              name="q"
+              defaultValue={q}
+              placeholder="Try Osaka, Alcaraz or Djokovic"
+              maxLength={80}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="pro-tour">Tour</label>
+            <select name="tour" id="pro-tour" defaultValue={tour}>
+              <option value="">Both tours</option>
+              <option value="ATP">Men's tour (ATP)</option>
+              <option value="WTA">Women's tour (WTA)</option>
+            </select>
+          </div>
+          <div className="cta-row">
+            <button type="submit" className="btn btn-primary">
+              Find players
+            </button>
+            <Link href="/pros" className="tap-link">
+              Clear filters
+            </Link>
+            <Link href="/discover" className="btn btn-optic">
+              Find my version →
+            </Link>
+          </div>
+        </form>
+        <div id="players" className="stack" tabIndex={-1}>
+          <p role="status">
+            {matches.length} {matches.length === 1 ? "player" : "players"} ·
+            page {page} of {pages}
+          </p>
+        </div>
+        {matches.length === 0 && (
+          <p>No player matches. Try another name or clear the filters.</p>
+        )}
         {TOURS.map((tour) => {
-          const list = pros.filter((pro) => pro.tour === tour);
+          const list = visible.filter((pro) => pro.tour === tour);
           if (list.length === 0) return null;
           return (
             <section
@@ -94,6 +156,53 @@ export default function ProsPage() {
           );
         })}
 
+        {pages > 1 && (
+          <nav aria-label="Player pages" className="cta-row">
+            {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
+              <Link
+                key={n}
+                className={page === n ? "chip chip-active" : "chip"}
+                href={href(n)}
+                aria-current={page === n ? "page" : undefined}
+              >
+                Page {n}
+              </Link>
+            ))}
+          </nav>
+        )}
+        <details className="card stack">
+          <summary className="tap-link">
+            Which retail references appear in this library?
+          </summary>
+          <p className="small muted">
+            Counts within these {pros.length} selected profiles, checked
+            November 19, 2026. Includes sourced brand listings and reported
+            models; excludes family alternatives. These are not tour-wide usage,
+            sales or popularity rankings.
+          </p>
+          {(["racquet", "shoe"] as const).map((category) => (
+            <div className="stack" key={category}>
+              <h2>
+                {category === "racquet"
+                  ? "Racquet references"
+                  : "Shoe references"}
+              </h2>
+              {trackedReferences(category)
+                .slice(0, 4)
+                .map(({ product, players }) => (
+                  <p key={product.slug}>
+                    <Link href={`/gear/${product.slug}`}>
+                      {productLabel(product)}
+                    </Link>{" "}
+                    · {players.length} of {pros.length} profiles{" "}
+                    <span className="small muted">
+                      ({players.map((p) => p.name).join(", ")})
+                    </span>
+                  </p>
+                ))}
+            </div>
+          ))}
+        </details>
         <section className="stack-lg" aria-labelledby="pro-rules">
           <h2 id="pro-rules">How we show pro gear</h2>
           <ol className={s.rules}>
@@ -144,12 +253,13 @@ function ProCard({ pro }: { pro: Pro }) {
             <li key={item.slot} className={s.miniItem}>
               <ProductImage product={product} ratio="1 / 1">
                 <div className={s.miniText}>
-                  <span className={s.miniSlot}>{item.slot}</span>
+                  <span className={s.miniSlot}>{item.slot}{item.familyAlternative ? " · family alternative" : ""}</span>
                   <Link href={`/gear/${product.slug}`} className={s.miniName}>
                     {productLabel(product)}
                   </Link>
                   <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-none">
-                    Identified {formatDate(item.identifiedOn as string)}
+                    {bagDateLabel(item)}{" "}
+                    {formatDate(item.identifiedOn as string)}
                   </span>
                   <SourceLink source={item.source} standalone />
                 </div>
@@ -163,7 +273,7 @@ function ProCard({ pro }: { pro: Pro }) {
               ?
             </span>
             <div className={s.miniText}>
-              <span className={s.miniSlot}>{item.slot}</span>
+              <span className={s.miniSlot}>{item.slot}{item.familyAlternative ? " · family alternative" : ""}</span>
               <span className="small">Not identified yet</span>
             </div>
           </li>

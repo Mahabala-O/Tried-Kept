@@ -12,12 +12,8 @@ import { switchSuggestions } from "@/lib/switches";
 import { ProductImage } from "./MediaFrame";
 import { PriceSticker } from "./ui";
 import s from "./journeys.module.css";
-const priorities: { value: GearPriority; label: string }[] = [
-  { value: "room", label: "More room" },
-  { value: "support", label: "More support" },
-  { value: "cushioning", label: "More cushioning" },
-  { value: "durability", label: "Better wear" },
-];
+import { racquetGoals, shoeGoals } from "@/lib/discovery";
+const priorities = [...shoeGoals, ...racquetGoals];
 
 export default function SwitchGuide({
   initialCurrent = "",
@@ -52,18 +48,32 @@ export default function SwitchGuide({
       ? (initialSurface as "hard" | "clay" | "any")
       : "hard",
   );
+  const current = getProduct(currentSlug);
+  const isRacquet = current?.category === "racquet";
+  const goals = isRacquet
+    ? racquetGoals
+    : shoeGoals.map((g) => ({
+        ...g,
+        label: g.value === "room" ? "More room" : g.label,
+      }));
+  const activePriority = goals.some((g) => g.value === priority)
+    ? priority
+    : goals[0].value;
+  const suggestions = switchSuggestions(
+    currentSlug,
+    activePriority,
+    line,
+    surface,
+  );
   useEffect(() => {
     const url = new URL(window.location.href);
     if (currentSlug) url.searchParams.set("current", currentSlug);
     else url.searchParams.delete("current");
-    url.searchParams.set("priority", priority);
+    url.searchParams.set("priority", activePriority);
     url.searchParams.set("line", line);
     url.searchParams.set("surface", surface);
     window.history.replaceState(null, "", url);
-  }, [currentSlug, priority, line, surface]);
-  const current = getProduct(currentSlug);
-  const suggestions = switchSuggestions(currentSlug, priority, line, surface);
-  const isRacquet = current?.category === "racquet";
+  }, [currentSlug, activePriority, line, surface]);
   return (
     <div className="stack-lg">
       <div className={s.form}>
@@ -106,23 +116,23 @@ export default function SwitchGuide({
             model.
           </p>
         </div>
+        <fieldset className={s.priorities}>
+          <legend>2. What would you like to improve?</legend>
+          {goals.map((p) => (
+            <label key={p.value} className={s.priority}>
+              <input
+                type="radio"
+                name="priority"
+                value={p.value}
+                checked={activePriority === p.value}
+                onChange={() => setPriority(p.value)}
+              />
+              {p.label}
+            </label>
+          ))}
+        </fieldset>
         {!isRacquet && (
           <>
-            <fieldset className={s.priorities}>
-              <legend>2. What would you like to improve?</legend>
-              {priorities.map((p) => (
-                <label key={p.value} className={s.priority}>
-                  <input
-                    type="radio"
-                    name="priority"
-                    value={p.value}
-                    checked={priority === p.value}
-                    onChange={() => setPriority(p.value)}
-                  />
-                  {p.label}
-                </label>
-              ))}
-            </fieldset>
             <div className="field">
               <label htmlFor="trial-surface">Where will you play?</label>
               <select
@@ -196,9 +206,13 @@ export default function SwitchGuide({
                   </p>
                 )}
                 <p className="small muted">
-                  {product.surface === "hard"
-                    ? "Recorded here as a hard-court version. For clay, confirm the exact outsole separately."
-                    : "Surface suitability is not recorded for this listing. Check the exact outsole."}{" "}
+                  {isRacquet
+                    ? "Retail frame specifications can differ from a pro's custom setup. Demo with matched strings and tension."
+                    : product.surface === "hard"
+                      ? "Recorded here as a hard-court version. For clay, confirm the exact outsole separately."
+                      : product.surface === "clay"
+                        ? "Recorded here as a clay version. Manufacturer-only evidence does not establish traction on your court."
+                        : "Surface suitability is not recorded for this listing. Check the exact outsole."}{" "}
                   Prices and stock can change.
                 </p>
                 <div className="cta-row">

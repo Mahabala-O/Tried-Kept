@@ -27,8 +27,8 @@ export default function HomePage() {
               <Link href="/pros" className="btn btn-optic btn-lg">
                 Explore pro setups
               </Link>
-              <Link href="/switch" className="btn btn-lg">
-                Find my next pair
+              <Link href="/discover" className="btn btn-lg">
+                Find my version
               </Link>
             </div>
             <p className="small muted">
@@ -136,7 +136,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className={s.tools}>
-          {pros.map((pro) => (
+          {pros.filter(p => ["carlos-alcaraz", "iga-swiatek", "coco-gauff", "novak-djokovic", "jannik-sinner", "naomi-osaka", "jessica-pegula", "ben-shelton"].includes(p.slug)).map((pro) => (
             <Link href={`/pros/${pro.slug}`} className="chip" key={pro.slug}>
               {pro.name}
             </Link>

@@ -6,6 +6,13 @@ const base: FinderAnswers = { surface: "any", budget: null, fit: "unsure", cushi
 const slugs = (answers: FinderAnswers) => rankShoes(answers).map((m) => m.product.slug);
 
 describe("rankShoes", () => {
+  it("keeps known clay versions off hard-court lists and identifies the recorded clay version", () => {
+    const slug = "asics-solution-speed-ff-4-clay-womens";
+    expect(slugs({ ...base, surface: "hard" })).not.toContain(slug);
+    const clay = rankShoes({ ...base, surface: "clay", line: "womens" }).find(m => m.product.slug === slug);
+    expect(clay?.reasons.join(" ")).toContain("Listed as a clay-court version");
+    expect(clay?.unknowns).not.toContain("Clay version");
+  });
   it("ranks Vapor Pro 3 first for $150, roomy, forefoot, hard and excludes Vapor 12", () => {
     const result = slugs({ ...base, budget: 150, fit: "roomy", cushioning: "forefoot", surface: "hard" });
     expect(result[0]).toBe("nike-vapor-pro-3");
@@ -52,7 +59,7 @@ describe("rankShoes", () => {
   });
 
   it("does not suggest the Vapor 12 on clay even when fit and cushioning match", () => {
-    expect(slugs({ ...base, surface: "clay", fit: "snug", cushioning: "heel" })).toEqual([]);
+    expect(slugs({ ...base, surface: "clay", fit: "snug", cushioning: "heel" })).not.toContain("nike-vapor-12");
   });
 
   it("recommends nothing when the answers give it no facts to rank on", () => {

@@ -395,5 +395,386 @@
       "height": 1858
     },
     "brightness": 1
+  },
+  "yonex-percept-97": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 470.24493489439453,
+      "centerY": 555.0971500372991,
+      "width": 715.7344261748124,
+      "height": 949.458983807182,
+      "support": [
+        {
+          "x": 317,
+          "y": 142
+        },
+        {
+          "x": 558,
+          "y": 1073
+        },
+        {
+          "x": 592,
+          "y": 82
+        },
+        {
+          "x": 449,
+          "y": 1091
+        }
+      ]
+    },
+    "source": "https://us.yonex.com/cdn/shop/files/ALL_01PE97_472-2_31e50e50-d152-4732-b39c-ef65741b912e.jpg?v=1755873749&width=960",
+    "width": 960,
+    "height": 1143,
+    "mode": "studio",
+    "crop": {
+      "left": 273,
+      "top": 47,
+      "width": 416,
+      "height": 1056
+    },
+    "brightness": 1.0282
+  },
+  "wilson-clash-100-v3": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 465.6706662321358,
+      "centerY": 467.4216917356356,
+      "width": 546.4686835696009,
+      "height": 779.0244051731415,
+      "support": [
+        {
+          "x": 395,
+          "y": 80
+        },
+        {
+          "x": 505,
+          "y": 905
+        },
+        {
+          "x": 516,
+          "y": 49
+        },
+        {
+          "x": 454,
+          "y": 910
+        }
+      ]
+    },
+    "source": "https://www.wilson.com/cdn/shop/files/WR172811U_1_CLASH_100_V3_FRM_Black_Infrared_black_01.png?v=1792776030&width=960",
+    "width": 960,
+    "height": 960,
+    "mode": "studio",
+    "crop": {
+      "left": 353,
+      "top": 28,
+      "width": 243,
+      "height": 894
+    },
+    "brightness": 1
+  },
+  "babolat-pure-drive-2025": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 240.46679808860165,
+      "centerY": 239.0456072618172,
+      "width": 328.0889629351856,
+      "height": 447.07003244138673,
+      "support": [
+        {
+          "x": 168,
+          "y": 53
+        },
+        {
+          "x": 268,
+          "y": 497
+        },
+        {
+          "x": 301,
+          "y": 18
+        },
+        {
+          "x": 239,
+          "y": 497
+        }
+      ]
+    },
+    "source": "https://media.babolat.com/image/upload/f_auto,q_auto,c_pad,w_504,h_504/v1707748921/Product_Media/2025/Tennis/Racquets/Expert/101552-PD_GEN11_STRUNG-100-1-Face.png",
+    "width": 504,
+    "height": 504,
+    "mode": "studio",
+    "crop": {
+      "left": 148,
+      "top": 0,
+      "width": 208,
+      "height": 504
+    },
+    "brightness": 1
+  },
+  "babolat-pure-aero-98-gen9": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 240.17495778563574,
+      "centerY": 238.11298390466052,
+      "width": 321.3045781659342,
+      "height": 447.07003244138673,
+      "support": [
+        {
+          "x": 173,
+          "y": 50
+        },
+        {
+          "x": 265,
+          "y": 494
+        },
+        {
+          "x": 299,
+          "y": 16
+        },
+        {
+          "x": 237,
+          "y": 495
+        }
+      ]
+    },
+    "source": "https://media.babolat.com/image/upload/f_auto,q_auto,c_pad,w_504,h_504/v1739968467/Product_Media/2026/Tennis/RACQUETS/Expert/101567-PURE_AERO_98_GEN9-100-1-Face.png",
+    "width": 504,
+    "height": 504,
+    "mode": "studio",
+    "crop": {
+      "left": 151,
+      "top": 0,
+      "width": 204,
+      "height": 502
+    },
+    "brightness": 1
+  },
+  "head-speed-mp-2026": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 327.7803143034006,
+      "centerY": 440.74203652813435,
+      "width": 487.133723733551,
+      "height": 699.6366925229307,
+      "support": [
+        {
+          "x": 238,
+          "y": 138
+        },
+        {
+          "x": 361,
+          "y": 834
+        },
+        {
+          "x": 407,
+          "y": 86
+        },
+        {
+          "x": 315,
+          "y": 837
+        }
+      ]
+    },
+    "source": "https://cdn-mdb.head.com/CDN3/D/232026/1/683x911/speed-mp-2026.webp",
+    "width": 683,
+    "height": 911,
+    "mode": "studio",
+    "crop": {
+      "left": 201,
+      "top": 63,
+      "width": 280,
+      "height": 784
+    },
+    "brightness": 1.0581
+  },
+  "head-gravity-mp-2025": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 327.790729487421,
+      "centerY": 440.1241978978766,
+      "width": 490.5268024850932,
+      "height": 700.2720638198607,
+      "support": [
+        {
+          "x": 230,
+          "y": 147
+        },
+        {
+          "x": 362,
+          "y": 835
+        },
+        {
+          "x": 415,
+          "y": 90
+        },
+        {
+          "x": 317,
+          "y": 838
+        }
+      ]
+    },
+    "source": "https://cdn-mdb.head.com/CDN3/D/231125/1/683x911/gravity-mp-2025.webp",
+    "width": 683,
+    "height": 911,
+    "mode": "studio",
+    "crop": {
+      "left": 198,
+      "top": 63,
+      "width": 287,
+      "height": 785
+    },
+    "brightness": 1.0581
+  },
+  "head-radical-mp-2025": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 328.78545140069286,
+      "centerY": 440.93281186683544,
+      "width": 496.46313915818814,
+      "height": 700.5910790187004,
+      "support": [
+        {
+          "x": 228,
+          "y": 147
+        },
+        {
+          "x": 367,
+          "y": 835
+        },
+        {
+          "x": 407,
+          "y": 85
+        },
+        {
+          "x": 318,
+          "y": 839
+        }
+      ]
+    },
+    "source": "https://cdn-mdb.head.com/CDN3/D/231015/1/683x911/radical-mp-2025.webp",
+    "width": 683,
+    "height": 911,
+    "mode": "studio",
+    "crop": {
+      "left": 200,
+      "top": 63,
+      "width": 283,
+      "height": 785
+    },
+    "brightness": 1.0581
+  },
+  "yonex-vcore-98-2026": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 451.97807552353333,
+      "centerY": 541.1195308963117,
+      "width": 684.7793411147281,
+      "height": 957.1968687052866,
+      "support": [
+        {
+          "x": 307,
+          "y": 144
+        },
+        {
+          "x": 504,
+          "y": 1087
+        },
+        {
+          "x": 589,
+          "y": 73
+        },
+        {
+          "x": 441,
+          "y": 1088
+        }
+      ]
+    },
+    "source": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/ALL_08VC98_338-2.jpg?v=1765566022&width=960",
+    "width": 960,
+    "height": 1143,
+    "mode": "studio",
+    "crop": {
+      "left": 271,
+      "top": 42,
+      "width": 419,
+      "height": 1059
+    },
+    "brightness": 1.0282
+  },
+  "asics-solution-speed-ff-4-clay-womens": {
+    "source": "https://images.asics.com/is/image/asics/1042A305_400_SL_LT_GLB?$sfcc-product$=",
+    "width": 683,
+    "height": 512,
+    "mode": "studio",
+    "crop": {
+      "left": 9,
+      "top": 74,
+      "width": 665,
+      "height": 331
+    },
+    "brightness": 1
+  },
+  "wilson-blade-98-16x19-v10": {
+    "rotation": {
+      "angle": -32,
+      "centerX": 967.9203456758153,
+      "centerY": 977.5171031651075,
+      "width": 1144.024066038649,
+      "height": 1608.404435952185,
+      "support": [
+        {
+          "x": 820,
+          "y": 165
+        },
+        {
+          "x": 1054,
+          "y": 1889
+        },
+        {
+          "x": 1051,
+          "y": 100
+        },
+        {
+          "x": 952,
+          "y": 1897
+        }
+      ]
+    },
+    "source": "https://img.myshopline.com/image/store/1722911146473/WR207811U-1-BLADE-98-16X19-V10-FRM-GREEN.png?h=960&q=80&w=960",
+    "width": 2000,
+    "height": 2000,
+    "mode": "studio",
+    "crop": {
+      "left": 741,
+      "top": 61,
+      "width": 481,
+      "height": 1858
+    },
+    "brightness": 1
+  },
+  "asics-gel-resolution-x-womens": {
+    "source": "https://images.asics.com/is/image/asics/1042A279_001_SL_LT_GLB?$sfcc-product$=",
+    "width": 683,
+    "height": 512,
+    "mode": "studio",
+    "crop": {
+      "left": 9,
+      "top": 75,
+      "width": 665,
+      "height": 331
+    },
+    "brightness": 1
+  },
+  "asics-court-ff-3": {
+    "source": "https://images.asics.com/is/image/asics/1041A370_100_SR_LT_GLB?$sfcc-product$=",
+    "width": 683,
+    "height": 512,
+    "mode": "studio",
+    "crop": {
+      "left": 8,
+      "top": 69,
+      "width": 667,
+      "height": 341
+    },
+    "brightness": 1
   }
 }

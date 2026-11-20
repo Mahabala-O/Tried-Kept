@@ -1,3 +1,4 @@
+import { expandedProMedia } from "./expanded-media";
 import { productPhotos } from "./product-photos";
 export { productPhotos } from "./product-photos";
 
@@ -95,6 +96,7 @@ export function gifEmbedUrl(gif: Pick<Gif, "id">): string {
 
 /** Keyed by pro slug from lib/catalog.ts. */
 export const proMedia: Record<string, ProMedia> = {
+  ...expandedProMedia,
   "carlos-alcaraz": {
     portrait: {
       src: "/media/photos/carlos-alcaraz-1280.webp",

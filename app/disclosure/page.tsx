@@ -91,7 +91,7 @@ export default function DisclosurePage() {
             </p>
             <p>When we do not have a fact, we label it as missing. We do not estimate it or fill it in from a similar model.</p>
             <p>
-              Pro gear always appears with the date it was identified and the source. A pro may use a custom or different
+              Pro gear distinguishes dated reports from checked brand listings and retail references. Family alternatives are labeled; a listing check is not a match observation. A pro may use a custom or different
               model from the retail version, and may have changed gear since that date.
             </p>
             <p>

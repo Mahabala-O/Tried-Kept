@@ -7,6 +7,9 @@ for (const width of [320, 375, 390, 440, 768, 1280]) {
       "/",
       "/pros",
       "/compare",
+      "/discover?pro=carlos-alcaraz&category=racquet&goal=spin",
+      "/compare/pick?left=babolat-pure-aero-98-gen9&right=yonex-vcore-98-2026",
+      "/pros/naomi-osaka",
       "/compare/resolution-9-vs-solution-speed-ff-4",
       "/switch?current=asics-gel-resolution-9",
     ]) {

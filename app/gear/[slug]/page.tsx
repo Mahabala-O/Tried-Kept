@@ -1,3 +1,4 @@
+import { bagDateLabel } from "@/lib/discovery";
 import GearEvidence from "@/components/GearEvidence";
 import StoryCard from "@/components/StoryCard";
 import { storiesForProduct } from "@/lib/editorial";
@@ -174,9 +175,9 @@ export default async function ProductPage({ params, searchParams }: Props) {
                 <PriceSticker product={product} />
               </div>
               <div className={s.tagRow}>
-                {product.surface === "hard" && (
+                {product.surface && (
                   <span className="sticker sticker-sm sticker-blue sticker-plain tilt-left">
-                    Hard court
+                    {product.surface === "clay" ? "Clay court" : "Hard court"}
                   </span>
                 )}
                 {product.wideVariant && (
@@ -237,7 +238,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
         </div>
 
         <section className="stack" aria-labelledby="pros-using">
-          <h2 id="pros-using">Pros seen using it</h2>
+          <h2 id="pros-using">Pro links &amp; retail references</h2>
           {proSightings.length === 0 && (
             <GapNote>
               No dated pro identification is recorded for this model.
@@ -249,11 +250,11 @@ export default async function ProductPage({ params, searchParams }: Props) {
                 slug={pro.slug}
                 prefer="photo"
                 ratio="16 / 9"
-                note="Player portrait. Gear identification is documented separately below."
+                note="Player portrait. The gear association is documented separately below."
               />
               <div className={s.sightingBody}>
                 <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-left">
-                  Identified {formatDate(date)}
+                  {bagDateLabel(item)} {formatDate(date)}
                 </span>
                 <h3>
                   <Link href={`/pros/${pro.slug}`}>{pro.name}</Link>
@@ -266,6 +267,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
           ))}
         </section>
 
+        <Link href={`/compare/pick?left=${product.slug}`} className="btn btn-optic">Compare with another model →</Link>
         {related.length > 0 && (
           <section className="stack-lg" aria-labelledby="related-comparisons">
             <h2 id="related-comparisons">Compare it</h2>

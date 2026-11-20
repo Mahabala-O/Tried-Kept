@@ -518,7 +518,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
 input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--clay-deep); background: #fff5f1; }
 input[type="radio"], input[type="checkbox"] { width: 22px; height: 22px; min-height: 0; padding: 0; flex: none; accent-color: var(--ink); box-shadow: none; }
 textarea { min-height: 110px; resize: vertical; }
-select { padding-right: 36px; }
+select {
+  appearance: none; -webkit-appearance: none;
+  min-height: 50px; padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m5 7.5 5 5 5-5' fill='none' stroke='%230e2a2a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+}
 .choice {
   display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 14px;
   border: var(--border); border-radius: var(--radius-sm); background: var(--paper); color: var(--ink);

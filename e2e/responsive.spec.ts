@@ -48,6 +48,12 @@ for (const width of [320, 375, 390, 440, 768, 1280]) {
         expect(caption.top).toBeGreaterThanOrEqual(caption.pictureBottom);
       }
       if (route === "/pros") expect(captions.length).toBeGreaterThan(0);
+      if (width <= 440) {
+        for (const select of await page.locator("main select").all()) {
+          const box = await select.boundingBox();
+          expect(box!.height, `${route}: native picker tap target`).toBeGreaterThanOrEqual(44);
+        }
+      }
       await expect(page.locator("main")).not.toContainText(
         /\bXP\b|Leaderboard/,
       );

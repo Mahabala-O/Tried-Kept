@@ -7,6 +7,7 @@ import {
   comparisonsFor,
   products,
   productLabel,
+  isComparable,
 } from "@/lib/catalog";
 import { comparablePair, evidenceLabel, frameFact } from "@/lib/discovery";
 import { gearBriefs } from "@/lib/editorial";
@@ -41,23 +42,25 @@ export default async function PickComparison({
         <span className="eyebrow">Catalogue · Compare</span>
         <h1>Pick your tradeoff.</h1>
         <p className="lede">
-          Compare two models in the same category. Start with what changes on
-          court, then test it with the same setup.
+          Compare two shoes or two racquets. Start with what changes on court,
+          then test it with the same setup.
         </p>
       </div>
       <ComparisonPicker
         key={`${left}:${right}`}
-        models={products.map((p) => ({
-          slug: p.slug,
-          label: productLabel(p),
-          category: p.category,
-        }))}
+        models={products
+          .filter((p) => isComparable(p.category))
+          .map((p) => ({
+            slug: p.slug,
+            label: productLabel(p),
+            category: p.category,
+          }))}
         initialLeft={left}
         initialRight={right}
       />
       {left && right && !pair && (
         <p role="status" className="callout">
-          Choose two different, known models in the same category.
+          Choose two different, known shoes or racquets in the same category.
         </p>
       )}
       {pair && (

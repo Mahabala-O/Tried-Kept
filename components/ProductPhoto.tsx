@@ -13,6 +13,7 @@ export default function ProductPhoto({ product, photo, eager = false }: {
   const frame = photoFraming(product.slug, photo.src, photo.width, photo.height);
   const geometry = framingGeometry(frame, product.category);
   const style = {
+    "--scene-fit": product.category === "clothing" || product.category === "sock" ? "contain" : "cover",
     "--image-w": frame.width, "--image-h": frame.height,
     "--crop-cx": geometry.centerX, "--crop-cy": geometry.centerY,
     "--fit-w": geometry.fitWidth, "--fit-h": geometry.fitHeight,

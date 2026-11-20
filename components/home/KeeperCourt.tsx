@@ -39,23 +39,24 @@ export default function KeeperCourt() {
         {gear.map((item) => {
           const product = getProduct(item.slug)!;
           return (
-            <div className={`${s.gear} ${s[item.style]}`} key={item.slug}>
-              <div className={s.picture}>
+            <Link
+              href={`/gear?category=${item.category}`}
+              className={`${s.gear} ${s[item.style]}`}
+              aria-label={`Explore ${item.label.toLowerCase()}`}
+              key={item.slug}
+            >
+              <div className={s.picture} data-gear-picture={item.category}>
                 <ProductPhoto
                   product={product}
                   photo={productPhotos[item.slug]}
                   eager
                 />
               </div>
-              <Link
-                href={`/gear?category=${item.category}`}
-                className={s.destination}
-                aria-label={`Explore ${item.label.toLowerCase()}`}
-              >
+              <span className={s.destination}>
                 {item.label}
                 <span aria-hidden="true">↗</span>
-              </Link>
-            </div>
+              </span>
+            </Link>
           );
         })}
         <span className={s.ball} aria-hidden="true" data-court-motion>

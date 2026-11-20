@@ -776,5 +776,83 @@
       "height": 341
     },
     "brightness": 1
+  },
+  "nike-everyday-plus-cushioned-crew-6-pack": {
+    "source": "https://static.nike.com/a/images/t_PDP_480_v1/f_auto,q_auto:eco,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/0c7302c0-9d23-4170-bca0-e67dd522add4/U+NK+ED+PLS+CSH+CRW+6PR+-+132.png",
+    "width": 480,
+    "height": 600,
+    "mode": "studio",
+    "crop": {
+      "left": 35,
+      "top": 52,
+      "width": 386,
+      "height": 497
+    },
+    "brightness": 1.0897
+  },
+  "thorlo-tx-maximum-cushion-crew": {
+    "source": "https://thorlo.com/cdn/shop/files/TX0000-white-1_1200x1200.jpg?v=1693593918",
+    "width": 1200,
+    "height": 1200,
+    "mode": "studio",
+    "crop": {
+      "left": 330,
+      "top": 76,
+      "width": 461,
+      "height": 1044
+    },
+    "brightness": 1.0451
+  },
+  "nikecourt-victory-mens-tennis-top": {
+    "source": "https://static.nike.com/a/images/t_PDP_480_v1/f_auto,q_auto:eco,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/c8733bc4-7897-467e-80e6-dbb707cb8554/M+NKCT+DF+VICTORY+TOP+PRT.png",
+    "width": 480,
+    "height": 600,
+    "mode": "studio",
+    "crop": {
+      "left": 59,
+      "top": 0,
+      "width": 362,
+      "height": 600
+    },
+    "brightness": 1.0944
+  },
+  "nikecourt-advantage-6-inch-tennis-shorts": {
+    "source": "https://static.nike.com/a/images/t_PDP_480_v1/f_auto,q_auto:eco/5326c832-72b5-4b29-8a74-c4a91e0eb3be/M+NKCT+DF+ADVTG+SHRT+6IN+PRT.png",
+    "width": 480,
+    "height": 600,
+    "mode": "studio",
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "width": 404,
+      "height": 600
+    },
+    "brightness": 1.0991
+  },
+  "nike-victory-womens-tennis-top": {
+    "source": "https://static.nike.com/a/images/t_PDP_480_v1/f_auto,q_auto:eco/08a817ac-d6b8-4acb-a8c0-12454f554f13/W+NK+DF+VCTRY+SS+TOP.png",
+    "width": 480,
+    "height": 600,
+    "mode": "studio",
+    "crop": {
+      "left": 58,
+      "top": 0,
+      "width": 422,
+      "height": 600
+    },
+    "brightness": 1.0944
+  },
+  "nike-victory-high-waisted-tennis-skirt": {
+    "source": "https://static.nike.com/a/images/t_PDP_480_v1/f_auto,q_auto:eco,u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/fadfb994-5401-47ff-8f38-3cf904dc7b0f/W+NK+DF+VCTRY+SKRT+HR+PLTED.png",
+    "width": 480,
+    "height": 600,
+    "mode": "studio",
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "width": 480,
+      "height": 600
+    },
+    "brightness": 1.0944
   }
 }

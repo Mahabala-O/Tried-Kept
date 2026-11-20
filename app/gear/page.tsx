@@ -1,3 +1,5 @@
+import Pagination from "@/components/Pagination";
+import { paginate } from "@/lib/pagination";
 import type { Metadata } from "next";
 import Link from "next/link";
 import BallArt from "@/components/art/BallArt";
@@ -10,12 +12,14 @@ import s from "./gear.module.css";
 export const metadata: Metadata = {
   title: "Catalogue",
   description:
-    "Explore tennis shoes and racquets with sourced advice, specifications and comparisons.",
+    "Explore tennis shoes, racquets, socks and clothing, with sourced specifications and fit advice.",
 };
 
 const GROUPS: { category: Category; heading: string }[] = [
   { category: "shoe", heading: "Shoes" },
   { category: "racquet", heading: "Racquets" },
+  { category: "sock", heading: "Socks" },
+  { category: "clothing", heading: "Clothing" },
 ];
 
 const BRANDS = [...new Set(products.map((p) => p.brand))].sort((a, b) =>
@@ -106,16 +110,8 @@ export default async function GearPage({
   const filtered = brand !== "" || category !== "" || q !== "";
 
   const matches = products.filter((p) => matchesFilters(p, brand, category, q));
-  const pages = Math.max(1, Math.ceil(matches.length / 12));
-  const page = Math.min(
-    pages,
-    Math.max(1, Math.floor(Number(params.page)) || 1),
-  );
-  const visible = matches.slice((page - 1) * 12, page * 12);
-  const groups = GROUPS.map((group) => ({
-    ...group,
-    items: visible.filter((p) => p.category === group.category),
-  })).filter((group) => group.items.length > 0);
+  const result = paginate(matches, params.page);
+  const { page, pages, items: visible } = result;
 
   const priced = products.filter((p) => p.priceUsd !== null).length;
   const filterName = [
@@ -162,7 +158,11 @@ export default async function GearPage({
       </section>
 
       <div className="wrap page">
-        <form action="/gear#models" className="stack">
+        <form
+          action="/gear#models"
+          className="stack"
+          key={`${brand}:${category}:${q}`}
+        >
           <input type="hidden" name="brand" value={brand} />
           <input type="hidden" name="category" value={category} />
           <div className="field">
@@ -238,8 +238,8 @@ export default async function GearPage({
           </div>
           <div className={s.resultLine}>
             <p className={s.resultCount}>
-              Showing {visible.length} of {matches.length} matches · page {page}{" "}
-              of {pages}
+              Showing {result.start}–{result.end} of {matches.length} matches ·
+              page {page} of {pages}
               {filterName ? (
                 <span className="muted"> · {filterName}</span>
               ) : null}
@@ -252,7 +252,7 @@ export default async function GearPage({
           </div>
         </nav>
 
-        {groups.length === 0 && (
+        {visible.length === 0 && (
           <div className={`card ${s.empty}`}>
             <BallArt bounce className={s.emptyBall} />
             <h2>Nothing here yet</h2>
@@ -265,39 +265,17 @@ export default async function GearPage({
           </div>
         )}
 
-        {pages > 1 && (
-          <nav className="cta-row" aria-label="Gear pages">
-            {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
-              <Link
-                key={n}
-                href={`${gearHref(brand, category, q, n)}#models`}
-                className={page === n ? "chip chip-active" : "chip"}
-                aria-current={page === n ? "page" : undefined}
-              >
-                Page {n}
-              </Link>
-            ))}
-          </nav>
-        )}
-        {groups.map((group) => (
-          <section
-            key={group.category}
-            className="stack-lg"
-            aria-labelledby={`group-${group.category}`}
-          >
-            <div className={s.groupHead}>
-              <h2 id={`group-${group.category}`}>{group.heading}</h2>
-              <span className="sticker sticker-sm sticker-paper sticker-plain tilt-right">
-                {plural(group.items.length, "model", "models")}
-              </span>
-            </div>
-            <div className="grid">
-              {group.items.map((product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-            </div>
-          </section>
-        ))}
+        <div className="grid" aria-label="Products">
+          {visible.map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+        <Pagination
+          page={page}
+          pages={pages}
+          href={(n) => `${gearHref(brand, category, q, n)}#models`}
+          label="Gear pages"
+        />
       </div>
     </>
   );

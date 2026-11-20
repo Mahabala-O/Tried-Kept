@@ -96,8 +96,8 @@ export function PriceSticker({ product, tilt = "tilt-left", short = false }: { p
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="card card-link product-card">
-      <ProductImage product={product} />
+    <article className="card card-link product-card" data-product-card={product.slug}>
+      <ProductImage product={product} ratio={product.category === "clothing" ? "4 / 5" : product.category === "sock" ? "1 / 1" : "4 / 3"} />
       <div className="product-card-body">
         <span className="eyebrow">{product.brand}</span>
         <h3>
@@ -112,6 +112,8 @@ export function ProductCard({ product }: { product: Product }) {
         <PriceSticker product={product} />
         {product.wideVariant && <span className="sticker sticker-sm sticker-paper tilt-right">Wide</span>}
         {product.surface === "hard" && <span className="sticker sticker-sm sticker-blue tilt-right">Hard court</span>}
+        {product.category === "sock" && <span className="tag">Socks</span>}
+        {product.category === "clothing" && <span className="tag">Clothing</span>}
         {product.category === "racquet" && <span className="sticker sticker-sm sticker-paper tilt-right">Racquet</span>}
       </div>
     </article>

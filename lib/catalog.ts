@@ -1,4 +1,5 @@
 import { reviewSources } from "./editorial";
+import { apparelProducts } from "./apparel";
 import { expandedProducts, expandedPros, brandBag, librarySources, LIBRARY_CHECKED } from "./catalog-expansion";
 import { expandedComparisons } from "./comparison-library";
 
@@ -13,7 +14,9 @@ export const RESEARCH_DATE = "2026-11-18";
 export const CATALOG_CHECKED = LIBRARY_CHECKED;
 
 export type Source = { label: string; url: string };
-export type Category = "shoe" | "racquet";
+export type Category = "shoe" | "racquet" | "sock" | "clothing";
+export const CATEGORY_LABELS: Record<Category, string> = { shoe: "Shoes", racquet: "Racquets", sock: "Socks", clothing: "Clothing" };
+export const isComparable = (category: Category) => category === "shoe" || category === "racquet";
 
 export type Spec = { label: string; value: string; source: Source };
 
@@ -47,7 +50,7 @@ export type Product = {
   sources: Source[];
 };
 
-export type RetailerId = "nike" | "asics";
+export type RetailerId = "nike" | "asics" | "thorlo";
 
 export type Retailer = {
   id: RetailerId;
@@ -59,6 +62,7 @@ export type Retailer = {
 export const retailers: Record<RetailerId, Retailer> = {
   nike: { id: "nike", name: "Nike", templateEnv: "AFFILIATE_TEMPLATE_NIKE" },
   asics: { id: "asics", name: "ASICS", templateEnv: "AFFILIATE_TEMPLATE_ASICS" },
+  thorlo: { id: "thorlo", name: "Thorlo", templateEnv: "AFFILIATE_TEMPLATE_THORLO" },
 };
 
 const S = {
@@ -401,6 +405,7 @@ export const products: Product[] = [
     summary: "Yonex's 100 sq in VCORE. No price, weight or string pattern has been recorded yet.",
     sources: [S.yonexAO26],
   },
+  ...apparelProducts,
 ];
 
 export function formatDate(iso: string): string {
@@ -428,7 +433,8 @@ export function getOffer(id: string): { offer: Offer; product: Product } | undef
 }
 
 export function productLabel(p: Product): string {
-  return `${p.brand} ${p.name}${p.line ? ` (${p.line})` : ""}`;
+  const includesBrand = p.name === p.brand || p.name.startsWith(`${p.brand} `) || (p.brand === "Nike" && p.name.startsWith("NikeCourt "));
+  return `${includesBrand ? "" : `${p.brand} `}${p.name}${p.line ? ` (${p.line})` : ""}`;
 }
 
 /** Every fact the research left blank for this model, so the page can label each gap. */
@@ -441,7 +447,7 @@ export function missingFacts(product: Product): string[] {
     [isShoe && product.sku === null, "style number"],
     [isShoe && product.forefootWidthMm === null, "interior width at the ball of the foot"],
     [isShoe && product.cushioning === null, "cushioning location"],
-    [product.weightG === null, "weight"],
+    [isComparable(product.category) && product.weightG === null, "weight"],
   ];
   return checks.filter(([isMissing]) => isMissing).map(([, label]) => label);
 }

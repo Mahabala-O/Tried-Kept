@@ -1,9 +1,10 @@
+import SponsorshipFacts from "@/components/SponsorshipFacts";
+import { sponsorships } from "@/lib/sponsorships";
 import { bagDateLabel } from "@/lib/discovery";
 import StoryCard from "@/components/StoryCard";
 import { storiesForPro, proWardrobe } from "@/lib/editorial";
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import ShoeArt from "@/components/art/ShoeArt";
 import RacquetArt from "@/components/art/RacquetArt";
@@ -84,20 +85,21 @@ function BagEntry({ item }: { item: BagItem }) {
   return (
     <article className={`card ${s.gearCard}`}>
       <ProductImage product={product} ratio="4 / 3" />
-      <div className={s.gearStickers}>
-        <span className="sticker sticker-ink sticker-sm tilt-left">
-          {item.slot}
-          {item.familyAlternative ? " · family alternative" : ""}
-        </span>
-        <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-right">
-          {bagDateLabel(item)} {formatDate(item.identifiedOn)}
-        </span>
-      </div>
+      <p className="small muted">
+        {item.slot}
+        {item.familyAlternative ? " · Retail family alternative" : ""}
+      </p>
       <h3 className={s.gearName}>
         <Link href={`/gear/${product.slug}`}>{productLabel(product)}</Link>
       </h3>
-      <p className="small">{item.evidence}</p>
-      <SourceLink source={item.source} standalone />
+      <p className="small muted">
+        {bagDateLabel(item)} {formatDate(item.identifiedOn)}
+      </p>
+      <details className={s.referenceDetails}>
+        <summary>Evidence &amp; source</summary>
+        <p>{item.evidence}</p>
+        <SourceLink source={item.source} standalone />
+      </details>
       <OfferButtons product={product} from="pro" />
       {cheaper && (
         <div className={s.cheaper}>
@@ -127,11 +129,8 @@ export default async function ProPage({ params }: Props) {
   if (!pro) notFound();
 
   const media = proMedia[pro.slug];
-  const heroGif = media?.gifs[0] ?? null;
-  // The hero shows the first clip (or the portrait when there is no clip). The gallery shows the rest.
-  const galleryGifs = heroGif ? (media?.gifs.slice(1) ?? []) : [];
-  const galleryPhoto = heroGif ? (media?.portrait ?? null) : null;
-  const hasGallery = galleryGifs.length > 0 || galleryPhoto !== null;
+  const galleryGifs = media?.gifs ?? [];
+  const hasGallery = galleryGifs.length > 0;
 
   const dates = pro.bag.flatMap((item) =>
     item.productSlug && item.identifiedOn ? [item.identifiedOn] : [],
@@ -155,52 +154,66 @@ export default async function ProPage({ params }: Props) {
               {pro.name}
             </h1>
             <p className="lede">
-              What was identified, when, and who says so. This may not be what{" "}
-              {pro.name} is using today.
+              Get to know {pro.name.split(" ")[0]}’s setup. Follow the sources
+              and explore the retail alternatives.
             </p>
-            <div className={s.heroStats}>
-              <span className="sticker sticker-xp sticker-plain tilt-left">
-                {dates.length} dated {dates.length === 1 ? "item" : "items"}
-              </span>
-              {latest && (
-                <span className="sticker sticker-paper sticker-plain sticker-wrap tilt-right">
-                  Latest: {formatDate(latest)}
-                </span>
-              )}
-            </div>
+            <p className="small">
+              {dates.length} dated references
+              {latest ? ` · Latest: ${formatDate(latest)}` : ""}
+            </p>
           </div>
           <div className={s.heroMedia}>
             <ProImage
               slug={pro.slug}
-              prefer="gif"
-              ratio="1 / 1"
+              prefer="photo"
+              ratio="16 / 10"
               eager
               artBg="#E6FF3D"
               note="Shows the player, not the gear in the bag below."
             />
-            <span
-              className={`sticker sticker-ink ${s.heroSticker}`}
-              style={{ "--tilt": "-6deg" } as CSSProperties}
-            >
-              Dated bag
-            </span>
           </div>
         </div>
       </section>
 
       <div className="wrap page">
-        <div className="callout">
-          <span className="eyebrow">Before you copy a pro</span>
-          <p>{pro.caveat}</p>
-        </div>
+        <nav
+          className={`chip-scroll ${s.profileNav}`}
+          aria-label="Profile sections"
+        >
+          <a className="chip" href="#bag">
+            Gear
+          </a>
+          {proWardrobe[pro.slug] && (
+            <a className="chip" href="#wardrobe-title">
+              Style
+            </a>
+          )}
+          {storiesForPro(pro.slug).length > 0 && (
+            <a className="chip" href="#gear-stories">
+              Stories
+            </a>
+          )}
+          {(sponsorships[pro.slug]?.length ?? 0) > 0 && (
+            <a
+              className="chip"
+              href="#partnerships"
+              aria-label="Sponsorship deals"
+            >
+              Deals
+            </a>
+          )}
+          {hasGallery && (
+            <a className="chip" href="#on-court">
+              Clips
+            </a>
+          )}
+        </nav>
+        <p className="small muted">{pro.caveat}</p>
 
         <section className="stack-lg" aria-labelledby="bag">
-          <h2 id="bag">Dated bag</h2>
+          <h2 id="bag">Equipment</h2>
           {!pro.bag.some((item) => item.slot === "Shoes") && (
-            <GapNote>
-              A shoe model has not been verified for this profile yet. The
-              racquet reference below does not establish a footwear choice.
-            </GapNote>
+            <p className="small muted">A shoe model is not yet recorded for this player. The racquet reference below does not identify their footwear.</p>
           )}
           <div className={s.bag}>
             {pro.bag.map((item) => (
@@ -222,6 +235,14 @@ export default async function ProPage({ params }: Props) {
                 <SourceLink source={look.source} standalone />
               </article>
             ))}
+            <div className="row">
+              <Link href="/gear?category=clothing" className="btn">
+                Explore tennis clothing
+              </Link>
+              <Link href="/gear?category=sock" className="tap-link">
+                Browse socks →
+              </Link>
+            </div>
           </section>
         )}
 
@@ -235,6 +256,8 @@ export default async function ProPage({ params }: Props) {
             </div>
           </section>
         )}
+
+        <SponsorshipFacts slug={pro.slug} />
 
         {hasGallery && (
           <section className="stack-lg" aria-labelledby="on-court">
@@ -252,18 +275,14 @@ export default async function ProPage({ params }: Props) {
             >
               {galleryGifs.map((gif) => (
                 <li key={gif.id}>
-                  <MediaFrame gif={gif} fallback={null} ratio="4 / 3" />
-                </li>
-              ))}
-              {galleryPhoto && (
-                <li>
                   <MediaFrame
-                    photo={galleryPhoto}
+                    gif={gif}
                     fallback={null}
                     ratio="4 / 3"
+                    autoPlay={false}
                   />
                 </li>
-              )}
+              ))}
             </ul>
           </section>
         )}

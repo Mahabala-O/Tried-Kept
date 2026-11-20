@@ -1,4 +1,5 @@
 import { expandedProductPhotos } from "./expanded-media";
+import { apparelPhotos } from "./apparel";
 /** Manufacturer-hosted product photography, checked 2026-11-19.
  * Copyright stays with the named brand; these are not Creative Commons images.
  * Keep the source attribution and pictured-variant notes with each image.
@@ -8,6 +9,7 @@ import type { Photo } from "./media";
 export type ProductPhoto = Photo & { picturedVariant: string; checkedOn: string };
 
 export const productPhotos: Record<string, ProductPhoto> = {
+  ...apparelPhotos,
   ...expandedProductPhotos,
   "nike-vapor-12": {
       "src": "https://static.nike.com/a/images/t_default/5a7432d7-57c1-4541-841a-50aec9bccc41/M+ZOOM+VAPOR+12+HC.png",

@@ -3,6 +3,7 @@ import { productLabel, type Product } from "@/lib/catalog";
 import { paletteFor } from "./palette";
 import RacquetArt from "./RacquetArt";
 import ShoeArt, { shoeModelFor } from "./ShoeArt";
+import ApparelArt, { apparelShape } from "./ApparelArt";
 
 type Props = {
   product: Pick<Product, "slug" | "category" | "brand" | "name" | "line">;
@@ -20,7 +21,7 @@ type Props = {
 export default function ProductArt({ product, className, ratio, hideLabel = false }: Props) {
   const palette = paletteFor(product.slug);
   const bg = product.category === "shoe" ? shoeModelFor(product.slug).colors.bg : palette.bg;
-  const kind = product.category === "racquet" ? "tennis racquet" : "tennis shoe";
+  const kind = product.category === "racquet" ? "tennis racquet" : product.category === "shoe" ? "tennis shoe" : product.category === "sock" ? "pair of socks" : "tennis garment";
   const style = { "--art-bg": bg, ...(ratio ? { "--ratio": ratio } : {}) } as CSSProperties;
   return (
     <div
@@ -37,8 +38,10 @@ export default function ProductArt({ product, className, ratio, hideLabel = fals
       )}
       {product.category === "racquet" ? (
         <RacquetArt seed={product.slug} frame={palette.main} accent={palette.accent} grip={palette.detail} />
-      ) : (
+      ) : product.category === "shoe" ? (
         <ShoeArt seed={product.slug} />
+      ) : (
+        <ApparelArt shape={apparelShape(product.category, product.name)} />
       )}
     </div>
   );

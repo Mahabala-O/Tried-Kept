@@ -142,6 +142,11 @@
 
 .sectionHead { display: grid; gap: 8px; }
 
+.apparelFacts { grid-template-columns: minmax(0, 1fr); }
+.apparelFacts .fact { min-height: 0; gap: 6px; }
+.apparelFacts .factValue { order: 0; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.5; letter-spacing: 0; font-weight: 650; }
+@media (min-width: 700px) { .apparelFacts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 @media (prefers-color-scheme: dark) {
   .fact:nth-child(4n + 1), .fact:nth-child(4n + 1) .factLabel {
     color: var(--accent-ink);

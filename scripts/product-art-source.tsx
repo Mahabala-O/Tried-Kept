@@ -4,6 +4,7 @@ import ShoeArt, { shoeModelFor } from '@/components/art/ShoeArt';
 import RacquetArt from '@/components/art/RacquetArt';
 import CourtArt from '@/components/art/CourtArt';
 import { paletteFor } from '@/components/art/palette';
+import ApparelArt, { apparelShape } from '@/components/art/ApparelArt';
 
 export function exportArt() {
   const assets = products.map(product => {
@@ -11,7 +12,9 @@ export function exportArt() {
     const bg = product.category === 'shoe' ? shoeModelFor(product.slug).colors.bg : palette.bg;
     const drawing = product.category === 'shoe'
       ? <ShoeArt seed={product.slug} />
-      : <RacquetArt seed={product.slug} frame={palette.main} accent={palette.accent} grip={palette.detail} />;
+      : product.category === 'racquet'
+        ? <RacquetArt seed={product.slug} frame={palette.main} accent={palette.accent} grip={palette.detail} />
+        : <ApparelArt shape={apparelShape(product.category, product.name)} />;
     const svg = renderToStaticMarkup(
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480" role="img">
         <title>{`${productLabel(product)} — illustration`}</title>

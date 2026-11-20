@@ -96,8 +96,8 @@ export default async function StoryPage({ params }: Props) {
         ) : null;
       })}
       <div className="cta-row">
-        <Link href={`/pros/${pro.slug}`} className="btn">
-          Explore {pro.name.split(" ")[0]}’s dated bag
+        <Link href={`/pros/${pro.slug}#bag`} className="btn">
+          Back to {pro.name.split(" ")[0]}’s equipment
         </Link>
         <Link href="/gear" className="btn btn-primary">
           Explore the catalogue

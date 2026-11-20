@@ -1,18 +1,13 @@
+import Pagination from "@/components/Pagination";
+import { paginate } from "@/lib/pagination";
 import StoryCard from "@/components/StoryCard";
 import { gearStories } from "@/lib/editorial";
-import { bagDateLabel, trackedReferences } from "@/lib/discovery";
+import { trackedReferences } from "@/lib/discovery";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ProImage, ProductImage } from "@/components/MediaFrame";
-import { GapNote, SourceLink, formatDate } from "@/components/ui";
-import {
-  TOUR_LABELS,
-  getProduct,
-  productLabel,
-  pros,
-  type Pro,
-  type Tour,
-} from "@/lib/catalog";
+import { ProImage } from "@/components/MediaFrame";
+import { GapNote } from "@/components/ui";
+import { getProduct, productLabel, pros, type Pro } from "@/lib/catalog";
 import s from "./pros.module.css";
 
 export const metadata: Metadata = {
@@ -49,12 +44,8 @@ export default async function ProsPage({
       (!tour || p.tour === tour) &&
       p.name.toLowerCase().includes(q.toLowerCase()),
   );
-  const pages = Math.max(1, Math.ceil(matches.length / 8));
-  const page = Math.min(
-    pages,
-    Math.max(1, Math.floor(Number(query.page)) || 1),
-  );
-  const visible = matches.slice((page - 1) * 8, page * 8);
+  const result = paginate(matches, query.page);
+  const { page, pages, items: visible } = result;
   const href = (n: number) =>
     `/pros?${new URLSearchParams({ ...(q ? { q } : {}), ...(tour ? { tour } : {}), page: String(n) })}#players`;
 
@@ -98,7 +89,7 @@ export default async function ProsPage({
           <GapNote>No pro gear has been recorded yet.</GapNote>
         )}
 
-        <form action="/pros#players" className="stack">
+        <form action="/pros#players" className="stack" key={`${q}:${tour}`}>
           <div className="field">
             <label htmlFor="pro-search">Find a player</label>
             <input
@@ -130,48 +121,25 @@ export default async function ProsPage({
             </Link>
           </div>
         </form>
-        <div id="players" className="stack" tabIndex={-1}>
+        <div id="players" className={`stack ${s.resultsStart}`} tabIndex={-1}>
           <p role="status">
-            {matches.length} {matches.length === 1 ? "player" : "players"} ·
-            page {page} of {pages}
+            Showing {result.start}–{result.end} of {matches.length} players
           </p>
         </div>
         {matches.length === 0 && (
           <p>No player matches. Try another name or clear the filters.</p>
         )}
-        {TOURS.map((tour) => {
-          const list = visible.filter((pro) => pro.tour === tour);
-          if (list.length === 0) return null;
-          return (
-            <section
-              key={tour}
-              className="stack"
-              aria-labelledby={`tour-${tour}`}
-            >
-              <h2 id={`tour-${tour}`}>{TOUR_LABELS[tour]}</h2>
-              <div className={s.proGrid}>
-                {list.map((pro) => (
-                  <ProCard key={pro.slug} pro={pro} />
-                ))}
-              </div>
-            </section>
-          );
-        })}
-
-        {pages > 1 && (
-          <nav aria-label="Player pages" className="cta-row">
-            {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
-              <Link
-                key={n}
-                className={page === n ? "chip chip-active" : "chip"}
-                href={href(n)}
-                aria-current={page === n ? "page" : undefined}
-              >
-                Page {n}
-              </Link>
-            ))}
-          </nav>
-        )}
+        <div className={s.proGrid} aria-label="Players">
+          {visible.map((pro) => (
+            <ProCard key={pro.slug} pro={pro} />
+          ))}
+        </div>
+        <Pagination
+          page={page}
+          pages={pages}
+          href={href}
+          label="Player pages"
+        />
         <details className="card stack">
           <summary className="tap-link">
             Which retail references appear in this library?
@@ -244,70 +212,36 @@ export default async function ProsPage({
   );
 }
 
-const TOURS: Tour[] = ["ATP", "WTA"];
-
 function ProCard({ pro }: { pro: Pro }) {
-  const dated = pro.bag.filter(
-    (item) => item.productSlug !== null && item.identifiedOn !== null,
-  );
-  const undated = pro.bag.filter(
-    (item) => item.productSlug === null || item.identifiedOn === null,
-  );
+  const brands = [
+    ...new Set(
+      pro.bag.flatMap((item) => {
+        const product = item.productSlug
+          ? getProduct(item.productSlug)
+          : undefined;
+        return product ? [product.brand] : [];
+      }),
+    ),
+  ];
   return (
-    <article className={`card ${s.proCard}`}>
+    <article className={`card ${s.proCard}`} data-pro-card={pro.slug}>
       <ProImage slug={pro.slug} prefer="photo" ratio="1 / 1" />
+      <p className="small muted">{pro.tour}</p>
       <h3 className={s.proName}>
         <Link href={`/pros/${pro.slug}`}>{pro.name}</Link>
       </h3>
-      {dated.length === 0 && (
-        <GapNote>No dated gear identification is recorded yet.</GapNote>
-      )}
-      <ul className={s.miniBag} aria-label={`${pro.name}'s dated gear`}>
-        {dated.map((item) => {
-          const product = getProduct(item.productSlug as string);
-          if (!product) return null;
-          return (
-            <li key={item.slot} className={s.miniItem}>
-              <ProductImage product={product} ratio="1 / 1">
-                <div className={s.miniText}>
-                  <span className={s.miniSlot}>
-                    {item.slot}
-                    {item.familyAlternative ? " · family alternative" : ""}
-                  </span>
-                  <Link href={`/gear/${product.slug}`} className={s.miniName}>
-                    {productLabel(product)}
-                  </Link>
-                  <span className="sticker sticker-blue sticker-sm sticker-plain sticker-wrap tilt-none">
-                    {bagDateLabel(item)}{" "}
-                    {formatDate(item.identifiedOn as string)}
-                  </span>
-                  <SourceLink source={item.source} standalone />
-                </div>
-              </ProductImage>
-            </li>
-          );
-        })}
-        {undated.map((item) => (
-          <li key={item.slot} className={`${s.miniItem} ${s.miniUnknown}`}>
-            <span className={s.qTile} aria-hidden="true">
-              ?
-            </span>
-            <div className={s.miniText}>
-              <span className={s.miniSlot}>
-                {item.slot}
-                {item.familyAlternative ? " · family alternative" : ""}
-              </span>
-              <span className="small">Not identified yet</span>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <p className="small muted">{pro.caveat}</p>
-      <div className="cta-row">
-        <Link href={`/pros/${pro.slug}`} className="btn btn-primary">
-          See the full bag
-        </Link>
-      </div>
+      <p className={`small muted ${s.brandSummary}`}>
+        {brands.length
+          ? `Gear references: ${brands.join(" · ")}`
+          : "Equipment not yet documented"}
+      </p>
+      <Link
+        href={`/pros/${pro.slug}`}
+        className="btn btn-primary"
+        aria-label={`View ${pro.name}’s profile`}
+      >
+        View profile →
+      </Link>
     </article>
   );
 }

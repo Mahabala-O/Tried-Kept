@@ -766,7 +766,7 @@ svg .anim-bounce, .pa-ball, .pa-shadow { transform-box: fill-box; transform-orig
 .product-photo img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
 }
-.product-photo[data-mode="scene"] img { object-fit: cover; }
+.product-photo[data-mode="scene"] img { object-fit: var(--scene-fit, cover); }
 .product-photo[data-mode="studio"] img:not([data-fallback]) {
   filter: brightness(var(--photo-brightness, 1)); mix-blend-mode: multiply;
 }

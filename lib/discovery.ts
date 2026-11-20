@@ -6,6 +6,7 @@ import {
   pros,
   type BagItem,
   type Category,
+  isComparable,
   type Product,
 } from "./catalog";
 import { gearBriefs, type GearPriority } from "./editorial";
@@ -113,7 +114,7 @@ export function comparablePair(
 ): [Product, Product] | null {
   const a = getProduct(left ?? ""),
     b = getProduct(right ?? "");
-  return a && b && a.slug !== b.slug && a.category === b.category
+  return a && b && a.slug !== b.slug && a.category === b.category && isComparable(a.category)
     ? [a, b]
     : null;
 }

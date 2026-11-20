@@ -49,7 +49,11 @@ for (const width of [320, 375, 390, 440, 768, 1280]) {
         ).toBeGreaterThanOrEqual(caption.frameWidth - 1);
         expect(caption.top).toBeGreaterThanOrEqual(caption.pictureBottom);
       }
-      if (route === "/pros") expect(captions.length).toBeGreaterThan(0);
+      if (route === "/pros") {
+        // The directory now contains player previews; detailed gear belongs inside profiles.
+        await expect(page.locator("[data-pro-card] .product-media-row")).toHaveCount(0);
+        await expect(page.locator("[data-pro-card]")).toHaveCount(12);
+      }
       if (width <= 440) {
         for (const select of await page.locator("main select").all()) {
           const box = await select.boundingBox();

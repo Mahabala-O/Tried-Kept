@@ -56,6 +56,17 @@
   position: absolute;
   display: grid;
   gap: 8px;
+  color: #0e2a2a;
+  text-decoration: none;
+  border-radius: 22px;
+  cursor: pointer;
+}
+.gear:hover {
+  color: #0e2a2a;
+}
+.gear:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
 }
 .shoe {
   left: 5%;
@@ -81,12 +92,13 @@
   aspect-ratio: 0.78;
 }
 .destination {
+  min-width: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   min-height: 44px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border: 2px solid #0e2a2a;
   border-radius: 999px;
   background: #e6ff3d;
@@ -101,19 +113,15 @@
 .racquet .destination {
   background: #fff7e6;
 }
-.destination:hover {
+.gear:focus-visible .destination {
   background: #fff;
   color: #0e2a2a;
 }
-.destination::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-}
-.destination:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 4px;
+@media (hover: hover) and (pointer: fine) {
+  .gear:hover .destination {
+    background: #fff;
+    color: #0e2a2a;
+  }
 }
 .ball {
   position: absolute;
@@ -225,8 +233,13 @@
       transform 0.22s ease,
       box-shadow 0.22s ease;
   }
-  .gear:has(.destination:hover) .picture,
-  .gear:has(.destination:focus-visible) .picture {
+  .gear:focus-visible .picture {
+    transform: translateY(-5px);
+    box-shadow: 5px 10px 0 #0e2a2a;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .gear:hover .picture {
     transform: translateY(-5px);
     box-shadow: 5px 10px 0 #0e2a2a;
   }

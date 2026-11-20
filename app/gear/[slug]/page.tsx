@@ -18,6 +18,8 @@ import {
 } from "@/components/ui";
 import {
   comparisonsFor,
+  isComparable,
+  CATEGORY_LABELS,
   getProduct,
   missingFacts,
   productLabel,
@@ -72,7 +74,9 @@ function KeyFacts({ product }: { product: Product }) {
 
       {product.specs.length > 0 && (
         <>
-          <dl className={s.facts}>
+          <dl
+            className={`${s.facts} ${!isComparable(product.category) ? s.apparelFacts : ""}`}
+          >
             {product.specs.map((spec) => (
               <div key={spec.label} className={s.fact}>
                 <dt className={s.factLabel}>{spec.label}</dt>
@@ -128,7 +132,7 @@ export default async function ProductPage({ params }: Props) {
       )
       .map((item) => ({ pro, item, date: item.identifiedOn as string })),
   );
-  const kind = product.category === "shoe" ? "Shoe" : "Racquet";
+  const kind = CATEGORY_LABELS[product.category];
 
   return (
     <>
@@ -139,7 +143,11 @@ export default async function ProductPage({ params }: Props) {
           </Link>
           <div className={s.topGrid}>
             <div className={s.visual}>
-              <ProductImage product={product} ratio="4 / 3" eager />
+              <ProductImage
+                product={product}
+                ratio={product.category === "clothing" ? "4 / 5" : "4 / 3"}
+                eager
+              />
               <span
                 className={`sticker sticker-ink ${s.visualSticker}`}
                 style={{ "--tilt": "6deg" } as CSSProperties}
@@ -177,10 +185,16 @@ export default async function ProductPage({ params }: Props) {
               <p className={s.summary}>{product.summary}</p>
               <div className="cta-row">
                 <Link
-                  href={`/gear/compare?left=${product.slug}`}
+                  href={
+                    isComparable(product.category)
+                      ? `/gear/compare?left=${product.slug}`
+                      : `/gear?category=${product.category}`
+                  }
                   className="btn btn-primary"
                 >
-                  Compare this model
+                  {isComparable(product.category)
+                    ? "Compare this model"
+                    : `Explore more ${CATEGORY_LABELS[product.category].toLowerCase()}`}
                 </Link>
                 {product.offers.length > 0 && (
                   <a href="#where-to-check" className="tap-link">
@@ -235,10 +249,16 @@ export default async function ProductPage({ params }: Props) {
         )}
 
         <Link
-          href={`/gear/compare?left=${product.slug}`}
+          href={
+            isComparable(product.category)
+              ? `/gear/compare?left=${product.slug}`
+              : `/gear?category=${product.category}`
+          }
           className="btn btn-optic"
         >
-          Compare with another model →
+          {isComparable(product.category)
+            ? "Compare with another model →"
+            : `Browse ${CATEGORY_LABELS[product.category].toLowerCase()} →`}
         </Link>
         {related.length > 0 && (
           <section className="stack-lg" aria-labelledby="related-comparisons">

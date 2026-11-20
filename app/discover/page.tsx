@@ -16,7 +16,7 @@ import s from "@/components/journeys.module.css";
 export const metadata: Metadata = {
   title: "Find my version",
   description:
-    "Start with a pro. Find two retail options, understand the tradeoff, and plan your own court test.",
+    "Start with a pro. Find up to two retail options, understand the tradeoff, and plan your own court test.",
 };
 type Params = {
   pro?: string;
@@ -58,7 +58,7 @@ export default async function DiscoverPage({
         <span className="eyebrow">Their inspiration. Your next keeper.</span>
         <h1>Find my version.</h1>
         <p className="lede">
-          Start with a player you love. Leave with two options to investigate, a
+          Start with a player you love. Find a focused shortlist to investigate, a
           tradeoff you understand, and a test for your next hit.
         </p>
         <p className="small muted">

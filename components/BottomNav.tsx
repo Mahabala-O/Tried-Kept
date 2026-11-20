@@ -98,7 +98,7 @@ export default function BottomNav({
     {
       href: "/switch",
       label: "Find gear",
-      match: ["/switch", "/gear", "/compare", "/play"],
+      match: ["/switch", "/discover", "/gear", "/compare", "/play"],
       icon: GearIcon,
     },
     {

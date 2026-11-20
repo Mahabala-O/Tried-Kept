@@ -84,7 +84,7 @@ export default function DiscoveryForm({
         </>
       )}
       <button type="submit" className="btn btn-optic">
-        Show my two options →
+        Find my options →
       </button>
     </form>
   );

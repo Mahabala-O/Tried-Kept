@@ -10,7 +10,8 @@ test("a pro bag leads to two goal-specific frames and a usable comparison", asyn
     })
     .tap();
   await page.getByLabel("3. What matters most to you?").selectOption("spin");
-  await page.getByRole("button", { name: "Show my two options →" }).tap();
+  await page.getByRole("button", { name: "Find my options →" }).tap();
+  await expect(page.locator(".bottom-nav").getByRole("link", { name: "Find gear", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.locator("#shortlist article")).toHaveCount(2);
   await expect(page.locator("#shortlist")).toContainText("Pure Aero 98 Gen9");
   await expect(page.locator("#shortlist")).toContainText("VCORE 98");
@@ -68,7 +69,7 @@ test("women's clay results keep the evidence gap instead of inventing a pair", a
   ).toHaveCount(0);
   await page.getByLabel("Your court surface").selectOption("hard");
   await page.getByLabel("3. What matters most to you?").selectOption("support");
-  await page.getByRole("button", { name: "Show my two options →" }).tap();
+  await page.getByRole("button", { name: "Find my options →" }).tap();
   await expect(page.locator("#shortlist article")).toHaveCount(2);
   await expect(page.locator("#shortlist article").first()).toContainText(
     "Women's",

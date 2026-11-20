@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import ResilientImage from "@/components/ResilientImage";
 
 type Props = {
+  /** Home-page highlights wait for an explicit play request. */
+  autoPlay?: boolean;
   /** GIPHY's own embed player URL (lib/media.ts gifEmbedUrl). */
   embedUrl: string;
   alt: string;
@@ -12,6 +14,9 @@ type Props = {
   channel: string;
   posterSrc?: string;
   posterAlt?: string;
+  posterPosition?: string;
+  posterSrcSet?: string;
+  posterSizes?: string;
 };
 
 /**
@@ -20,7 +25,18 @@ type Props = {
  * a tap. Before it loads, a credited portrait or original court illustration stays visible.
  * The button stops or restarts the clip at any time (WCAG 2.2.2).
  */
-export default function GiphyClip({ embedUrl, alt, playerName, channel, posterSrc, posterAlt }: Props) {
+export default function GiphyClip({
+  embedUrl,
+  alt,
+  playerName,
+  channel,
+  posterSrc,
+  posterAlt,
+  posterPosition,
+  posterSrcSet,
+  posterSizes,
+  autoPlay = true,
+}: Props) {
   const boxRef = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
   const [stopped, setStopped] = useState(false);
@@ -28,7 +44,7 @@ export default function GiphyClip({ embedUrl, alt, playerName, channel, posterSr
 
   useEffect(() => {
     const box = boxRef.current;
-    if (!box || stopped) return;
+    if (!box || stopped || !autoPlay) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motion.matches) return;
 
@@ -55,7 +71,7 @@ export default function GiphyClip({ embedUrl, alt, playerName, channel, posterSr
       observer.disconnect();
       motion.removeEventListener("change", onMotionChange);
     };
-  }, [stopped]);
+  }, [stopped, autoPlay]);
 
   // A tap always wins over the automatic start, so a stopped clip stays stopped.
   const toggle = () => {
@@ -65,11 +81,30 @@ export default function GiphyClip({ embedUrl, alt, playerName, channel, posterSr
   };
 
   return (
-    <div ref={boxRef} className="clip" style={{ position: "absolute", inset: 0 }}>
-      <ResilientImage src={posterSrc ?? "/media/tennis-court.svg"}
-        alt={posterAlt ?? "Illustrated tennis court while the clip is paused or loading"}
-        loading="lazy" decoding="async"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+    <div
+      ref={boxRef}
+      className="clip"
+      style={{ position: "absolute", inset: 0 }}
+    >
+      <ResilientImage
+        src={posterSrc ?? "/media/tennis-court.svg"}
+        srcSet={posterSrcSet}
+        sizes={posterSrcSet ? posterSizes : undefined}
+        alt={
+          posterAlt ??
+          "Illustrated tennis court while the clip is paused or loading"
+        }
+        loading="lazy"
+        decoding="async"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: posterPosition,
+        }}
+      />
       {on ? (
         <iframe
           src={embedUrl}
@@ -82,16 +117,32 @@ export default function GiphyClip({ embedUrl, alt, playerName, channel, posterSr
           style={{ opacity: loadedUrl === embedUrl ? 1 : 0 }}
         />
       ) : (
-        <div className="clip-poster-caption" aria-label={`Clip not playing: ${alt}`}>
+        <div
+          className="clip-poster-caption"
+          aria-label={`Clip not playing: ${alt}`}
+        >
           <span className="clip-card-kicker">GIF</span>
-          <span className="clip-card-title">{playerName ?? "A tennis moment"}</span>
+          <span className="clip-card-title">
+            {playerName ?? "A tennis moment"}
+          </span>
           <span className="small">from {channel} on GIPHY</span>
         </div>
       )}
-      <button type="button" className="media-toggle media-toggle-wide" onClick={toggle}>
+      <button
+        type="button"
+        className="media-toggle media-toggle-wide"
+        onClick={toggle}
+      >
         {on ? (
           <svg viewBox="0 0 20 20" aria-hidden="true">
-            <rect x="4" y="4" width="12" height="12" rx="1.5" fill="currentColor" />
+            <rect
+              x="4"
+              y="4"
+              width="12"
+              height="12"
+              rx="1.5"
+              fill="currentColor"
+            />
           </svg>
         ) : (
           <svg viewBox="0 0 20 20" aria-hidden="true">

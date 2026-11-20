@@ -1,0 +1,138 @@
+.hero {
+  padding-block: 28px 36px;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+.intro {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  align-content: end;
+}
+.title {
+  font-size: clamp(2.75rem, 10.5vw, 5.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+.pop {
+  display: inline-block;
+  background: var(--optic);
+  color: var(--accent-ink);
+  padding: 0 0.12em 0.04em;
+  border-radius: 0.1em;
+  transform: rotate(-2deg);
+}
+.heroGrid > figure {
+  width: min(100%, 560px);
+  justify-self: center;
+}
+.actions {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+}
+.ctas {
+  display: grid;
+  gap: 12px;
+}
+.section {
+  display: grid;
+  gap: 24px;
+  padding-block: 36px;
+}
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+}
+.categoryCard {
+  padding: 14px 14px 20px;
+  gap: 12px;
+}
+.categoryCard :global(.media-box) {
+  border-radius: 14px;
+}
+.categoryName,
+.proName {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  letter-spacing: -0.04em;
+}
+.proCard {
+  padding: 14px 14px 20px;
+  gap: 14px;
+}
+.proCard :global(.media-box) {
+  border-radius: 14px;
+}
+.proCard :global(.clip-poster-caption) {
+  display: none;
+}
+.proCard :global(.media-toggle) {
+  bottom: 12px;
+  right: 12px;
+}
+
+@media (min-width: 720px) {
+  .pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 900px) {
+  .title {
+    font-size: clamp(3rem, 5.7vw, 5rem);
+  }
+  .hero {
+    padding-block: 48px 56px;
+  }
+  .heroGrid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    column-gap: 42px;
+    row-gap: 24px;
+    align-items: center;
+  }
+  .heroGrid > figure {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .actions {
+    align-self: start;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .ctas :global(.btn) {
+    font-size: 1rem;
+    min-height: 52px;
+    padding-inline: 18px;
+  }
+  .intro {
+    align-self: end;
+  }
+  .section {
+    padding-block: 56px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .categoryCard :global(.media-box),
+  .proCard :global(.media-box) {
+    transition: box-shadow 0.2s ease;
+  }
+  .categoryCard:focus-within :global(.media-box),
+  .categoryCard:hover :global(.media-box),
+  .proCard:focus-within :global(.media-box),
+  .proCard:hover :global(.media-box) {
+    box-shadow: var(--shadow-sm);
+  }
+}

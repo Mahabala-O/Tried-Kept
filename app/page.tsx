@@ -1,21 +1,21 @@
 import Link from "next/link";
-import MediaFrame, { ProImage, ProductImage } from "@/components/MediaFrame";
+import { ProImage, ProductImage } from "@/components/MediaFrame";
+import KeeperCourt from "@/components/home/KeeperCourt";
 import { getProduct, getPro, productLabel, products } from "@/lib/catalog";
-import { homeMedia } from "@/lib/media";
-import s from "@/components/journeys.module.css";
+import s from "./home.module.css";
 
 const categories = [
   {
     category: "shoe",
     title: "Shoes",
-    example: "asics-solution-speed-ff-4",
-    text: "Fit, cushioning and support. Understand what each pair does well and what to check when you try it on.",
+    example: "nike-vapor-pro-3",
+    text: "Fast feet, happy feet. Find the fit, cushioning and support that suit your court time.",
   },
   {
     category: "racquet",
     title: "Racquets",
-    example: "babolat-pure-aero-98-gen9",
-    text: "Power, spin and control. Compare the stock specifications and the tradeoffs before your next demo.",
+    example: "yonex-vcore-98-2026",
+    text: "More spin? A little control? Get to know the tradeoffs before your next demo.",
   },
 ] as const;
 
@@ -30,15 +30,18 @@ export default function HomePage() {
           <div className={s.intro}>
             <span className="eyebrow">Tennis gear, clearly explained</span>
             <h1 id="hero-title" className={s.title}>
-              Good gear.
+              Find your
               <br />
-              <span className={s.pop}>Clear choices.</span>
+              next <span className={s.pop}>keeper.</span>
             </h1>
             <p className="lede">
-              Explore shoes and racquets, understand their strengths and
-              tradeoffs, and see what the pros play with.
+              Find gear that fits your game. Get to know the tradeoffs. See what
+              the pros play with.
             </p>
-            <div className="cta-row">
+          </div>
+          <KeeperCourt />
+          <div className={s.actions}>
+            <div className={s.ctas}>
               <Link href="/gear" className="btn btn-optic btn-lg">
                 Explore the catalogue
               </Link>
@@ -49,14 +52,6 @@ export default function HomePage() {
             <p className="small muted">
               Sourced advice. Dated pro gear. Every comparison open to explore.
             </p>
-          </div>
-          <div className={s.heroPhoto}>
-            <MediaFrame
-              photo={homeMedia.photos[1]}
-              fallback={null}
-              ratio="4 / 3"
-              eager
-            />
           </div>
         </div>
       </section>
@@ -80,9 +75,12 @@ export default function HomePage() {
               (p) => p.category === group.category,
             ).length;
             return (
-              <article className="card stack" key={group.category}>
+              <article
+                className={`card stack ${s.categoryCard}`}
+                key={group.category}
+              >
                 <ProductImage product={example} ratio="16 / 10" />
-                <h3>{group.title}</h3>
+                <h3 className={s.categoryName}>{group.title}</h3>
                 <p>{group.text}</p>
                 <p className="small muted">
                   Pictured:{" "}
@@ -120,9 +118,25 @@ export default function HomePage() {
             {["carlos-alcaraz", "iga-swiatek"].map((slug) => {
               const pro = getPro(slug)!;
               return (
-                <article className="card stack" key={slug}>
-                  <ProImage slug={slug} prefer="photo" ratio="16 / 10" />
-                  <h3>{pro.name}</h3>
+                <article
+                  className={`card stack ${s.proCard}`}
+                  key={slug}
+                  aria-labelledby={`home-${slug}`}
+                >
+                  <ProImage
+                    slug={slug}
+                    prefer="gif"
+                    autoPlay={false}
+                    ratio="4 / 3"
+                  />
+                  <h3 id={`home-${slug}`} className={s.proName}>
+                    {pro.name}
+                  </h3>
+                  <p className="muted">
+                    {slug === "carlos-alcaraz"
+                      ? "Big energy. A bag with a story. Explore the gear behind the player."
+                      : "Every detail has a purpose. Explore Iga’s equipment and gear-switch story."}
+                  </p>
                   <Link href={`/pros/${slug}`} className="btn">
                     Explore {pro.name.split(" ")[0]}’s gear →
                   </Link>

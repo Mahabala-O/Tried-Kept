@@ -15,6 +15,7 @@ import {
 } from "@/lib/media";
 
 type FrameProps = {
+  autoPlay?: boolean;
   photo?: Photo | null;
   gif?: Gif | null;
   /** Shown when there is no photo or GIF. Use original art from components/art. */
@@ -144,6 +145,7 @@ export function PhotoImg({
  * The box keeps its aspect ratio before anything loads, so nothing shifts.
  */
 export default function MediaFrame({
+  autoPlay,
   photo,
   gif,
   fallback,
@@ -180,12 +182,20 @@ export default function MediaFrame({
       <figure className={classes}>
         <div className="media-box" style={style}>
           <GiphyClip
+            autoPlay={autoPlay}
             embedUrl={gifEmbedUrl(gif)}
             alt={gif.alt}
             playerName={gif.playerName}
             channel={gif.channel}
             posterSrc={poster?.src}
             posterAlt={poster?.alt}
+            posterPosition={poster?.objectPosition}
+            posterSrcSet={
+              poster
+                ? (photoSrcSet(poster) ?? commonsSrcSet(poster))
+                : undefined
+            }
+            posterSizes={sizes ?? "(min-width: 900px) 50vw, 100vw"}
           />
         </div>
         <GifCredit gif={gif} note={note} />
@@ -363,6 +373,7 @@ export function PlayerIllustration({
  * portrait. With prefer="art", or without either, a generic illustrated player labeled as art.
  */
 export function ProImage({
+  autoPlay,
   slug,
   prefer = "photo",
   ratio = "1 / 1",
@@ -372,6 +383,7 @@ export function ProImage({
   note,
   artBg = "#2457E6",
 }: {
+  autoPlay?: boolean;
   slug: string;
   prefer?: "photo" | "gif" | "art";
   /** Background behind the fallback illustration. */
@@ -392,6 +404,7 @@ export function ProImage({
 
   return (
     <MediaFrame
+      autoPlay={autoPlay}
       gif={chosen.gif}
       photo={chosen.photo}
       ratio={ratio}

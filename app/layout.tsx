@@ -5,6 +5,8 @@ import "@fontsource-variable/dm-sans";
 import BottomNav from "@/components/BottomNav";
 import SiteHeader from "@/components/SiteHeader";
 import { siteOrigin } from "@/lib/site";
+import { siteGraph } from "@/lib/structured-data";
+import { StructuredData } from "@/components/StructuredData";
 import "./globals.css";
 import "./dark.css";
 
@@ -37,6 +39,9 @@ export const metadata: Metadata = {
   },
   // Outside hosts (Wikimedia, GIPHY) get only our origin, never the page path.
   referrer: "strict-origin-when-cross-origin",
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export const viewport: Viewport = {
@@ -59,6 +64,7 @@ export default function RootLayout({
     // data-scroll-behavior lets Next turn smooth scrolling off during route changes, so new pages open at the top.
     <html lang="en" data-scroll-behavior="smooth">
       <body>
+        <StructuredData value={siteGraph()} />
         <a href="#main" className="skip-link">
           Skip to content
         </a>

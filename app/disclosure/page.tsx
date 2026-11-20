@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import BallArt from "@/components/art/BallArt";
@@ -6,10 +7,11 @@ import { SourceLink, formatDate } from "@/components/ui";
 import { RESEARCH_DATE, sources } from "@/lib/catalog";
 import s from "./disclosure.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Disclosure",
-  description: "How affiliate links, evidence, dates, points and lab data work on Tried & Kept.",
-};
+  description: "How Tried & Kept researches tennis gear, checks sources and ratings, and earns money from affiliate links.",
+  path: "/disclosure",
+});
 
 const SECTIONS = [
   { id: "affiliate", title: "Affiliate links" },

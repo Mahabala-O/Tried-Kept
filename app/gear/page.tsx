@@ -8,12 +8,16 @@ import ShoeArt from "@/components/art/ShoeArt";
 import { ProductCard } from "@/components/ui";
 import { products, type Category, type Product } from "@/lib/catalog";
 import s from "./gear.module.css";
+import { catalogueMetadata, type SearchQuery } from "@/lib/seo";
+import PageSchema from "@/components/StructuredData";
 
-export const metadata: Metadata = {
-  title: "Catalogue",
-  description:
-    "Explore tennis shoes, racquets, socks and clothing, with sourced specifications and fit advice.",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<SearchQuery>;
+}): Promise<Metadata> {
+  return catalogueMetadata(await searchParams);
+}
 
 const GROUPS: { category: Category; heading: string }[] = [
   { category: "shoe", heading: "Shoes" },
@@ -123,6 +127,7 @@ export default async function GearPage({
 
   return (
     <>
+      <PageSchema kind="catalogue" query={params} />
       <section
         className={`band band-clay ${s.hero}`}
         aria-labelledby="gear-title"

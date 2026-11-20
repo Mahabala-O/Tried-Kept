@@ -21,6 +21,8 @@ import {
 } from "@/lib/catalog";
 import { proMedia } from "@/lib/media";
 import s from "../pros.module.css";
+import { proMetadata } from "@/lib/seo";
+import PageSchema from "@/components/StructuredData";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,10 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const pro = getPro(slug);
   if (!pro) return { title: "Pro not found" };
-  return {
-    title: `${pro.name} gear`,
-    description: `${pro.name}'s reported gear and retail references, with dates and sources.`,
-  };
+  return proMetadata(pro);
 }
 
 /** Finds a comparison that pairs this model with a cheaper one in the catalog. */
@@ -140,6 +139,7 @@ export default async function ProPage({ params }: Props) {
 
   return (
     <>
+      <PageSchema kind="pro" slug={pro.slug} />
       <section
         className={`band band-hardcourt court-lines ${s.hero}`}
         aria-labelledby="pro-title"
